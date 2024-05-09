@@ -22,7 +22,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
     AlreadyApplied();
     _loadUserEmail();
     fetchDiscount();
-    print("Pushed");
+    print("ghfidahvchfcduhfsuch ");
   }
   String loginEmail="";
   int Uid = 0;
