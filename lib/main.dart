@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor:Colors.white),
         useMaterial3: true,
       ),
-      home: HomePage(sourceScreen: '', uid: '', username: '', verificationId: '',),
+      home: CongratulationScreen(),
       // routes: {
       //   '/signin': (context) => SignIn(),
       // },

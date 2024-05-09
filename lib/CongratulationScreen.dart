@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:hiremi/PhonePePayment.dart';
 import 'package:hiremi/api_services/base_services.dart';
-import 'package:hiremi/firstCongratulationScreen.dart';
+
 import 'package:hiremi/pageview_screen.dart';
-import 'package:hiremi/threeCongratulationScreen.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hiremi/HomePage.dart';
-import 'package:hiremi/signin.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CongratulationScreen extends StatefulWidget {
@@ -175,6 +175,7 @@ class CongratulationScreenState extends State<CongratulationScreen> {
                ),
              );
            }
+
            else {
               // Navigate to HomePage Screen2
               print('Going to HomePage Screen1');

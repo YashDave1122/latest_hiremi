@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:hiremi/HomePage.dart';
 import 'package:hiremi/utils/api.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +21,14 @@ class _CorporateTrainingState extends State<CorporateTraining> {
     super.initState();
     AlreadyApplied();
     _loadUserEmail();
+    fetchDiscount();
+    print("Pushed");
   }
   String loginEmail="";
   int Uid = 0;
+  String DiscountedPrice="";
+  String Discount="";
+  String OriginalPrice="";
   // or whatever default value you want to assign
   bool hasAlreadyApplied = false;
   Future<void> _loadUserEmail() async {
@@ -33,6 +39,32 @@ class _CorporateTrainingState extends State<CorporateTraining> {
       setState(() {
         loginEmail = savedUsername;
       });
+
+    }
+  }
+  Future<void> fetchDiscount() async {
+    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/discount/'));
+
+    if (response.statusCode == 200) {
+      // Parse the response JSON
+      final List<dynamic> data = jsonDecode(response.body);
+
+      if (data.isNotEmpty) {
+        final Map<String, dynamic> discountData = data.last; // Access the last element in the list
+        final int discount = discountData['discount'];
+        final int originalPrice = discountData['original_price'];
+
+        // Calculate discounted price
+        final double discountPrice = originalPrice - (originalPrice * discount / 100);
+
+        setState(() {
+          DiscountedPrice = discountPrice.toString(); // Convert ID to String
+          Discount=discount.toString();
+          OriginalPrice=originalPrice.toString();
+        });
+
+
+      }
 
     }
   }
@@ -48,7 +80,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
           'applied': true,
           'email':loginEmail,
           'uid':Uid,
-          "candidate_status": "Select",
+          "candidate_status": "Pending",
         }),
       );
 
@@ -60,6 +92,8 @@ class _CorporateTrainingState extends State<CorporateTraining> {
         //     builder: (context) => HomePage(sourceScreen: '', uid: '', username: '', verificationId: ''),
         //   ),
         // );
+        print("Appliedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+
         await ShowDialog();
         print('Applied successfully!');
         print('ApplyNow Response Code: ${response.statusCode}');
@@ -112,38 +146,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
                 backgroundColor: Colors.white,
                 surfaceTintColor: Colors.transparent,// Set the background color to transparent
                 actions: [
-                  // Column(
-                  //   children: [
-                  //     Center(
-                  //       child: RichText(
-                  //         textAlign: TextAlign.center,
-                  //         text: TextSpan(
-                  //           style: TextStyle(
-                  //             fontFamily: "FontMain",
-                  //             fontSize: 15,
-                  //             color: Colors.black, // Default color for other text
-                  //           ),
-                  //           children: [
-                  //             TextSpan(
-                  //               text: "You have applied for ",
-                  //             ),
-                  //             TextSpan(
-                  //               text: Intern_Profile,
-                  //               style: TextStyle(
-                  //                 fontWeight: FontWeight.bold, // Make JobProfile text bold
-                  //                 color: Color(0xFFBD232B), // Desired color for JobProfile text
-                  //               ),
-                  //             ),
-                  //             TextSpan(
-                  //               text: " internship position. We will update you after the interview.",
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     SizedBox(height: 20),
-                  //   ],
-                  // ),
+
                   Column(
                     children: [
                       SizedBox(height: 30,),
@@ -294,7 +297,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
   }
   Future<void> loadUserUid() async {
     print("Hello");
-    await _loadUserEmail();
+   // await _loadUserEmail();
 
     try {
       final response = await http.get(Uri.parse('${ApiUrls.baseurl}verified-emails/'));
@@ -315,6 +318,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
           if (userEmail == loginEmail ) {
             print(userEmail);
             print(UID);
+
             // await postVerifiedEmail();
             // await VerificationID2();
             Uid=UID;
@@ -398,10 +402,16 @@ class _CorporateTrainingState extends State<CorporateTraining> {
           SingleChildScrollView(
             child: SafeArea(
               child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                      alignment: Alignment.topLeft,
-                      child: Image.asset('images/Back_Button.png')),
+                  InkWell(
+                    onTap:(){
+                      Navigator.pop(context);
+                   },
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Image.asset('images/Back_Button.png')),
+                  ),
                   SizedBox(height: screenHeight*0.02,),
                   Row(
                     children: [
@@ -459,30 +469,61 @@ class _CorporateTrainingState extends State<CorporateTraining> {
                                   ),
                                 ),
                               ),
+                              // Column(
+                              //   children: [
+                              //     SizedBox(height: screenHeight * 0.015),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(right: 89.0),
+                              //       child: Text(
+                              //         getTextForIndex(index),
+                              //         textAlign: TextAlign.center,
+                              //         style: TextStyle(
+                              //           color: Colors.white,
+                              //           fontSize: screenHeight < 700 ? 13.5 : 17,
+                              //           fontFamily: 'FontMain',
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     SizedBox(height: 7.5),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(right: 80.0),
+                              //       child: Text(
+                              //         getAnotherTextForIndex(index),
+                              //         textAlign: TextAlign.center,
+                              //         style: TextStyle(
+                              //           color: Colors.white,
+                              //           fontSize: screenHeight < 700 ? 12.5 : 14.5,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               Column(
                                 children: [
                                   SizedBox(height: screenHeight * 0.015),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 89.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 89.0),
                                     child: Text(
                                       getTextForIndex(index),
-                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: screenHeight < 700 ? 13.5 : 17,
+                                        fontSize:
+                                        screenHeight < 700 ? 13.5 : 17,
                                         fontFamily: 'FontMain',
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 7.5),
+                                  const SizedBox(height: 7.5),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 80.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 80.0),
                                     child: Text(
                                       getAnotherTextForIndex(index),
-                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: screenHeight < 700 ? 12.5 : 14.5,
+                                        fontSize:
+                                        screenHeight < 700 ? 12.5 : 14.5,
                                       ),
                                     ),
                                   ),
@@ -499,22 +540,27 @@ class _CorporateTrainingState extends State<CorporateTraining> {
                     ),
                   ),
                   SizedBox(height: screenHeight*0.033,),
-                  Text("Corporate training",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontFamily: 'FontMain',
-                      fontSize:  screenWidth < 411  ? 22 : 25,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Text("Corporate training",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontFamily: 'FontMain',
+                        fontSize:  screenWidth < 411  ? 22 : 25,
 
-                    ),),
-                  SizedBox(height: screenHeight*0.026,),
-                  Text("Corporate training program at Hiremi prioritise comprehensive learning, diversity, and career excellence. We offer hands-on expertise, practical exercises, and a structured curriculum, preparing individuals for real-world challenges in a shorter time frame."
-                    ,
-                    textAlign: TextAlign.center,
-                    style:TextStyle(
-                      fontWeight:FontWeight.w600,
-                      fontSize:  screenWidth < 411   ? 12.5: 14,
+                      ),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 25),
+                    child: Text("Corporate training program at Hiremi prioritise comprehensive learning, diversity, and career excellence. We offer hands-on expertise, practical exercises, and a structured curriculum, preparing individuals for real-world challenges in a shorter time frame."
+                      ,
+                      textAlign: TextAlign.start,
+                      style:TextStyle(
+                        fontWeight:FontWeight.w600,
+                        fontSize:  screenWidth < 411   ? 12.5: 14,
 
 
+                      ),
                     ),
                   ),
                   Padding(
@@ -550,10 +596,10 @@ class _CorporateTrainingState extends State<CorporateTraining> {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: "Rs 250,000",
+                                            text: "Rs $DiscountedPrice",
                                           ),
                                           TextSpan(
-                                            text: "/250,000", // This will remain unstruck
+                                            text: "/$OriginalPrice", // This will remain unstruck
                                             style: TextStyle(
                                               decoration: TextDecoration.lineThrough,
                                               // To remove the decoration from this part
@@ -613,7 +659,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
                               surfaceTintColor: Colors.transparent,// rgba(0, 0, 0, 0.25)
                               child: Column(
                                 children: [
-                                  Text("0% OFF",
+                                  Text("$Discount% OFF",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: 'FontMain',

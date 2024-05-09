@@ -274,9 +274,202 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
     );
     return result ?? false; // Return false if the dialog is dismissed without pressing 'OK'
   }
+  // @override
+  // Widget build(BuildContext context) {
+  //
+  //   print('Applied Job IDs: $appliedJobIds');
+  //   return Scaffold(
+  //     body: SingleChildScrollView(
+  //       child: SafeArea(
+  //         child: RefreshIndicator(
+  //           onRefresh: () async {
+  //             await fetchDataFromApi();
+  //           },
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               InkWell(
+  //                 onTap: () {
+  //                   Navigator.pushReplacement(
+  //                     context,
+  //                     MaterialPageRoute(
+  //                       builder: (context) {
+  //                         return HomePage(
+  //                           sourceScreen: '',
+  //                           uid: '',
+  //                           username: '',
+  //                           verificationId: '',
+  //                         );
+  //                       },
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: Image.asset('images/Back_Button.png'),
+  //               ),
+  //               Row(
+  //                 children: [
+  //                   SizedBox(
+  //                     width: 15,
+  //                   ),
+  //                   Text(
+  //                     "Fresher's Jobs",
+  //                     style: TextStyle(
+  //                       color: Colors.black,
+  //                       fontFamily: "FontMain",
+  //                       fontSize: 25,
+  //                     ),
+  //                   ),
+  //                   Image.asset(
+  //                     'images/Saly-1 (2).png',
+  //                     width: 180,
+  //                     height: 160,
+  //                     fit: BoxFit.cover,
+  //                   )
+  //                 ],
+  //               ),
+  //               Center(
+  //                 child: Column(
+  //                   children: [
+  //                     Container(
+  //                       width: 380,
+  //                       height: 620,
+  //                       child: fresherJobList.isNotEmpty
+  //                           ? ListView.builder(
+  //                         itemCount: fresherJobList.length,
+  //                         itemBuilder: (BuildContext context, int index) {
+  //                           final job = fresherJobList[index];
+  //
+  //                           return Column(
+  //                             children: [
+  //                               Card(
+  //                                 color: const Color(0xFFF8F8F8),
+  //                                 surfaceTintColor: Colors.transparent,
+  //                                 elevation: 3.0,
+  //                                 shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(12.0),
+  //                                 ),
+  //                                 child: Column(
+  //                                   children: [
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'Company: ${job.companyName}',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'Location: ${job.jobLocation}',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),),
+  //                                     ),
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'CTC: ${job.jobCtc} LPA',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //
+  //
+  //                                     Padding(
+  //                                       padding: const EdgeInsets.only(left:200.0),
+  //                                       child: Container(
+  //                                         width: 155, // Set width as per your requirement
+  //                                         height: 40, // Set height as per your requirement
+  //                                         child: ElevatedButton(
+  //                                           style: ButtonStyle(
+  //                                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFBD232B)), // Red background color
+  //                                             foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // White text color
+  //                                           ),
+  //                                           onPressed: () async {
+  //                                             bool applied = await checkIfApplied(loginEmail, job.jobProfile!, job.companyName!);
+  //                                             if (applied) {
+  //                                               // If already applied, show a message
+  //                                               ScaffoldMessenger.of(context).showSnackBar(
+  //                                                 SnackBar(
+  //                                                   content: Text('You have already applied for this job.'),
+  //                                                 ),
+  //                                               );
+  //                                             } else {
+  //                                               // Otherwise, navigate to the job details page
+  //                                               final int jobIndex = fresherJobList.indexOf(job);
+  //                                               print("Selected Job Index: $jobIndex");
+  //                                               Navigator.push(
+  //                                                 context,
+  //                                                 MaterialPageRoute(
+  //                                                   builder: (context) => JobDescription(
+  //                                                     jobIndex: jobIndex,
+  //                                                     id: job.id!,
+  //                                                     jobProfile: job.jobProfile!,
+  //                                                     jobLocation: job.jobLocation!,
+  //                                                     jobCtc: job.jobCtc!,
+  //                                                     companyName: job.companyName!,
+  //                                                     education: job.education!,
+  //                                                     jobDescreption: job.jobDescription!,
+  //                                                     termsAndConditions: job.termsAndConditions!,
+  //                                                     skillRequired: job.skillsRequired!,
+  //                                                   ),
+  //                                                 ),
+  //                                               );
+  //                                             }
+  //                                           },
+  //                                           child: Row(
+  //                                             children: [
+  //                                               Text(
+  //                                                 'View details',
+  //                                                 style: TextStyle(
+  //                                                   fontWeight: FontWeight.w700,
+  //                                                   fontSize: 13,
+  //                                                 ),
+  //                                               ),
+  //                                               Icon(
+  //                                                 Icons.arrow_forward_ios,
+  //                                                 size: 20,
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                         ),
+  //                                       ),
+  //                                     )
+  //                                   ],
+  //                                 ),
+  //                               ),
+  //                               SizedBox(
+  //                                 height: 73,
+  //                               ),
+  //                             ],
+  //                           );
+  //                         },
+  //                       )
+  //
+  //                           : Padding(
+  //                             padding: const EdgeInsets.only(bottom: 75.0),
+  //                             child: Center(
+  //                               child: Text(
+  //                             'No vacancies are available',
+  //                             style: TextStyle(
+  //                               fontFamily: 'FontMain',
+  //                               fontSize: 18,
+  //                             ),
+  //                               ),
+  //                             ),),),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  //
+  // }
   @override
   Widget build(BuildContext context) {
-
     print('Applied Job IDs: $appliedJobIds');
     return Scaffold(
       body: SingleChildScrollView(
@@ -290,19 +483,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return HomePage(
-                            sourceScreen: '',
-                            uid: '',
-                            username: '',
-                            verificationId: '',
-                          );
-                        },
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   child: Image.asset('images/Back_Button.png'),
                 ),
@@ -333,8 +514,11 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                       Container(
                         width: 380,
                         height: 620,
-                        child: fresherJobList.isNotEmpty
-                            ? ListView.builder(
+                        child: fresherJobList == null || fresherJobList.isEmpty
+                            ? Center(
+                          child: CircularProgressIndicator(), // Show CircularProgressIndicator when loading
+                        )
+                            : ListView.builder(
                           itemCount: fresherJobList.length,
                           itemBuilder: (BuildContext context, int index) {
                             final job = fresherJobList[index];
@@ -363,7 +547,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                           'Location: ${job.jobLocation}',
                                           style: TextStyle(
                                             fontFamily: 'FontMain',
-                                          ),),
+                                          ),
+                                        ),
                                       ),
                                       ListTile(
                                         title: Text(
@@ -373,10 +558,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                           ),
                                         ),
                                       ),
-
-
                                       Padding(
-                                        padding: const EdgeInsets.only(left:200.0),
+                                        padding: const EdgeInsets.only(left: 200.0),
                                         child: Container(
                                           width: 155, // Set width as per your requirement
                                           height: 40, // Set height as per your requirement
@@ -444,19 +627,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                               ],
                             );
                           },
-                        )
-
-                            : Padding(
-                              padding: const EdgeInsets.only(bottom: 75.0),
-                              child: Center(
-                                child: Text(
-                              'No vacancies are available',
-                              style: TextStyle(
-                                fontFamily: 'FontMain',
-                                fontSize: 18,
-                              ),
-                                ),
-                              ),),),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -466,7 +638,7 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
         ),
       ),
     );
-
   }
+
 }
 

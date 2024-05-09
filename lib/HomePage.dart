@@ -53,6 +53,9 @@ import 'chatGptrz2.dart';
     //  int _currentPageIndex = 0;
 
     int _currentIndex=0;
+    bool enableGestureDetector = true;
+    String discountPrice="";
+    String DiscountedPrice="";
     late DateTime currentTime;
     late String  _date;
     late String  _time;
@@ -71,8 +74,11 @@ import 'chatGptrz2.dart';
   late String uid;
    String ID = "";
    String Intern_Profile="";
+   String FN="";
     int a=0;
      bool verify=false;
+     String UIDforCorporateTraining="";
+     String UIDforMentorship="";
      String NewID="";
      bool fresherJob=true;
 
@@ -129,12 +135,13 @@ import 'chatGptrz2.dart';
     }
 
     Future<void> initialize() async {
+      await fetchDiscount();
       await VerificationID();
       await _loadUserFullName();
       await  _CheckStatusInMEntorship();
       await _CheckStatusIncorporatetraining();
       await Details_from_verification_details();
-    // await _Interview_Details();
+      // await _Interview_Details();
       //  await _loadUserJobProfile();
       uid = widget.uid;
       if (await ( Check_for_Verify())){
@@ -215,6 +222,10 @@ import 'chatGptrz2.dart';
     String JProfile="";
     String UID="";
     String FullName="";
+    String FatherName="";
+    String College="";
+
+
     String IDforRegistartion="";
     String Gender="";
     String CandidateStatus="";
@@ -297,8 +308,6 @@ import 'chatGptrz2.dart';
         }
       });
     }
-
-
     Future <void> _loadUserJobProfile()async{
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -418,7 +427,7 @@ import 'chatGptrz2.dart';
 
       // ... (your dialog code)
 
-      String errormessage = "Your Application is rejected";
+      String errormessage = "Your Application is rejected $JobProfile ";
       showCustomDialog(errormessage);
       await _GetUidfromVerifyDetails();
     }
@@ -504,6 +513,7 @@ import 'chatGptrz2.dart';
         if (response.statusCode == 200) {
           print('ChangeStatus updated successfully');
         } else {
+          
           print("Failed to update ChangeStatus. Response body: ${response.body}");
           print('Failed to update ChangeStatus. Status code: ${response.statusCode}');
         }
@@ -651,9 +661,11 @@ import 'chatGptrz2.dart';
 
     }
     Future<void> _EnrollDialogForMentorship() async {
+      fetchDiscount();
+      print("discountPrice is $DiscountedPrice");
       print("_EnrollDialogForMentorshippppppppppppppppppppp");
       DateTime currentTime = DateTime.now();
-      Duration timeDifference = futureTime.difference(currentTime);
+      Duration timeDifference = futureTimeforMentorship.difference(currentTime);
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
@@ -662,13 +674,7 @@ import 'chatGptrz2.dart';
         // sourceScreen: 'Screen1',
         if (result) {
           print("Result issssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
-          // User pressed 'OK', take necessary actions
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => RazorPayPage(sourceScreen: '_EnrollDialogForMentorship'),
-          //   ),
-          // );
+
         }
         return; // Return early to avoid showing the main dialog
       }
@@ -745,7 +751,7 @@ import 'chatGptrz2.dart';
                                 MaterialPageRoute(
                                   builder: (context) => PaymentScreen(
                                     sourceScreen: '_EnrollDialogForMentorship',
-                                    paymentAmount: 1,),
+                                    paymentAmount:   DiscountedPrice.contains('.') ? double.parse(DiscountedPrice).round() : int.parse(DiscountedPrice),),
                                 ),
                               );
                             },
@@ -955,9 +961,11 @@ import 'chatGptrz2.dart';
       );
     }
     Future<void> _EnrollDialogForcorporatetraining() async {
+      fetchDiscount();
+      print("discountPrice is $DiscountedPrice");
       print("_EnrollDialogForcorporatetraining");
       DateTime currentTime = DateTime.now();
-      Duration timeDifference = futureTime.difference(currentTime);
+      Duration timeDifference = futureTimeforCorporatetraining.difference(currentTime);
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
@@ -1034,7 +1042,7 @@ import 'chatGptrz2.dart';
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaymentScreen(sourceScreen: '_EnrollDialogForCorporateTraining',paymentAmount: 1,),
+                                builder: (context) => PaymentScreen(sourceScreen: '_EnrollDialogForCorporateTraining',paymentAmount:  DiscountedPrice.contains('.') ? double.parse(DiscountedPrice).round() : int.parse(DiscountedPrice),),
                               ),
                             );
                           },
@@ -1314,14 +1322,17 @@ import 'chatGptrz2.dart';
                 final candidateStatus = user['candidate_status'];
                 final timeEndString = user['time_end'];
                 final PaymentStatus = user['payment_status'];
+                final uid=user['uid'];
 
                 if (email == loginEmail) {
                   setState(() {
+                    UIDforMentorship=uid;
                     CandidateStatus = candidateStatus ?? '';
                     futureTimeforMentorship = timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
                   });
 
                   if (PaymentStatus == 'Enrolled') {
+                    _showDialogMentorship();
                     print("Hello payment status is $PaymentStatus");
                     break;
                   } else if (CandidateStatus == "Select") {
@@ -1376,16 +1387,19 @@ import 'chatGptrz2.dart';
                 final candidateStatus = user['candidate_status'];
                 final timeEndString = user['time_end'];
                 final PaymentStatus=user['payment_status'];
+                final UID=user['uid'];
 
                 if (email == loginEmail) {
                   setState(() {
-
+                    UIDforCorporateTraining=UID;
                     CandidateStatus = candidateStatus;
                     futureTimeforCorporatetraining = DateTime.parse(timeEndString);
                   });
                   if(PaymentStatus=='Enrolled')
                   {
+                   _showDialogBox();
                     print("Hello payment status is $PaymentStatus");
+
                     break;
                   }
                   else if (CandidateStatus == "Select") {
@@ -1413,6 +1427,9 @@ import 'chatGptrz2.dart';
                             //await _EnrollDialogForMentorship();
                             await _EnrollDialogForcorporatetraining();
                           }
+                          // else if(){
+                          //
+                          // }
                           break; // Exit the loop once a match is found
                         }
                       }
@@ -1482,13 +1499,14 @@ import 'chatGptrz2.dart';
 
                 if (email == loginEmail) {
                   setState(() {
-
                     CandidateStatus = candidateStatus;
                     futureTime = DateTime.parse(timeEndString);
                   });
                   if(PaymentStatus=='Enrolled')
                   {
                     print("Hello payment status is $PaymentStatus");
+                    enableGestureDetector = false;
+                    print("$enableGestureDetector");
                     break;
                   }
                   if (CandidateStatus == "Select") {
@@ -1585,8 +1603,10 @@ import 'chatGptrz2.dart';
 
                 final email = user['email'];
                 final name = user['full_name'];
+                final fathername=user['father_name'];
                 final verifyData = user['verified'];
                 final gender = user['gender'];
+                final collegeName=user['college_name'];
                 final candidateStatus = user['candidate_status'];
                 final timeEndString = user['time_end'];
                 final PaymentStatus=user['payment_status'];
@@ -1596,11 +1616,14 @@ import 'chatGptrz2.dart';
 
                    // FullName = name;
                     FullName = name;
+                    College=collegeName;
+                    FatherName=fathername;
                     verify = verifyData;
                     Gender = gender;
                     CandidateStatus = candidateStatus;
                     futureTime = DateTime.parse(timeEndString);
                   });
+                  saveFullNameToSharedPreferences(FullName,FatherName,Gender,College,);
                 if(PaymentStatus=='Enrolled')
                 {
                  print("Hello payment status is $PaymentStatus");
@@ -1623,6 +1646,7 @@ import 'chatGptrz2.dart';
                           setState(() {
                             IDforRegistartion=id ?? '';
                             FullName = name ?? ''; // Use an empty string if name is null
+                            print("FullName");
                             verify = verifyData ?? ''; // Use an empty string if verifyData is null
                             Gender = gender ?? ''; // Use an empty string if gender is null
                             CandidateStatus = candidateStatus ?? ''; // Use an empty string if candidateStatus is null
@@ -1687,6 +1711,27 @@ import 'chatGptrz2.dart';
         } catch (e) {
           print('Error inregister: $e');
         }
+      }
+    }
+    Future<void> saveFullNameToSharedPreferences(String FullName,String FatherName,String Gender,String College) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('FullName', FullName);
+      prefs.setString('FatherName', FatherName);
+      prefs.setString('Gender', Gender);
+      prefs.setString('College', College);
+
+  //    GetFullName();
+
+    }
+    Future<void> GetFullName() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? savedFullName = prefs.getString('FullName');
+
+      if (savedFullName != null && savedFullName.isNotEmpty) {
+        setState(() {
+          FN = savedFullName;
+        });
+        print("FN is $FN");
       }
     }
 
@@ -1829,8 +1874,34 @@ import 'chatGptrz2.dart';
         print('Error in VerificationID2: $e');
       }
     }
+    Future<void> fetchDiscount() async {
+      final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/discount/'));
+
+      if (response.statusCode == 200) {
+        // Parse the response JSON
+        final List<dynamic> data = jsonDecode(response.body);
+
+        if (data.isNotEmpty) {
+          final Map<String, dynamic> discountData = data.last; // Access the last element in the list
+          final int discount = discountData['discount'];
+          final int originalPrice = discountData['original_price'];
+
+          // Calculate discounted price
+          final double discountPrice = originalPrice - (originalPrice * discount / 100);
+
+          setState(() {
+            DiscountedPrice = discountPrice.toString(); // Convert ID to String
+          });
+
+
+        }
+
+      }
+    }
 
     Future<void>  _showDialog() async {
+      fetchDiscount();
+      print("discountPrice is $DiscountedPrice");
       int spaceIndex = FullName.indexOf(' ');
       String firstName = FullName.substring(0, spaceIndex);
       if (!(await Check_for_Verify())){
@@ -1872,15 +1943,7 @@ import 'chatGptrz2.dart';
                             height: 150, // Set your desired height here
                             child: Image.asset('images/Hiremi_Icon.png'),
                           ),
-                          // Text(
-                          //   "Hello ${FullName},Verify Your Account!",
-                          //   textAlign: TextAlign.start,
-                          //   style: TextStyle(
-                          //     fontFamily: "FontMain",
-                          //     fontSize: 19,
-                          //     color: Color(0xFFBD232B),
-                          //   ),
-                          // ),
+
                           RichText(
 
                             text: TextSpan(
@@ -1945,7 +2008,7 @@ import 'chatGptrz2.dart';
                                 padding: EdgeInsets.all(12.0), // Padding inside the container
                                 child: Center(
                                   child: Text(
-                                    '1000', // Text content
+                                    '₹${double.parse(DiscountedPrice).toInt()}', // Text content
                                     style: TextStyle(
                                       fontSize: 16.0, // Font size of the text
                                       fontWeight: FontWeight.bold, // Bold text
@@ -2018,6 +2081,261 @@ import 'chatGptrz2.dart';
     }
 
 
+   Future<void> _showDialogBox()async{
+     showDialog<void>(
+       context: context,
+       barrierDismissible: false, // Set this to false to prevent closing on outside tap
+       builder: (BuildContext context) {
+         return Stack(
+           children: [
+             // Blurred background
+             BackdropFilter(
+               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+               child: Container(
+                 color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                 width: MediaQuery.of(context).size.width,
+                 height: MediaQuery.of(context).size.height,
+               ),
+             ),
+             // AlertDialog on top of the blurred background
+             WillPopScope(
+               onWillPop: () async {
+                 // Handle back button press here
+                 // Returning true allows the dialog to be popped
+                 // Returning false prevents the dialog from being popped
+                 return false;
+               },
+               child: AlertDialog(
+                 backgroundColor: Colors.white,
+                 surfaceTintColor: Colors.transparent,// Set the background color to transparent
+                 actions: [
+                   Column(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       // Image.asset("images/Hiremi_Icon.png"),
+                       Container(
+                         width: 150, // Set your desired width here
+                         height: 150, // Set your desired height here
+                         child: Image.asset('images/tick.png'),
+                       ),
+                       // Text(
+                       //   "Hello ${FullName},Verify Your Account!",
+                       //   textAlign: TextAlign.start,
+                       //   style: TextStyle(
+                       //     fontFamily: "FontMain",
+                       //     fontSize: 19,
+                       //     color: Color(0xFFBD232B),
+                       //   ),
+                       // ),
+
+
+                       Column(
+                         children: [
+                           SizedBox(height: 25),
+                           Text(
+                             "Congratulations",
+                             textAlign: TextAlign.start,
+                             style: TextStyle(
+                               color:Colors.black,
+                               fontSize: 22,
+                               fontFamily: 'FontMain',
+                             ),
+                           ),
+                           SizedBox(height: 15),
+
+                           Text("Your UID is:$UIDforCorporateTraining",
+                             textAlign: TextAlign.center,
+                             style: TextStyle(
+                                 fontFamily:'FontMain',
+                                 color:Colors.redAccent,
+                               fontSize: 20,
+                             ),),
+                           SizedBox(height: 15),
+                           Text("You've successfully enrolled in the Corporate Training Program. ",
+                             textAlign: TextAlign.center,
+                             style: TextStyle(
+                                 fontFamily:'FontMain'
+                           ),),
+                           SizedBox(height: 14,),
+                           Center(
+                             child: Text(
+                               "For any queries:support@hiremi.in",
+                               textAlign: TextAlign.center,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: 12,
+                                 color: Colors.black,
+                               ),
+                             ),
+
+                           ),
+                           SizedBox(height: 14,),
+                           GestureDetector(
+                             onTap: () {
+                               launch('https://api.whatsapp.com/send?phone=+918815165433');
+                             },
+                             child: Row(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               children: [
+                                 Text(
+                                   "For chat support, click here",
+                                   textAlign: TextAlign.center,
+                                   style: TextStyle(
+                                     fontFamily: "FontMain",
+                                     fontSize: 12,
+                                     color: Colors.black,
+                                   ),
+                                 ),
+                                 Padding(
+                                   padding: const EdgeInsets.only(left: 8.0), // Adjust spacing as needed
+                                   child: Image.asset("images/whatsapp.png"),
+                                 ),
+                               ],
+                             ),
+                           ),
+
+                         ],
+                       ),
+
+                     ],
+                   ),
+                 ],
+               ),
+             ),
+           ],
+         );
+       },
+     );
+
+   }
+    Future<void> _showDialogMentorship()async{
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false, // Set this to false to prevent closing on outside tap
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              // Blurred background
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Container(
+                  color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                ),
+              ),
+              // AlertDialog on top of the blurred background
+              WillPopScope(
+                onWillPop: () async {
+                  // Handle back button press here
+                  // Returning true allows the dialog to be popped
+                  // Returning false prevents the dialog from being popped
+                  return false;
+                },
+                child: AlertDialog(
+                  backgroundColor: Colors.white,
+                  surfaceTintColor: Colors.transparent,// Set the background color to transparent
+                  actions: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Image.asset("images/Hiremi_Icon.png"),
+                        Container(
+                          width: 150, // Set your desired width here
+                          height: 150, // Set your desired height here
+                          child: Image.asset('images/tick.png'),
+                        ),
+                        // Text(
+                        //   "Hello ${FullName},Verify Your Account!",
+                        //   textAlign: TextAlign.start,
+                        //   style: TextStyle(
+                        //     fontFamily: "FontMain",
+                        //     fontSize: 19,
+                        //     color: Color(0xFFBD232B),
+                        //   ),
+                        // ),
+
+
+                        Column(
+                          children: [
+                            SizedBox(height: 25),
+                            Text(
+                              "Congratulations",
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color:Colors.black,
+                                fontSize: 22,
+                                fontFamily: 'FontMain',
+                              ),
+                            ),
+                            SizedBox(height: 15),
+
+                            Text("Your UID is:$UIDforMentorship",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily:'FontMain',
+                                color:Colors.redAccent,
+                                fontSize: 20,
+                              ),),
+                            SizedBox(height: 15),
+                            Text("You've successfully enrolled in the Mentorship Program. ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily:'FontMain'
+                              ),),
+                            SizedBox(height: 14,),
+                            Center(
+                              child: Text(
+                                "Our Team will connect with you shortly to provide furthur details and guidance",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: "FontMain",
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+
+                            ),
+                            SizedBox(height: 14,),
+
+                            ElevatedButton(
+                              onPressed: () {
+                                // Pop the current route (the AlertDialog)
+                                Navigator.of(context).pop();
+
+                                // Add any additional logic here
+
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFF13640),
+                                minimumSize: Size(250, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              child: const Text(
+                                "Continue",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      );
+
+    }
 
     Future<bool> Details_from_verification_details() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -2201,7 +2519,7 @@ import 'chatGptrz2.dart';
                         SizedBox(height: 30),
                         Center(
                           child: Text(
-                            "Your application is under review",
+                            "Your application is under review ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: "FontMain",
@@ -2324,7 +2642,7 @@ import 'chatGptrz2.dart';
                   // Handle back button press here
                   // Returning true allows the dialog to be popped
                   // Returning false prevents the dialog from being popped
-                  return false;
+                  return true;
                 },
                 child: AlertDialog(
                   backgroundColor: Colors.white,
@@ -2539,11 +2857,7 @@ import 'chatGptrz2.dart';
       );
     }
 
-    void count(){
 
-      a++;
-   //   print(a);
-    }
 
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     Widget build(BuildContext context) {
@@ -2551,8 +2865,8 @@ import 'chatGptrz2.dart';
       double screenHeight=MediaQuery.of(context).size.height;
       // print("Width is $screenWidth");
       // print("Height is $screenHeight");
-      print("Build");
-      count();
+
+
 
       return Scaffold(
           key: _scaffoldKey,
@@ -2561,17 +2875,15 @@ import 'chatGptrz2.dart';
           child: screenWidth<900?SingleChildScrollView(
             child: Column(
               children: [
-
-
-                 Stack(
+                Stack(
                 children: [
-
+            
                   ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
                     ),
-                    child: Container(
+                      child: Container(
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -2582,139 +2894,112 @@ import 'chatGptrz2.dart';
                       ),
                       width:screenWidth,
                       height:211,
-
-
+            
+            
                     ),
-
-
+            
+            
                   ),
+            
+                  Column(children: [
 
-                Column(children: [
-                  Row(
-                    children: [
-                      SizedBox(width: screenWidth*0.08,),
-                      GestureDetector(
-                        onTap: () {
-                          // Open the drawer
-                          // _scaffoldKey.currentState?.openDrawer();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Settings(
-
-                              ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40.0),
+                    child: Row(
+                      children: [
+                        SizedBox(width: screenWidth*0.08,),
+                        Container(
+                          child: Container(
+                            height: 150,
+                            child: FractionalTranslation(
+                              translation: Offset(0.19, 0),
+                              child: Gender == 'Male'
+                                  ? Image.asset(
+                                'images/TheFace.png',
+                                height: 150,
+                                width: 91,
+                              )
+                                  : (Gender == 'Female'
+                                  ? Image.asset(
+                                'images/female.png',
+                                height: 150,
+                                width: 91,
+                              )
+                              //     : Image.asset(
+                              //   'images/placeholder.png', // Use a placeholder image
+                              //   height: 150,
+                              //   width: 91,
+                              // )),
+                                  :Center(child: CircularProgressIndicator())),
                             ),
-                          );
-                        },
-                        child: Container(
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Image.asset('images/ThreeLine.png')),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Row(
-                    children: [
-                      SizedBox(width: screenWidth*0.08,),
-                      Container(
-                        child: Container(
-                          height: 150,
-                          child: FractionalTranslation(
-                            translation: Offset(0.19, 0),
-                            child: Gender == 'Male'
-                                ? Image.asset(
-                              'images/TheFace.png',
-                              height: 150,
-                              width: 91,
-                            )
-                                : (Gender == 'Female'
-                                ? Image.asset(
-                              'images/female.png',
-                              height: 150,
-                              width: 91,
-                            )
-                            //     : Image.asset(
-                            //   'images/placeholder.png', // Use a placeholder image
-                            //   height: 150,
-                            //   width: 91,
-                            // )),
-                                :Center(child: CircularProgressIndicator())),
                           ),
+
+
                         ),
+                        SizedBox(width: screenWidth*0.062,),
 
-
-                      ),
-                      SizedBox(width: screenWidth*0.062,),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Hii!!",style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),),
-                          Row(
-                            children: [
-                              Visibility(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Hii!!",style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),),
+                            Row(
+                              children: [
+                                Visibility(
+                                    visible: uidverify == true || verify==true,
+                                    child: Text(FullName, style: TextStyle(color: Colors.white, fontFamily: "FontMain", fontSize: 20))),
+                                Visibility(
                                   visible: uidverify == true || verify==true,
-                                  child: Text(FullName, style: TextStyle(color: Colors.white, fontFamily: "FontMain", fontSize: 20))),
-                              Visibility(
-                                visible: uidverify == true || verify==true,
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 5,),
-                                    Image.asset('images/verified.png')
-                                  ],
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: 5,),
+                                      Image.asset('images/verified.png')
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          // Text(
-                          //   'ID: ${ID?.toString().padLeft(8, '0') ?? "00000000"}',
-                          //   style: TextStyle(fontSize: 20),
-                          // ),
-                          Visibility(
-                            visible: uidverify == true || verify==true,
-                            child: Builder(
-                              builder: (BuildContext context) {
-                               _GetUidfromVerifyDetails();
-                                return Row(
-                                 children: [
-                                  Column(
-                                   children: [
-                                    Row(
-                                     children: [
-                                      Text('UID: ${UIDforVerify?.toString().padLeft(8, '0') ?? "00000000"}', style: TextStyle(fontSize: 20,
-                                      fontFamily: 'FontMain',
-                                      color: Colors.white
-                                     )),
-                                   ],
-                                   ),
-                                // Text('UID: ${UID}', style: TextStyle(fontSize: 19)),
-                                  ],
-                                ),
-
-                                SizedBox(width: 10),
-
-                                ],
-                                );
-                              }
+                              ],
                             ),
-                          ),
 
-                        ],
-                      ),
-                    ],
+                            Visibility(
+                              visible: uidverify == true || verify==true,
+                              child: Builder(
+                                builder: (BuildContext context) {
+                                 _GetUidfromVerifyDetails();
+                                  return Row(
+                                   children: [
+                                    Column(
+                                     children: [
+                                      Row(
+                                       children: [
+                                        Text('UID: ${UIDforVerify?.toString().padLeft(8, '0') ?? "00000000"}', style: TextStyle(fontSize: 20,
+                                        fontFamily: 'FontMain',
+                                        color: Colors.white
+                                       )),
+                                     ],
+                                     ),
+                                  // Text('UID: ${UID}', style: TextStyle(fontSize: 19)),
+                                    ],
+                                  ),
+
+                                  SizedBox(width: 10),
+
+                                  ],
+                                  );
+                                }
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],)
                 ],
               ),
-
                 SizedBox(height: 20,),
-
-
                 Center(
                   child: SizedBox(
                     height: screenHeight * 0.179,
@@ -2723,14 +3008,38 @@ import 'chatGptrz2.dart';
                       itemCount: 2,
                       itemBuilder: (BuildContext context, int index, int realIndex) {
                         if (index == 0) {
-                          return Image.asset(
-                            "images/HomePage01.png",
-                            fit: BoxFit.cover,
+                          return InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>  Mentorship(),
+                                ),
+                              );
+                            },
+                            child: Image.asset(
+                              height:40,
+                              "images/HomePage01.png",
+                              fit: BoxFit.cover,
+                            ),
                           );
                         } else {
-                          return Image.asset(
-                            "images/HomePage2.png",
-                            fit: BoxFit.cover,
+                          return InkWell(
+                            onTap:(){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>  CorporateTraining(),
+                                ),
+                              );
+                            },
+                            child: Card(
+                              elevation: 3.0,
+                              child: Image.asset(
+                                "images/HomePage2.png",
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           );
                         }
                       },
@@ -2746,9 +3055,6 @@ import 'chatGptrz2.dart';
                     ),
                   ),
                 ),
-
-
-
                 SizedBox(height: screenHeight*0.005,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2764,8 +3070,8 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errormessage="You are only allowed for Fresher Jobs";
-
+                        //  String errormessage="You are only allowed for Fresher Jobs";
+            
                          // showCustomDialog(errormessage);
                         }
                       },
@@ -2774,7 +3080,7 @@ import 'chatGptrz2.dart';
                         height: screenHeight*0.213,
                       ),
                     ),
-
+            
                     InkWell(
                       onTap: () {
                         if (fresherJob) {
@@ -2785,7 +3091,7 @@ import 'chatGptrz2.dart';
                             ),
                           );
                         } else {
-                          String errormessage = "Not allowed for freshers Jobs";
+                         // String errormessage = "Not allowed for freshers Jobs";
                          // showCustomDialog(errormessage);
                         }
                       },
@@ -2795,8 +3101,8 @@ import 'chatGptrz2.dart';
                         height: screenHeight*0.213,
                       ),
                     )
-
-
+            
+            
                   ],
                 ),
                 Row(
@@ -2813,15 +3119,15 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errormessage="You are only allowed for Fresher Jobs";
-                          showCustomDialog(errormessage);
+                         // String errormessage="You are only allowed for Fresher Jobs";
+                          //showCustomDialog(errormessage);
                         }
                       },
                       child: Image.asset('images/lockex.png',
                         width: screenWidth*0.438, // Set your desired width
                         height: screenHeight*0.213,
                       ),
-
+            
                     ),
                     InkWell(
                       onTap: () {
@@ -2834,8 +3140,8 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                         String errormessage="You are only allowed for Fresher Jobs";
-                         showCustomDialog(errormessage);
+                         // String errormessage="You are only allowed for Fresher Jobs";
+                         // showCustomDialog(errormessage);
                         }
                       },
                       child: Image.asset('images/Mentorship2.png',
@@ -2843,7 +3149,7 @@ import 'chatGptrz2.dart';
                         height: screenHeight*0.213,
                       ),
                     )
-
+            
                   ],
                 ),
                 Row(
@@ -2862,8 +3168,8 @@ import 'chatGptrz2.dart';
                               );
                             } else {
                               // Show dialog box indicating not eligible for Fresher Job
-                              String errorMessage = "You are only allowed for Fresher Jobs";
-                              showCustomDialog(errorMessage);
+                              // String errorMessage = "You are only allowed for Fresher Jobs";
+                              // showCustomDialog(errorMessage);
                             }
                           },
                           child: Image.asset(
@@ -2872,10 +3178,10 @@ import 'chatGptrz2.dart';
                             height: 180,
                           ),
                         ),
-
+            
                       ],
                     ),
-
+            
                     InkWell(
                       onTap: () {
                         if (!corporateTraining) {
@@ -2887,8 +3193,8 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errorMessage = "You are only allowed for Fresher Jobs";
-                          showCustomDialog(errorMessage);
+                         // String errorMessage = "You are only allowed for Fresher Jobs";
+                         // showCustomDialog(errorMessage);
                         }
                       },
                       child: Stack(
@@ -2898,20 +3204,19 @@ import 'chatGptrz2.dart';
                             width: 180,
                             height: 180,
                           ),
-
-
+            
+            
                         ],
                       ),
-
-
+            
+            
                     )
-
-
-
+            
+            
+            
                   ],
                 ),
-
-             SizedBox(height:screenHeight*0.008 ,),
+                SizedBox(height:screenHeight*0.008 ,),
                 AspectRatio(
                   aspectRatio: 39/9,
                   child: CurvedNavigationBar(
@@ -2931,8 +3236,8 @@ import 'chatGptrz2.dart';
                             // Callback function to be executed when InkWell is tapped
                             // Place your code here
                           },
-                          child: Icon(Icons.manage_accounts,size: 50,color: _iconColors[2])),
-
+                          child: Icon(Icons.manage_accounts,size: 50,color: _iconColors[1])),
+            
                     ],
                     onTap: (index){
                       setState(() {
@@ -2946,12 +3251,22 @@ import 'chatGptrz2.dart';
                                 Color(0xFF43485E); // Reset the color for other icons
                           }
                         }
+                        if(_currentIndex==1){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Settings(),
+                            ),
+                          );
+                        }
+                        if(_currentIndex==0){
+                          _iconColors[0] =
+                              Colors.red; // Change the color for the tapped icon
+                        }
                       });
                     },
                   ),
                 ),
-
-
               ],
             ),
           ):
@@ -3019,7 +3334,8 @@ import 'chatGptrz2.dart';
                             height: 200, // Increase the height
                             width: 121,   // Increase the width
                           )
-                              : Center(child: CircularProgressIndicator())),
+                              : Center(child: CircularProgressIndicator())
+                          ),
                         ),
                       ),
 
@@ -3027,7 +3343,6 @@ import 'chatGptrz2.dart';
 
                     ),
                     SizedBox(width: screenWidth*0.032,),
-
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -3168,9 +3483,9 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errormessage="You are only allowed for Fresher Jobs";
+                          //String errormessage="You are only allowed for Fresher Jobs";
 
-                          showCustomDialog(errormessage);
+//                          showCustomDialog(errormessage);
                         }
                       },
                       child: ClipRRect(
@@ -3257,8 +3572,8 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errormessage="You are only allowed for Fresher Jobs";
-                          showCustomDialog(errormessage);
+                          // String errormessage="You are only allowed for Fresher Jobs";
+                          // showCustomDialog(errormessage);
                         }
                       },
                       child: ClipRRect(
@@ -3289,8 +3604,8 @@ import 'chatGptrz2.dart';
                           );
                         } else {
                           // Show dialog box indicating not eligible for Fresher Job
-                          String errormessage="You are only allowed for Fresher Jobs";
-                          showCustomDialog(errormessage);
+                          // String errormessage="You are only allowed for Fresher Jobs";
+                          // showCustomDialog(errormessage);
                         }
                       },
                       child: ClipRRect(
@@ -3344,6 +3659,7 @@ import 'chatGptrz2.dart';
                           if (i == index) {
                             _iconColors[i] =
                                 Colors.red; // Change the color for the tapped icon
+
                           } else {
                             _iconColors[i] =
                                 Color(0xFF43485E); // Reset the color for other icons

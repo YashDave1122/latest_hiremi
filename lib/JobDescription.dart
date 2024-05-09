@@ -1,6 +1,7 @@
   import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hiremi/FresherJob.dart';
 import 'package:hiremi/HomePage.dart';
 import 'package:hiremi/utils/api.dart';
   import 'package:hiremi/utils/my_colors.dart';
@@ -751,9 +752,22 @@ import 'package:hiremi/utils/api.dart';
               children: [
 
                 SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.only(right: 290.0),
-                  child: Image.asset('images/Back_Button.png'),
+                InkWell(
+                  onTap:(){
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return FresherJobScreen();
+                    //     },
+                    //   ),
+                    // );
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 290.0),
+                    child: Image.asset('images/Back_Button.png'),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 170.0),

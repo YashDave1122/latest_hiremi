@@ -207,8 +207,205 @@ class _InternScreenState extends State<InternScreen> {
     );
     return result ?? false; // Return false if the dialog is dismissed without pressing 'OK'
   }
-  @override
 
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   print('Applied Job IDs: $appliedJobIds');
+  //   return Scaffold(
+  //     body: SingleChildScrollView(
+  //       child: SafeArea(
+  //         child: RefreshIndicator(
+  //           onRefresh: () async {
+  //             await fetchDataFromApi();
+  //           },
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               InkWell(
+  //                 onTap: () {
+  //                   Navigator.pushReplacement(
+  //                     context,
+  //                     MaterialPageRoute(
+  //                       builder: (context) {
+  //                         return HomePage(
+  //                           sourceScreen: '',
+  //                           uid: '',
+  //                           username: '',
+  //                           verificationId: '',
+  //                         );
+  //                       },
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: Image.asset('images/Back_Button.png'),
+  //               ),
+  //               Row(
+  //                 children: [
+  //                   SizedBox(
+  //                     width: 15,
+  //                   ),
+  //                   Text(
+  //                     "Internships",
+  //                     style: TextStyle(
+  //                       color: Colors.black,
+  //                       fontFamily: "FontMain",
+  //                       fontSize: 25,
+  //                     ),
+  //                   ),
+  //                   SizedBox(
+  //                     width: 25,
+  //                   ),
+  //                   Image.asset(
+  //                     'images/Saly-1 (2).png',
+  //                     width: 180,
+  //                     height: 160,
+  //                     fit: BoxFit.cover,
+  //                   )
+  //                 ],
+  //               ),
+  //               Center(
+  //                 child: Column(
+  //                   children: [
+  //                     Container(
+  //                       width: 380,
+  //                       height: 620,
+  //                       child: InternshipList != null && InternshipList.isNotEmpty
+  //                           ? ListView.builder(
+  //                         itemCount: InternshipList.length,
+  //                         itemBuilder: (BuildContext context, int index) {
+  //                           final internship = InternshipList[index];
+  //                           return Column(
+  //                             children: [
+  //                               Card(
+  //                                 color: const Color(0xFFF8F8F8),
+  //                                 surfaceTintColor: Colors.transparent,
+  //                                 elevation: 3.0,
+  //                                 shape: RoundedRectangleBorder(
+  //                                   borderRadius: BorderRadius.circular(12.0),
+  //                                 ),
+  //                                 child: Column(
+  //                                   children: [
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'Company: ${internship.companyName}',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'Location: ${internship.InternshipLocation}',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //                                     ListTile(
+  //                                       title: Text(
+  //                                         'CTC: ${internship.InternshipCtc} LPA',
+  //                                         style: TextStyle(
+  //                                           fontFamily: 'FontMain',
+  //                                         ),
+  //                                       ),
+  //                                     ),
+  //                                     Padding(
+  //                                       padding: const EdgeInsets.only(left:200.0),
+  //                                       child: Container(
+  //                                         width: 155,
+  //                                         height: 40,
+  //                                         child: ElevatedButton(
+  //                                           style: ButtonStyle(
+  //                                             backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFBD232B)),
+  //                                             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+  //                                           ),
+  //                                           onPressed: () async {
+  //                                             print("Hello");
+  //                                             bool applied = await checkIfApplied(loginEmail, internship.InternshipProfile!, internship.companyName!);
+  //
+  //                                             if (applied) {
+  //                                               print("Applied");
+  //                                               ScaffoldMessenger.of(context).showSnackBar(
+  //                                                 SnackBar(
+  //                                                   content: Text('You have already applied for this internship.'),
+  //                                                 ),
+  //                                               );
+  //                                             } else {
+  //                                               print("Not Applied");
+  //                                               final int jobIndex = InternshipList.indexOf(internship);
+  //                                               print("Selected Job Index: $jobIndex");
+  //                                               Navigator.push(
+  //                                                 context,
+  //                                                 MaterialPageRoute(
+  //                                                   builder: (context) => InternshipDescription(
+  //                                                     jobIndex: jobIndex,
+  //                                                     id: internship.id!,
+  //                                                     InternshipProfile: internship.InternshipProfile!,
+  //                                                     InternshipLocation: internship.InternshipLocation!,
+  //                                                     InternshipCtc: internship.InternshipCtc!,
+  //                                                     companyName: internship.companyName!,
+  //                                                     education: internship.education!,
+  //                                                     InternshipDescreption: internship.InternshipDescription!,
+  //                                                     termsAndConditions: internship.termsAndConditions!,
+  //                                                     skillRequired: internship.skillsRequired!,
+  //                                                   ),
+  //                                                 ),
+  //                                               );
+  //                                             }
+  //                                           },
+  //                                           child: Row(
+  //                                             children: [
+  //                                               Text(
+  //                                                 'View details',
+  //                                                 style: TextStyle(
+  //                                                   fontWeight: FontWeight.w700,
+  //                                                   fontSize: 13,
+  //                                                 ),
+  //                                               ),
+  //                                               Icon(
+  //                                                 Icons.arrow_forward_ios,
+  //                                                 size: 20,
+  //                                               ),
+  //                                             ],
+  //                                           ),
+  //                                         ),
+  //                                       ),
+  //                                     )
+  //                                   ],
+  //                                 ),
+  //                               ),
+  //                               SizedBox(
+  //                                 height: 73,
+  //                               ),
+  //                             ],
+  //                           );
+  //                         },
+  //                       )
+  //                           : Padding(
+  //                         padding: const EdgeInsets.only(bottom: 75.0),
+  //                         child: Center(
+  //                           child: Text(
+  //                             'No vacancies are available',
+  //                             style: TextStyle(
+  //                               fontFamily: 'FontMain',
+  //                               fontSize: 18,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+  @override
   Widget build(BuildContext context) {
     print('Applied Job IDs: $appliedJobIds');
     return Scaffold(
@@ -223,19 +420,20 @@ class _InternScreenState extends State<InternScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return HomePage(
-                            sourceScreen: '',
-                            uid: '',
-                            username: '',
-                            verificationId: '',
-                          );
-                        },
-                      ),
-                    );
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return HomePage(
+                    //         sourceScreen: '',
+                    //         uid: '',
+                    //         username: '',
+                    //         verificationId: '',
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                    Navigator.pop(context);
                   },
                   child: Image.asset('images/Back_Button.png'),
                 ),
@@ -269,8 +467,11 @@ class _InternScreenState extends State<InternScreen> {
                       Container(
                         width: 380,
                         height: 620,
-                        child: InternshipList != null && InternshipList.isNotEmpty
-                            ? ListView.builder(
+                        child: InternshipList == null || InternshipList.isEmpty
+                            ? Center(
+                          child: CircularProgressIndicator(), // Show CircularProgressIndicator when loading
+                        )
+                            : ListView.builder(
                           itemCount: InternshipList.length,
                           itemBuilder: (BuildContext context, int index) {
                             final internship = InternshipList[index];
@@ -380,18 +581,6 @@ class _InternScreenState extends State<InternScreen> {
                               ],
                             );
                           },
-                        )
-                            : Padding(
-                          padding: const EdgeInsets.only(bottom: 75.0),
-                          child: Center(
-                            child: Text(
-                              'No vacancies are available',
-                              style: TextStyle(
-                                fontFamily: 'FontMain',
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                     ],
@@ -404,5 +593,6 @@ class _InternScreenState extends State<InternScreen> {
       ),
     );
   }
+
 }
 

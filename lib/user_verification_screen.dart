@@ -47,6 +47,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
   String? minutes="";
   String? year="";
   int PaymentPrice=0;
+  int discountedprice=0;
 
   void selectTimePicker() async {
     TimeOfDay? timeOfDay = await showTimePicker(
@@ -244,7 +245,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaymentScreen(paymentAmount:1 ),
+                                builder: (context) => PaymentScreen(paymentAmount:discountedPrice.toInt() ),
                               ),
                             );
                           }
@@ -876,10 +877,12 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                       //  // await fetchData();
                       // }
 
-
+                     await _loadUserEmail();
 
                       if(Email.text==loginEmail){
-                        if (rateYourComm == 0.0 || _formKey.currentState!.validate()==false) {
+                        print(Email);
+                        print(loginEmail);
+                        if ((rateYourComm == null || rateYourComm == 0.0)  || _formKey.currentState!.validate()==false) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Please Enter  your feilds.'),
                           ));
@@ -890,14 +893,16 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                         else{
                           print("await saveDataToSharedPreferences();");
                           await saveDataToSharedPreferences();
+                          print(rateYourComm);
                           print(_formKey.currentState!.validate());
                         }
 
                       }
                       else
                       {
-                        print("Email is incorrect $Email");
-                        print("hello$loginEmail");
+
+                        print("Email is incorrecttttt $Email");
+                        print("login email is $loginEmail");
 
                         showDialog(
                           context: context, // The BuildContext from which the dialog should be shown

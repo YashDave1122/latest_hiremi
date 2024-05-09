@@ -100,7 +100,7 @@ class _seceondCongratulationScreenState extends State<seceondCongratulationScree
                             color: Colors.black,
                           ),
                           children: [
-                            TextSpan(text: 'Discover Exclusive\n'),
+                            TextSpan(text: 'Disdfjfuihfveravcover Exclusive\n'),
                             TextSpan(
                               text: 'Job Opportunities',
                               style: TextStyle(color: Colors.red),

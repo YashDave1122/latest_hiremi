@@ -22,9 +22,13 @@ class _MentorshipState extends State<Mentorship> {
     super.initState();
     AlreadyApplied();
     _loadUserEmail();
+    fetchDiscount();
   }
   String loginEmail="";
   int Uid = 0;
+  String DiscountedPrice="";
+  String Discount="";
+  String OriginalPrice="";
   // or whatever default value you want to assign
   bool hasAlreadyApplied = false;
   Future<void> _loadUserEmail() async {
@@ -35,6 +39,32 @@ class _MentorshipState extends State<Mentorship> {
       setState(() {
         loginEmail = savedUsername;
       });
+
+    }
+  }
+  Future<void> fetchDiscount() async {
+    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/discount/'));
+
+    if (response.statusCode == 200) {
+      // Parse the response JSON
+      final List<dynamic> data = jsonDecode(response.body);
+
+      if (data.isNotEmpty) {
+        final Map<String, dynamic> discountData = data.last; // Access the last element in the list
+        final int discount = discountData['discount'];
+        final int originalPrice = discountData['original_price'];
+
+        // Calculate discounted price
+        final double discountPrice = originalPrice - (originalPrice * discount / 100);
+
+        setState(() {
+          DiscountedPrice = discountPrice.toString(); // Convert ID to String
+          Discount=discount.toString();
+          OriginalPrice=originalPrice.toString();
+        });
+
+
+      }
 
     }
   }
@@ -67,7 +97,7 @@ class _MentorshipState extends State<Mentorship> {
     }
   }
   Future<void> loadUserUid() async {
-    await _loadUserEmail();
+   // await _loadUserEmail();
 
     try {
       final response = await http.get(Uri.parse('${ApiUrls.baseurl}verified-emails/'));
@@ -133,7 +163,7 @@ class _MentorshipState extends State<Mentorship> {
         //     builder: (context) => HomePage(sourceScreen: '', uid: '', username: '', verificationId: ''),
         //   ),
         // );
-
+          print("Appliedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
         await ShowDialog();
         print('Applied successfully!');
         print('ApplyNow Response Code: ${response.statusCode}');
@@ -408,9 +438,22 @@ class _MentorshipState extends State<Mentorship> {
              SingleChildScrollView(
                child: Column(
                  children: [
-                   Align(
-                       alignment: Alignment.topLeft,
-                       child: Image.asset('images/Back_Button.png')),
+                   InkWell(
+                     onTap:(){
+                       // Navigator.pushReplacement(
+                       //   context,
+                       //   MaterialPageRoute(
+                       //     builder: (context) {
+                       //       return HomePage(sourceScreen: "", uid: "", username: "", verificationId: "");
+                       //     },
+                       //   ),
+                       // );
+                       Navigator.pop(context);
+                     },
+                     child: Align(
+                         alignment: Alignment.topLeft,
+                         child: Image.asset('images/Back_Button.png')),
+                   ),
                    SizedBox(height: screenHeight*0.02,),
                    Text("Why Hiremi Mentorship?",
                      textAlign: TextAlign.center,
@@ -446,30 +489,65 @@ class _MentorshipState extends State<Mentorship> {
                                    ),
                                  ),
                                ),
+                               // Column(
+                               //   children: [
+                               //     SizedBox(height: screenHeight * 0.015),
+                               //     Padding(
+                               //       padding: const EdgeInsets.only(right: 60.0),
+                               //       child: Text(
+                               //         getTextForIndex(index),
+                               //
+                               //         style: TextStyle(
+                               //           color: Colors.white,
+                               //           fontSize: screenHeight < 700 ? 13.5 : 17,
+                               //           fontFamily: 'FontMain',
+                               //         ),
+                               //       ),
+                               //     ),
+                               //     SizedBox(height: 7.5),
+                               //     Padding(
+                               //       padding: const EdgeInsets.only(left:38.0),
+                               //       child: Text(
+                               //         getAnotherTextForIndex(index),
+                               //
+                               //         style: TextStyle(
+                               //           color: Colors.white,
+                               //           fontSize: screenHeight < 700 ? 12.5 : 14.5,
+                               //         ),
+                               //       ),
+                               //     ),
+                               //   ],
+                               // ),
                                Column(
+                                 mainAxisAlignment: MainAxisAlignment.center,
+                                 crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
                                    SizedBox(height: screenHeight * 0.015),
                                    Padding(
-                                     padding: const EdgeInsets.only(right: 89.0),
+                                     padding: const EdgeInsets.only(
+                                       left: 10,
+                                       right: 80.0,
+                                     ),
                                      child: Text(
                                        getTextForIndex(index),
-                                       textAlign: TextAlign.center,
                                        style: TextStyle(
                                          color: Colors.white,
-                                         fontSize: screenHeight < 700 ? 13.5 : 17,
+                                         fontSize:
+                                         screenHeight < 700 ? 13.5 : 17,
                                          fontFamily: 'FontMain',
                                        ),
                                      ),
                                    ),
-                                   SizedBox(height: 7.5),
+                                   const SizedBox(height: 7.5),
                                    Padding(
-                                     padding: const EdgeInsets.only(right: 80.0),
+                                     padding: const EdgeInsets.only(
+                                         left: 10, right: 80.0),
                                      child: Text(
                                        getAnotherTextForIndex(index),
-                                       textAlign: TextAlign.center,
                                        style: TextStyle(
                                          color: Colors.white,
-                                         fontSize: screenHeight < 700 ? 12.5 : 14.5,
+                                         fontSize:
+                                         screenHeight < 700 ? 12.5 : 14.5,
                                        ),
                                      ),
                                    ),
@@ -489,7 +567,7 @@ class _MentorshipState extends State<Mentorship> {
 
                    SizedBox(height: screenHeight*0.033,),
                    Padding(
-                     padding: const EdgeInsets.only(right: 190.0),
+                     padding: const EdgeInsets.only(left: 10.0),
                      child: Text("Mentorship",
                        textAlign: TextAlign.center,
                        style: TextStyle(
@@ -503,13 +581,16 @@ class _MentorshipState extends State<Mentorship> {
                    //     "foster professional and academic growth.It's a collaborative"
                    //     "relationship between experienced mentors and individuals"
                    //     "seeking guidance in their career or academic pursuits.",
-                   Text("Mentorship at Hiremi is a dynamic partnership designed to promote professional and academic growth. It's a collaborative relationship between experienced mentors and college students seeking guidance in their career or academic pursuits.",
-                     textAlign: TextAlign.center,
-                     style:TextStyle(
-                       fontWeight:FontWeight.w600,
-                       fontSize:  screenWidth < 411   ? 12.5: 14,
+                   Padding(
+                     padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 10),
+                     child: Text("Mentorship at Hiremi is a dynamic partnership designed to promote professional and academic growth. It's a collaborative relationship between experienced mentors and college students seeking guidance in their career or academic pursuits.",
+                       textAlign: TextAlign.start,
+                       style:TextStyle(
+                         fontWeight:FontWeight.w600,
+                         fontSize:  screenWidth < 411   ? 12.5: 14,
 
 
+                       ),
                      ),
                    ),
                    SizedBox(height: screenHeight*0.033,),
@@ -536,7 +617,7 @@ class _MentorshipState extends State<Mentorship> {
                                    ),
                                    Padding(
                                      padding: const EdgeInsets.only(top: 24.0),
-                                     child: Text("Rs 10,000/Rs 25,000",
+                                     child: Text("Rs $DiscountedPrice/Rs $OriginalPrice",
                                        textAlign: TextAlign.center,
                                        style: TextStyle(
                                          fontFamily: 'FontMain',
@@ -588,7 +669,7 @@ class _MentorshipState extends State<Mentorship> {
                                surfaceTintColor: Colors.transparent,// rgba(0, 0, 0, 0.25)
                                child: Column(
                                  children: [
-                                   Text("60% OFF",
+                                   Text("$Discount% OFF",
                                      textAlign: TextAlign.center,
                                      style: TextStyle(
                                        fontFamily: 'FontMain',
