@@ -998,7 +998,7 @@ import 'chatGptrz2.dart';
         bool result = await _showTimeFinishDialog();
         // sourceScreen: 'Screen1',
         if (result) {
-          print("Result changedissssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
+          print("Result dfvdffdvsissssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
 
           //User pressed 'OK', take necessary actions
           // Navigator.push(
