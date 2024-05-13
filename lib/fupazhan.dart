@@ -13,25 +13,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class Forgoturpass extends StatefulWidget {
-  const Forgoturpass({super.key});
+class Forgotu extends StatefulWidget {
+  const Forgotu({super.key});
 
   @override
-  State<Forgoturpass> createState() => _ForgoturpassState();
+  State<Forgotu> createState() => _ForgotuState();
 }
 
-class _ForgoturpassState extends State<Forgoturpass> {
+class _ForgotuState extends State<Forgotu> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     //_loadUserEmailandPhoneNumber();
+    //_loadUserEmailandPhoneNumber();
     print("Hello");
 
   }
   UserService _userService = new UserService();
   //String errorTextVal = '';
-String loginEmail="";
+  String loginEmail="";
   final emailController = TextEditingController();
   Future<void> storeCSRFToken(String csrfToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -179,7 +179,7 @@ String loginEmail="";
                         children:[
                           Image.asset('images/ForgetUrPass.png')
                         ]
-                )
+                    )
                 ),
                 Container(
                     child: Text("Forget Password",style: TextStyle(
@@ -210,7 +210,7 @@ String loginEmail="";
                         decoration: InputDecoration(
                             labelText: "Email Address",
                             labelStyle: TextStyle(color: Color(0xFFCACACA),
-                            fontSize:22,
+                              fontSize:22,
                             ),
                             prefixIcon: Icon(Icons.person,
                               color: Color(0xFFCACACA),
@@ -279,10 +279,10 @@ String loginEmail="";
                                     SizedBox(height: 30,),
                                     Center(child: Text("Please Enter Registered Email Id",
                                       style: TextStyle(
-                                      fontFamily: "FontMain",
-                                      fontSize: 18,
-                                      color: Color(0xFFBD232B),
-                                    ),)),
+                                        fontFamily: "FontMain",
+                                        fontSize: 18,
+                                        color: Color(0xFFBD232B),
+                                      ),)),
                                     SizedBox(height: 35,),
                                     ElevatedButton(
                                       onPressed: () {

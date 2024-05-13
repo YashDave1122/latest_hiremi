@@ -29,7 +29,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
   void initState() {
     super.initState();
     // OnlyApplyOneJob();
-     fetchDataFromApi();
+    // fetchDataFromApi();
+    fetchDataFromCacheOrApi();
     _loadUserEmail();
    // _checkAppliedJobs(); //
     //checkIfApplied();
@@ -53,8 +54,43 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
       print("login mail is  $loginEmail");
     }
   }
+  // Future<void> fetchDataFromApi() async {
+  //     final response = await http.get(Uri.parse('${ApiUrls.baseurl}api/fresherjob/'));
+  //
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> responseData = json.decode(response.body);
+  //     setState(() {
+  //       fresherJobList = responseData
+  //           .map((data) => FresherJobModel.fromJson(data))
+  //           .toList();
+  //     });
+  //     print("Fresher Job List Length: ${fresherJobList.length}");
+  //   } else {
+  //     throw Exception('Failed to load data from the API');
+  //   }
+  // }
+  Future<void> fetchDataFromCacheOrApi() async {
+    // Check if data exists in cache
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? cachedData = prefs.getString('fresher_data');
+
+    if (cachedData != null && cachedData.isNotEmpty) {
+      // If data exists in cache, parse and use it
+      final List<dynamic> cachedList = json.decode(cachedData);
+      setState(() {
+        fresherJobList = cachedList
+            .map((data) => FresherJobModel.fromJson(data))
+            .toList();
+      });
+      fetchDataFromApi();
+    } else {
+      // If data doesn't exist in cache, fetch from API
+      fetchDataFromApi();
+    }
+  }
   Future<void> fetchDataFromApi() async {
-      final response = await http.get(Uri.parse('${ApiUrls.baseurl}api/fresherjob/'));
+    final response =
+    await http.get(Uri.parse('${ApiUrls.baseurl}/api/fresherjob/'));
 
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
@@ -63,7 +99,10 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
             .map((data) => FresherJobModel.fromJson(data))
             .toList();
       });
-      print("Fresher Job List Length: ${fresherJobList.length}");
+
+      // Cache the fetched data
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('fresher_data', json.encode(responseData));
     } else {
       throw Exception('Failed to load data from the API');
     }
@@ -534,6 +573,16 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                   ),
                                   child: Column(
                                     children: [
+                                      ListTile(
+                                        title: Text(
+                                          '${job.jobProfile}',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontFamily: 'FontMain',
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
                                       ListTile(
                                         title: Text(
                                           'Company: ${job.companyName}',

@@ -769,6 +769,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                   //   ),
                   // );
                   Navigator.pop(context);
+
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(right: 290.0),

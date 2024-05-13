@@ -30,7 +30,7 @@ class ApiUrls {
   static const verifiedEmails="http://13.127.81.177:8000/verified-emails/";
   static const mentorship="http://13.127.81.177:8000/api/mentorship/";
   static const internship="http://13.127.81.177:8000/api/internship";
-  static const internshipapplication="http://13.127.81.177:8000/Internship-applications/";
+  static const internshipapplication="http://13.127.81.177:8000/internship-applications/";
   static const Discount="http://13.127.81.177:8000/api/discount/";
   static const baseurl="http://13.127.81.177:8000/";
 // static const posts = 'registers/';

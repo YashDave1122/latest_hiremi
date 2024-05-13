@@ -53,6 +53,7 @@ import 'chatGptrz2.dart';
     //  int _currentPageIndex = 0;
 
     int _currentIndex=0;
+    int count=0;
     bool enableGestureDetector = true;
     String discountPrice="";
     String DiscountedPrice="";
@@ -75,6 +76,9 @@ import 'chatGptrz2.dart';
    String ID = "";
    String Intern_Profile="";
    String FN="";
+   String FatherNameinHomePage="";
+   String COL="";
+   String GN="";
     int a=0;
      bool verify=false;
      String UIDforCorporateTraining="";
@@ -93,6 +97,7 @@ import 'chatGptrz2.dart';
       super.initState();
       startTimer();
       _loadUserJobProfile();
+      GetAllDetails();
       //refresh();
       _date = '';
       _time = '';
@@ -202,7 +207,28 @@ import 'chatGptrz2.dart';
 
       });
     }
+    Future<void> GetAllDetails() async {
+      print("DJKCDHJBC");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? fullName = prefs.getString('FullName');
+      String? fatherName = prefs.getString('FatherName');
+      String? gender = prefs.getString('Gender');
+      String? college = prefs.getString('College');
 
+      if (fullName != null && fullName.isNotEmpty &&
+          fatherName != null && fatherName.isNotEmpty &&
+          gender != null && gender.isNotEmpty &&
+          college != null && college.isNotEmpty) {
+        setState(() {
+          FN = fullName;
+          FatherNameinHomePage = fatherName;
+          GN = gender;
+          COL = college;
+        });
+        print("Full Nameeee: $FN, Father's Name: $FatherName, Gender: $GN, College: $COL");
+      }
+
+    }
 
     Future<bool> _checkVerifyFuture = Future.value(false);
 
@@ -965,7 +991,7 @@ import 'chatGptrz2.dart';
       print("discountPrice is $DiscountedPrice");
       print("_EnrollDialogForcorporatetraining");
       DateTime currentTime = DateTime.now();
-      Duration timeDifference = futureTimeforCorporatetraining.difference(currentTime);
+      Duration timeDifference = futureTime.difference(currentTime);
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
@@ -1992,33 +2018,58 @@ import 'chatGptrz2.dart';
                                 ),
                               ),
                               SizedBox(height: 35),
-                              Container(
-                                width: 90, // Set your desired width here
-                                height: 50, // Set your desired height here
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.redAccent,
-                                    width: 3.0,
-                                  ),
-                                  // Red accent border
-
-                                  borderRadius: BorderRadius.circular(12.0),
-
-                                  // Rounded corners
-                                ),
-                                padding: EdgeInsets.all(12.0), // Padding inside the container
-                                child: Center(
-                                  child: Text(
-                                    '₹${double.parse(DiscountedPrice).toInt()}', // Text content
-                                    style: TextStyle(
-                                      fontSize: 16.0, // Font size of the text
-                                      fontWeight: FontWeight.bold, // Bold text
+                              // Container(
+                              //   width: 90, // Set your desired width here
+                              //   height: 50, // Set your desired height here
+                              //   decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.redAccent,
+                              //       width: 3.0,
+                              //     ),
+                              //     // Red accent border
+                              //
+                              //     borderRadius: BorderRadius.circular(12.0),
+                              //
+                              //     // Rounded corners
+                              //   ),
+                              //   padding: EdgeInsets.all(12.0), // Padding inside the container
+                              //   child: Center(
+                              //     child: Text(
+                              //       '₹${double.parse(DiscountedPrice).toInt()}', // Text content
+                              //       style: TextStyle(
+                              //         fontSize: 16.0, // Font size of the text
+                              //         fontWeight: FontWeight.bold, // Bold text
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UserVerificationScreen(username: widget.username),
                                     ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFFF13640),
+                                  minimumSize: Size(250, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Get Verified",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
                                   ),
                                 ),
                               ),
                               SizedBox(height: 15),
                               Text(
-                                'Pay one-time verification time', // Text content
+                                'Pay one-time verification time ₹${double.parse(DiscountedPrice).toInt()}', // Text content
                                 style: TextStyle(
                                   fontSize: 12.0, // Font size of the text
                                   fontWeight: FontWeight.bold, // Bold text
@@ -2027,31 +2078,7 @@ import 'chatGptrz2.dart';
                             ],
                           ),
                           SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => UserVerificationScreen(username: widget.username),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFF13640),
-                              minimumSize: Size(250, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: const Text(
-                              "Get Verified",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
+
                         ],
                       ),
                     ],
@@ -2949,7 +2976,7 @@ import 'chatGptrz2.dart';
                               children: [
                                 Visibility(
                                     visible: uidverify == true || verify==true,
-                                    child: Text(FullName, style: TextStyle(color: Colors.white, fontFamily: "FontMain", fontSize: 20))),
+                                    child: Text(FN, style: TextStyle(color: Colors.white, fontFamily: "FontMain", fontSize: 20))),
                                 Visibility(
                                   visible: uidverify == true || verify==true,
                                   child: Row(
@@ -3174,8 +3201,8 @@ import 'chatGptrz2.dart';
                           },
                           child: Image.asset(
                             'images/lockcou.png',
-                            width: 180,
-                            height: 180,
+                            width: screenWidth*0.438, // Set your desired width
+                            height: screenHeight*0.213,
                           ),
                         ),
             
@@ -3201,8 +3228,8 @@ import 'chatGptrz2.dart';
                         children: [
                           Image.asset(
                             'images/CorTra2.png',
-                            width: 180,
-                            height: 180,
+                            width: screenWidth*0.438, // Set your desired width
+                            height: screenHeight*0.213,
                           ),
             
             
@@ -3352,7 +3379,7 @@ import 'chatGptrz2.dart';
                         ),),
                         Row(
                           children: [
-                            Text(FullName, style: TextStyle(color: Colors.black, fontFamily: "FontMain", fontSize: 20)),
+                            Text(FN, style: TextStyle(color: Colors.black, fontFamily: "FontMain", fontSize: 20)),
                             Visibility(
                               visible: verify == true,
                               child: Row(

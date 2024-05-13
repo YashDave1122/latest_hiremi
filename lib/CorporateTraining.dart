@@ -31,6 +31,8 @@ class _CorporateTrainingState extends State<CorporateTraining> {
   String OriginalPrice="";
   // or whatever default value you want to assign
   bool hasAlreadyApplied = false;
+
+
   Future<void> _loadUserEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedUsername = prefs.getString('username');

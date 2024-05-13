@@ -763,6 +763,7 @@ import 'package:hiremi/utils/api.dart';
                     //   ),
                     // );
                     Navigator.pop(context);
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 290.0),
@@ -855,7 +856,6 @@ import 'package:hiremi/utils/api.dart';
                   width: double.infinity, // Use double.infinity to stretch the Divider
                   child: Divider(),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(right: 75.0),
                   child: Text(

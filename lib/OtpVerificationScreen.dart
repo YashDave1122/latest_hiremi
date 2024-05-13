@@ -22,7 +22,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController fieldFour = TextEditingController();
   final TextEditingController fieldFive = TextEditingController();
   final TextEditingController fieldSix = TextEditingController();
-  String loginEmail = "yashmanu0761@gmail.com";
+  String loginEmail = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isProgressIndicator = false;
   Future<void> storeCSRFToken(String csrfToken) async {
@@ -194,12 +194,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         isProgressIndicator = false;
                         await storeCSRFToken(csrfToken);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OtpVerificationScreen(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const OtpVerificationScreen(),
+                        //   ),
+                        // );
                       }
                       else {
                         isProgressIndicator = false;

@@ -5,6 +5,7 @@ import 'package:hiremi/api_services/base_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hiremi/signin.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -68,6 +69,8 @@ class _SettingsState extends State<Settings> {
     }
 
   }
+
+
 
   Future<void> _loadUserDetail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
