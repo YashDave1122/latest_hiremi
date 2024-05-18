@@ -147,7 +147,7 @@ import 'chatGptrz2.dart';
       await _CheckStatusIncorporatetraining();
       await Details_from_verification_details();
       // await _Interview_Details();
-      print("HELLOChanged");
+      print("HELLOChangedduhjwduewdhuowehdioh");
       //  await _loadUserJobProfile();
       uid = widget.uid;
       if (await ( Check_for_Verify())){
