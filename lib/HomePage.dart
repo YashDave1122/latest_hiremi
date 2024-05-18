@@ -255,6 +255,8 @@ import 'chatGptrz2.dart';
     String IDforRegistartion="";
     String Gender="";
     String CandidateStatus="";
+    String IDCorporatetraining="";
+    String IDformentorship="";
     // String _formattedTimeLeft = '';
 
 
@@ -382,6 +384,14 @@ import 'chatGptrz2.dart';
         } catch (e) {
           print('Error in jobprofileeeeeeeeeeeeeeeeeeeeeeeeee: $e');
         }
+      }
+    }
+    double _parseDiscountedPrice() {
+      try {
+        return double.parse(DiscountedPrice ?? '0'); // Use '0' as default value if DiscountedPrice is null or empty
+      } catch (e) {
+        print('Error parsing DiscountedPrice: $e');
+        return 0; // Return 0 or any other default value
       }
     }
     Future <void> _Interview_Details()async{
@@ -926,12 +936,7 @@ import 'chatGptrz2.dart';
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("your_background_image_path"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Container(
@@ -960,6 +965,72 @@ import 'chatGptrz2.dart';
                       children: [
                         Text(
                           "Thank you for your interest in the Mentorship program at Hiremi in Bhopal, Madhya Pradesh, India. Unfortunately, we will not be moving forward with your application, but we appreciate your time and interest in Hiremi.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "FontMain",
+                            fontSize: 12,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          "Thank you for applying to Hiremi", // Your leading text
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "FontMain",
+                            fontSize: 20,
+                            color: Color(0xFFBD232B),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    Future<void> _EnrollDialogForCorporatetrainingRejection() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Stack(
+            children: [
+              // Blurred background
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                  child: Container(
+                    color: Colors.black.withOpacity(0.5), // Adjust opacity as needed
+                  ),
+                ),
+              ),
+              // Your dialog
+              AlertDialog(
+                backgroundColor: Colors.white,
+                surfaceTintColor: Colors.transparent,
+                content: WillPopScope(
+                  onWillPop: () async {
+                    // Handle back button press here
+                    // Returning true allows the dialog to be popped
+                    // Returning false prevents the dialog from being popped
+                    return true;
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Thank you for your interest in the Corporate training program at Hiremi in Bhopal, Madhya Pradesh, India. Unfortunately, we will not be moving forward with your application, but we appreciate your time and interest in Hiremi.",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: "FontMain",
@@ -1324,8 +1395,122 @@ import 'chatGptrz2.dart';
     //     }
     //   }
     // }
+    Future<void> _updateCandidateStatusforMentorship(String email, String newStatus ,String IDformentorship) async {
+      final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
+
+      try {
+        // Fetch all users from the API
+        final response = await http.get(Uri.parse(apiUrl));
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+
+          // Find the user with the specified email in the data
+          var userToUpdate;
+          for (final user in data) {
+            if (user['email'] == email) {
+              userToUpdate = user;
+              break;
+            }
+          }
+
+          if (userToUpdate != null) {
+            final String uid = userToUpdate['uid'];
+            final updateApiUrl = '${ApiUrls.baseurl}/api/mentorship/$IDformentorship/';
+
+            // Perform the update request
+            final updateResponse = await http.put(
+              Uri.parse(updateApiUrl),
+              headers: {'Content-Type': 'application/json'},
+              body: json.encode({'email': loginEmail,'candidate_status': newStatus}),
+            );
+
+            if (updateResponse.statusCode == 200) {
+              print('Candidate status updated successfully to $newStatus');
+            } else {
+              print('Failed to update candidate status: ${updateResponse.body}');
+            }
+          } else {
+            print('User with email $email not found in the API response');
+          }
+        } else {
+          print('Failed to fetch users from API: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error updating candidate status: $e');
+      }
+    }
+    // Future<void> _CheckStatusInMEntorship() async {
+    //   print("ppppppsamnkn ndn");
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   String? savedUsername = prefs.getString('username');
+    //
+    //   if (savedUsername != null && savedUsername.isNotEmpty) {
+    //     setState(() {
+    //       loginEmail = savedUsername;
+    //     });
+    //
+    //     final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
+    //
+    //     try {
+    //       final response = await http.get(Uri.parse(apiUrl));
+    //
+    //       if (response.statusCode == 200) {
+    //         final data = json.decode(response.body);
+    //
+    //         if (data is List && data.isNotEmpty) {
+    //           for (final user in data) {
+    //             final email = user['email'];
+    //             final candidateStatus = user['candidate_status'];
+    //             final timeEndString = user['time_end'];
+    //             final PaymentStatus = user['payment_status'];
+    //             final uid=user['uid'];
+    //             final id=user['id'];
+    //
+    //             if (email == loginEmail) {
+    //               setState(() {
+    //                 UIDforMentorship=uid;
+    //                 CandidateStatus = candidateStatus ?? '';
+    //                 IDformentorship = id;
+    //                 futureTimeforMentorship = timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
+    //               });
+    //
+    //               if (PaymentStatus == 'Enrolled') {
+    //                 _showDialogMentorship();
+    //                 print("Hello payment status is $PaymentStatus");
+    //                 break;
+    //               } else if (CandidateStatus == "Select") {
+    //                 print("Select me hai");
+    //                 print('End time isssssssssssssss $futureTimeforMentorship');
+    //                 print("Yashhhhhhhhhhh");
+    //                 await _EnrollDialogForMentorship();
+    //                 // Additional logic here
+    //               } else if (CandidateStatus == "Reject") {
+    //                 print("Reject me hai");
+    //                 await _updateCandidateStatus(loginEmail,'Rejectt',IDformentorship);
+    //                 await _EnrollDialogForMentorshipRejection();
+    //
+    //               }
+    //
+    //
+    //
+    //               print("Gender is $Gender");
+    //               print("Your ID is $verify");
+    //               break;
+    //             }
+    //           }
+    //         } else {
+    //           print('Email not found on the server.');
+    //         }
+    //       }
+    //     } catch (e) {
+    //       print('Error in Mentorshippppp: $e');
+    //     }
+    //   }
+    // }
     Future<void> _CheckStatusInMEntorship() async {
       print("ppppppsamnkn ndn");
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? savedUsername = prefs.getString('username');
 
@@ -1348,13 +1533,16 @@ import 'chatGptrz2.dart';
                 final candidateStatus = user['candidate_status'];
                 final timeEndString = user['time_end'];
                 final PaymentStatus = user['payment_status'];
-                final uid=user['uid'];
+                final uid = user['uid'];
+                final id = user['id'];
 
                 if (email == loginEmail) {
                   setState(() {
-                    UIDforMentorship=uid;
+                    UIDforMentorship = uid;
                     CandidateStatus = candidateStatus ?? '';
-                    futureTimeforMentorship = timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
+                    IDformentorship = id.toString();
+                    futureTimeforMentorship =
+                    timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
                   });
 
                   if (PaymentStatus == 'Enrolled') {
@@ -1369,6 +1557,7 @@ import 'chatGptrz2.dart';
                     // Additional logic here
                   } else if (CandidateStatus == "Reject") {
                     print("Reject me hai");
+                    await _updateCandidateStatusforMentorship(loginEmail, 'Rejectt', IDformentorship);
                     await _EnrollDialogForMentorshipRejection();
                   }
 
@@ -1382,8 +1571,54 @@ import 'chatGptrz2.dart';
             }
           }
         } catch (e) {
-          print('Error in Mentorship: $e');
+          print('Error in Mentorshippp: $e');
         }
+      }
+    }
+
+    Future<void> _updateCandidateStatusforCorporatetraining(String email, String newStatus ,String IDforcorporatetraining) async {
+      final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
+
+      try {
+        // Fetch all users from the API
+        final response = await http.get(Uri.parse(apiUrl));
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+
+          // Find the user with the specified email in the data
+          var userToUpdate;
+          for (final user in data) {
+            if (user['email'] == email) {
+              userToUpdate = user;
+              break;
+            }
+          }
+
+          if (userToUpdate != null) {
+            final String uid = userToUpdate['uid'];
+            final updateApiUrl = '${ApiUrls.baseurl}/api/corporatetraining/$IDforcorporatetraining/';
+
+            // Perform the update request
+            final updateResponse = await http.put(
+              Uri.parse(updateApiUrl),
+              headers: {'Content-Type': 'application/json'},
+              body: json.encode({'email': loginEmail,'candidate_status': newStatus}),
+            );
+
+            if (updateResponse.statusCode == 200) {
+              print('Candidate status updated successfully to $newStatus');
+            } else {
+              print('Failed to update candidate status: ${updateResponse.body}');
+            }
+          } else {
+            print('User with email $email not found in the API response');
+          }
+        } else {
+          print('Failed to fetch users from API: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error updating candidate status: $e');
       }
     }
 
@@ -1414,12 +1649,15 @@ import 'chatGptrz2.dart';
                 final timeEndString = user['time_end'];
                 final PaymentStatus=user['payment_status'];
                 final UID=user['uid'];
+                final id=user['id'];
 
                 if (email == loginEmail) {
                   setState(() {
                     UIDforCorporateTraining=UID;
                     CandidateStatus = candidateStatus;
-                    futureTimeforCorporatetraining = DateTime.parse(timeEndString);
+                    IDCorporatetraining=id.toString();
+                    futureTimeforCorporatetraining =
+                    timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
                   });
                   if(PaymentStatus=='Enrolled')
                   {
@@ -1453,9 +1691,8 @@ import 'chatGptrz2.dart';
                             //await _EnrollDialogForMentorship();
                             await _EnrollDialogForcorporatetraining();
                           }
-                          // else if(){
-                          //
-                          // }
+
+
                           break; // Exit the loop once a match is found
                         }
                       }
@@ -1469,6 +1706,11 @@ import 'chatGptrz2.dart';
                     else {
                       print('Email not found on the server.');
                     }
+
+                  }
+                  else if(CandidateStatus == "Reject"){
+                    await _updateCandidateStatusforCorporatetraining(loginEmail, 'Rejectt', IDCorporatetraining);
+                    await _EnrollDialogForCorporatetrainingRejection();
 
                   }
 
@@ -1493,7 +1735,7 @@ import 'chatGptrz2.dart';
             }
           }
         } catch (e) {
-          print('Error in Mentorshipnnnnnnnnnnn: $e');
+          print('Error in corporatetraining: $e');
         }
       }
     }
@@ -2069,7 +2311,7 @@ import 'chatGptrz2.dart';
                               ),
                               SizedBox(height: 15),
                               Text(
-                                'Pay one-time verification time ₹${double.parse(DiscountedPrice).toInt()}', // Text content
+                                'Pay one-time verification fee ₹${_parseDiscountedPrice()}', // Text content
                                 style: TextStyle(
                                   fontSize: 12.0, // Font size of the text
                                   fontWeight: FontWeight.bold, // Bold text
@@ -2199,7 +2441,7 @@ import 'chatGptrz2.dart';
                            SizedBox(height: 14,),
                            GestureDetector(
                              onTap: () {
-                               launch('https://api.whatsapp.com/send?phone=+918815165433');
+                               launch('https://api.whatsapp.com/send?phone=+919302707264');
                              },
                              child: Row(
                                mainAxisAlignment: MainAxisAlignment.center,
@@ -3244,55 +3486,123 @@ import 'chatGptrz2.dart';
                   ],
                 ),
                 SizedBox(height:screenHeight*0.008 ,),
-                AspectRatio(
-                  aspectRatio: 39/9,
-                  child: CurvedNavigationBar(
-                    backgroundColor: Colors.white10,
-                    color: Color(0xFFEDEDED),
-                    items:[
-                      Icon(Icons.home,size: 50,color: _iconColors[0] ),
-                      //Icon(Icons.mail,size: 50,color: _iconColors[1]),
-                      InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Settings(),
-                              ),
-                            );
-                            // Callback function to be executed when InkWell is tapped
-                            // Place your code here
-                          },
-                          child: Icon(Icons.manage_accounts,size: 50,color: _iconColors[1])),
-            
-                    ],
-                    onTap: (index){
-                      setState(() {
-                        _currentIndex=index;
-                        for (int i = 0; i < _iconColors.length; i++) {
-                          if (i == index) {
-                            _iconColors[i] =
-                                Colors.red; // Change the color for the tapped icon
-                          } else {
-                            _iconColors[i] =
-                                Color(0xFF43485E); // Reset the color for other icons
-                          }
-                        }
-                        if(_currentIndex==1){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Settings(),
-                            ),
-                          );
-                        }
-                        if(_currentIndex==0){
-                          _iconColors[0] =
-                              Colors.red; // Change the color for the tapped icon
-                        }
-                      });
-                    },
-                  ),
+                // AspectRatio(
+                //   aspectRatio: 39/9,
+                //   child: CurvedNavigationBar(
+                //     backgroundColor: Colors.white10,
+                //     color: Color(0xFFEDEDED),
+                //     items:[
+                //       Icon(Icons.home,size: 50,color: _iconColors[0] ),
+                //       //Icon(Icons.mail,size: 50,color: _iconColors[1]),
+                //       InkWell(
+                //           onTap: () {
+                //             Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                 builder: (context) => const Settings(),
+                //               ),
+                //             );
+                //             // Callback function to be executed when InkWell is tapped
+                //             // Place your code here
+                //           },
+                //           child: Icon(Icons.manage_accounts,size: 50,color: _iconColors[1])),
+                //
+                //     ],
+                //     onTap: (index){
+                //       setState(() {
+                //         _currentIndex=index;
+                //         for (int i = 0; i < _iconColors.length; i++) {
+                //           if (i == index) {
+                //             _iconColors[i] =
+                //                 Colors.red; // Change the color for the tapped icon
+                //           } else {
+                //             _iconColors[i] =
+                //                 Color(0xFF43485E); // Reset the color for other icons
+                //           }
+                //         }
+                //         if(_currentIndex==1){
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const Settings(),
+                //             ),
+                //           );
+                //         }
+                //         if(_currentIndex==0){
+                //           _iconColors[0] =
+                //               Colors.red; // Change the color for the tapped icon
+                //         }
+                //       });
+                //     },
+                //   ),
+                // ),
+                Stack(
+                  children: [
+                    // Container(
+                    //   height: 70,
+                    //   width: double.infinity,
+                    //   color: Colors.grey.shade300,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
+                      child: Container(
+                        height: 80,
+                        width: double.infinity,
+                        color: Colors.grey.shade300,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30.0),
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.grey.shade300),
+                            child: Center(
+                                child: Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle, color: Colors.grey.shade100),
+                                  child: const Center(
+                                    child: Icon(Icons.home, size: 50, color: Colors.red),
+                                  ),
+                                )),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 30),
+                          child: Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.grey.shade100),
+                            child: Center(
+                                child: Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle, color: Colors.grey.shade300),
+                                  child: Center(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) {
+                                                return const Settings();
+                                              }));
+                                        },
+                                        icon: const Icon(Icons.settings,
+                                            size: 50, color: Colors.grey)),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -448,6 +448,8 @@ Future<void> fetchDataFromApi() async {
   // }
   @override
   Widget build(BuildContext context) {
+    double screenWidth=MediaQuery.of(context).size.width;
+    double screenHeight=MediaQuery.of(context).size.height;
     print('Applied Job IDs: $appliedJobIds');
     return Scaffold(
       body: SingleChildScrollView(
@@ -506,8 +508,8 @@ Future<void> fetchDataFromApi() async {
                   child: Column(
                     children: [
                       Container(
-                        width: 380,
-                        height: 620,
+                        width: screenWidth*0.97,
+                        height:screenHeight * 0.75,
                         child: InternshipList == null || InternshipList.isEmpty
                             ? Center(
                           child: CircularProgressIndicator(), // Show CircularProgressIndicator when loading
@@ -628,12 +630,15 @@ Future<void> fetchDataFromApi() async {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 73,
+                                  height: 93,
                                 ),
                               ],
                             );
                           },
                         ),
+                      ),
+                      SizedBox(
+                        height: screenHeight*0.98,
                       ),
                     ],
                   ),

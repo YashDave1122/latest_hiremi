@@ -110,11 +110,8 @@ class _CreateUrPassState extends State<CreateUrPass> {
                 children: [
                   InkWell(
                       onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context)
-                        {
-                          return OtpVerificationScreen();
-                        }
-                        ),);
+                        Navigator.pop(context);
+
                       },
                       child: Image.asset('images/Back_Button.png')),
                 ],

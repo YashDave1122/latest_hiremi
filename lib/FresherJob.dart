@@ -510,6 +510,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
   @override
   Widget build(BuildContext context) {
     print('Applied Job IDs: $appliedJobIds');
+    double screenWidth=MediaQuery.of(context).size.width;
+    double screenHeight=MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -551,8 +553,10 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                   child: Column(
                     children: [
                       Container(
-                        width: 380,
-                        height: 620,
+                        // width: 380,
+                        // height: 620,
+                        width: screenWidth*0.97,
+                        height:screenHeight * 0.75,
                         child: fresherJobList == null || fresherJobList.isEmpty
                             ? Center(
                           child: CircularProgressIndicator(), // Show CircularProgressIndicator when loading
@@ -644,6 +648,8 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                                       jobDescreption: job.jobDescription!,
                                                       termsAndConditions: job.termsAndConditions!,
                                                       skillRequired: job.skillsRequired!,
+                                                        AboutCompany:job.AboutCompany!,
+
                                                     ),
                                                   ),
                                                 );
@@ -671,13 +677,17 @@ class _FresherJobScreenState extends State<FresherJobScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 73,
+                                  height: 93,
                                 ),
                               ],
                             );
                           },
                         ),
                       ),
+                      SizedBox(
+                        height: screenHeight*0.98,
+                      ),
+
                     ],
                   ),
                 ),

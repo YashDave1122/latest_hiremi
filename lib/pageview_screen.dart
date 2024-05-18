@@ -330,10 +330,13 @@
               padding: const EdgeInsets.all(1),
               child: Image.asset('images/Hiremi_Icon.png'),
             ),
-            SizedBox(
-              height: screenHeight*0.43,
-              width: screenWidth*0.9,
-              child: Image.asset('images/thirdCongratulation.png'),
+            Padding(
+              padding: const EdgeInsets.only(left: 21.0),
+              child: SizedBox(
+                height: screenHeight*0.43,
+                width: screenWidth*0.9,
+                child: Image.asset('images/thirdCongratulation.png'),
+              ),
             ),
             const Text(
               "Get Personalized",
