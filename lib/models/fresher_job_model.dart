@@ -8,6 +8,7 @@ class FresherJobModel {
   String? jobCtc;
   String? education;
   String? skillsRequired;
+  String? AboutCompany;
   String? jobDescription;
   String? termsAndConditions;
 
@@ -19,6 +20,7 @@ class FresherJobModel {
         this.jobCode,
         this.companyName,
         this.jobCtc,
+        this.AboutCompany,
         this.education,
         this.skillsRequired,
         this.jobDescription,
@@ -36,6 +38,7 @@ class FresherJobModel {
     skillsRequired = json['skills_required'];
     jobDescription = json['job_description'];
     termsAndConditions = json['terms_and_conditions'];
+    AboutCompany=json['About_company'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +54,7 @@ class FresherJobModel {
     data['skills_required'] = this.skillsRequired;
     data['job_description'] = this.jobDescription;
     data['terms_and_conditions'] = this.termsAndConditions;
+    data['About_company']=this.AboutCompany;
     return data;
   }
 }

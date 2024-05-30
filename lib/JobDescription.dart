@@ -1,6 +1,7 @@
   import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:hiremi/FresherJob.dart';
 import 'package:hiremi/HomePage.dart';
 import 'package:hiremi/utils/api.dart';
   import 'package:hiremi/utils/my_colors.dart';
@@ -18,8 +19,10 @@ import 'package:hiremi/utils/api.dart';
     String jobDescreption;
     String termsAndConditions;
     String skillRequired;
+
     int id;
     int jobIndex;
+    String AboutCompany;
 
     JobDescription({
       super.key,
@@ -31,6 +34,8 @@ import 'package:hiremi/utils/api.dart';
       required this.jobDescreption,
       required this.termsAndConditions,
       required this.skillRequired,
+      required this.AboutCompany,
+
       required this.id,
       required this.jobIndex,
 
@@ -751,9 +756,23 @@ import 'package:hiremi/utils/api.dart';
               children: [
 
                 SizedBox(height: 20,),
-                Padding(
-                  padding: const EdgeInsets.only(right: 290.0),
-                  child: Image.asset('images/Back_Button.png'),
+                InkWell(
+                  onTap:(){
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return FresherJobScreen();
+                    //     },
+                    //   ),
+                    // );
+                    Navigator.pop(context);
+
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 290.0),
+                    child: Image.asset('images/Back_Button.png'),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 170.0),
@@ -841,9 +860,8 @@ import 'package:hiremi/utils/api.dart';
                   width: double.infinity, // Use double.infinity to stretch the Divider
                   child: Divider(),
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.only(right: 75.0),
+                  padding: const EdgeInsets.only(right: 65.0),
                   child: Text(
                     'About the Job Description',
                     style: TextStyle(
@@ -854,7 +872,7 @@ import 'package:hiremi/utils/api.dart';
                 ),
                 SizedBox(height: 10,),
                 Padding(
-                  padding: const EdgeInsets.only(right: 40.0),
+                  padding: const EdgeInsets.only(right: 27.0),
                   child: Text(
                     widget.jobDescreption,
 
@@ -942,10 +960,34 @@ import 'package:hiremi/utils/api.dart';
                         ),
                       ),
                     ),
+                    SizedBox(height: 20,),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 90.0),
+                      child:  Text(
+                        "About ${widget.companyName} company" ,
 
-
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            fontFamily: 'FontMain'
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 22),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child:  Text(
+                        "${widget.AboutCompany}" ,
 
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: MyColor.black,
+
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 22),
                     ElevatedButton(
                       onPressed: () async {
                         await getFresherJobProfile();
@@ -970,8 +1012,6 @@ import 'package:hiremi/utils/api.dart';
                         minimumSize: Size(200, 50),
                       ),
                     )
-
-
                   ],
                 ),
 

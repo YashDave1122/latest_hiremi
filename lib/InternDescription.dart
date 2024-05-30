@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hiremi/HomePage.dart';
+import 'package:hiremi/internship.dart';
 import 'package:hiremi/utils/api.dart';
 import 'package:hiremi/utils/my_colors.dart';
 import 'package:http/http.dart' as http;
@@ -757,9 +758,23 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
             children: [
 
               SizedBox(height: 20,),
-              Padding(
-                padding: const EdgeInsets.only(right: 290.0),
-                child: Image.asset('images/Back_Button.png'),
+              InkWell(
+                onTap: (){
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) {
+                  //       return InternScreen();
+                  //     },
+                  //   ),
+                  // );
+                  Navigator.pop(context);
+
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 290.0),
+                  child: Image.asset('images/Back_Button.png'),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 170.0),
@@ -958,7 +973,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                         await _showJobCodeDialog();
 
                       } else {
-                        _showSuccessDialog();
+                        //_showSuccessDialog();
+                        _applyForJob();
                       }
                     },
                     child: Text(

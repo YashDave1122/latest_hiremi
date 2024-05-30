@@ -8,7 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
+  //const OtpVerificationScreen({super.key});
+  final String email; // Add this line to accept email as a parameter
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
@@ -22,9 +24,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController fieldFour = TextEditingController();
   final TextEditingController fieldFive = TextEditingController();
   final TextEditingController fieldSix = TextEditingController();
-  String loginEmail = "yashmanu0761@gmail.com";
+  String loginEmail = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isProgressIndicator = false;
+
+  @override
+  void initState() {
+    super.initState();
+    loginEmail = widget.email; // Set loginEmail to the passed email
+  }
   Future<void> storeCSRFToken(String csrfToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('csrfToken', csrfToken);
@@ -194,12 +202,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         isProgressIndicator = false;
                         await storeCSRFToken(csrfToken);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const OtpVerificationScreen(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const OtpVerificationScreen(),
+                        //   ),
+                        // );
                       }
                       else {
                         isProgressIndicator = false;
@@ -232,9 +240,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: isProgressIndicator
-                      ? CircularProgressIndicator(color: Colors.black)
-                      : const Text(
+                  child:
+                       const Text(
                     "Send OTP Again",
                     style: TextStyle(
                       color: Colors.white,

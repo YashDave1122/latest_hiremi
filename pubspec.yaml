@@ -59,6 +59,8 @@ dependencies:
   url_launcher: ^6.2.6
   swipe_to: ^1.0.6
   smooth_page_indicator: ^1.1.0
+  connectivity_plus: ^6.0.3
+  get: ^4.6.6
 
 
 dev_dependencies:

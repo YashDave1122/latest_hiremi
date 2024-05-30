@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:hiremi/CongratulationScreen.dart';
+import 'package:hiremi/HomePage.dart';
 import 'package:hiremi/api_services/base_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hiremi/signin.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -19,14 +21,21 @@ class _SettingsState extends State<Settings> {
     // TODO: implement initState
     super.initState();
     _loadUserEmail();
-    _loadUserDetail();
+    //_loadUserDetail();
+    GetAllDetails();
   }
   String loginEmail="";
+  String FatherName="";
   String FullName="";
+  String Father="";
   String Gender="";
   String College="";
   String Branch="";
   String imagePath=""; // Declare imagePath with 'late'
+  String FN="";
+  String GN="";
+  String COL="";
+
   Future<void> _loadUserEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedUsername = prefs.getString('username');
@@ -38,6 +47,31 @@ class _SettingsState extends State<Settings> {
       print(loginEmail);
     }
   }
+  Future<void> GetAllDetails() async {
+    print("DJKCDHJBC");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? fullName = prefs.getString('FullName');
+    String? fatherName = prefs.getString('FatherName');
+    String? gender = prefs.getString('Gender');
+    String? college = prefs.getString('College');
+
+    if (fullName != null && fullName.isNotEmpty &&
+        fatherName != null && fatherName.isNotEmpty &&
+        gender != null && gender.isNotEmpty &&
+        college != null && college.isNotEmpty) {
+      setState(() {
+        FN = fullName;
+        FatherName = fatherName;
+        GN = gender;
+        COL = college;
+      });
+      print("Full Nameeee: $FN, Father's Name: $FatherName, Gender: $GN, College: $COL");
+    }
+
+  }
+
+
+
   Future<void> _loadUserDetail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? savedUsername = prefs.getString('username');
@@ -60,16 +94,18 @@ class _SettingsState extends State<Settings> {
             for (final user in data) {
               final email = user['email'];
               final name = user['full_name'];
+              final fatherName=user['father_name'];
               final gender=user['gender'];
               final branch=user['branch_name'];
               final college=user['college_name'];
               if (email == loginEmail) {
                 setState(() {
                   FullName = name;
+                  Father=fatherName;
                   Gender=gender;
                   Branch=branch;
                   College=college;
-                   imagePath = (Gender == 'Male') ? 'images/TheFace.png' : 'images/female.png';
+                   imagePath = (GN == 'Male') ? 'images/TheFace.png' : 'images/female.png';
                 });
                 print("Gender is $Gender");
                 print('Full Name: $name');
@@ -102,7 +138,29 @@ class _SettingsState extends State<Settings> {
 
                 children: [
                   SizedBox(height: 10,),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 280.0),
+                    child: InkWell(
+                      onTap: () {
+                        // Navigator.pushReplacement(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return HomePage(
+                        //         sourceScreen: '',
+                        //         uid: '',
+                        //         username: '',
+                        //         verificationId: '',
+                        //       );
+                        //     },
+                        //   ),
+                        // );
 
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset('images/Back_Button.png'),
+                    ),
+                  ),
                   SizedBox(height: 40,),
                   // Container(
                   //   width: MediaQuery.of(context).size.width,
@@ -120,12 +178,12 @@ class _SettingsState extends State<Settings> {
                     child: Center(
                       child: CircleAvatar(
                         radius: 46,
-                        backgroundImage: (Gender == 'Male')
+                        backgroundImage: (GN == 'Male')
                             ? AssetImage('images/TheFace.png')
-                            : (Gender == 'Female')
+                            : (GN == 'Female')
                             ? AssetImage('images/female.png')
                             : null, // Set to null when gender is neither male nor female
-                        child: (Gender != 'Male' && Gender != 'Female')
+                        child: (GN != 'Male' && GN != 'Female')
                             ? Center(child: CircularProgressIndicator()) // Show CircularProgressIndicator when gender is neither male nor female
                             : null, // Set to null when gender is male or female
                       ),
@@ -134,7 +192,7 @@ class _SettingsState extends State<Settings> {
 
 
 
-                  Text(FullName,style: TextStyle(fontSize: 25,fontWeight: FontWeight.w700),),
+                  Text(FN,style: TextStyle(fontSize: 25,fontWeight: FontWeight.w700),),
                   Text(loginEmail,style: TextStyle(
                     fontFamily: 'FontMain',
                   ),),
@@ -151,83 +209,72 @@ class _SettingsState extends State<Settings> {
                     ),
                     children: [
                       Column(
-                     crossAxisAlignment: CrossAxisAlignment.center,
+                     crossAxisAlignment: CrossAxisAlignment.start
+                        ,
                         children: [
-                          Text("Name: ",
+                          Text("Father Name: ",
+                                                   textAlign: TextAlign.center,
+                                                   style: TextStyle(
+                           color:  Colors.black,
+                           fontSize: 20,
+                           fontFamily: 'FontMain',
+                                                   ),),
+                          Text("$FatherName",
+                           textAlign: TextAlign.center,
+                           style: TextStyle(
+                             color: Colors.grey,
+                             fontSize: 20,
+                             fontFamily: 'FontMain',
+                           ),),
+                          Text("Gender: ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                            color:  Color(0xFFBD232B),
-                            fontSize: 20,
-                            fontFamily: 'FontMain',
-                          ),),
-                          Text("$FullName",
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontFamily: 'FontMain',
+                            ),),
+                          Text("$GN",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color:  Colors.grey,
+                              fontSize: 20,
+                              fontFamily: 'FontMain',
+                            ),),
+                          Text("Email:",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontFamily: 'FontMain',
                           ),),
-                          Text("Email:",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                            color: Color(0xFFBD232B),
-                            fontSize: 20,
-                            fontFamily: 'FontMain',
-                          ),),
                           Text("$loginEmail",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontFamily: 'FontMain',
-                            ),),
-                          Text("Branch:",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                            color: Color(0xFFBD232B),
-                            fontSize: 20,
-                            fontFamily: 'FontMain',
-                          ),),
-                          Text("$Branch",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.grey,
                               fontSize: 20,
                               fontFamily: 'FontMain',
                             ),),
                           Text("College:",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                            color: Color(0xFFBD232B),
+                            color: Colors.black,
                             fontSize: 20,
                             fontFamily: 'FontMain',
                           ),),
-                          Text("$College",
+                          Text("$COL",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color:  Colors.black,
+                              color:  Colors.grey,
                               fontSize: 20,
                               fontFamily: 'FontMain',
                             ),),
-                          Text("Gender: ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                            color: Color(0xFFBD232B),
-                            fontSize: 20,
-                            fontFamily: 'FontMain',
-                          ),),
-                          Text("$Gender",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color:  Colors.black,
-                              fontSize: 20,
-                              fontFamily: 'FontMain',
-                            ),),
+
                         ],
                       ),
                     ],
                     trailing: Icon(Icons.arrow_forward),
                   ),
+
 
                   SizedBox(height: 30),
                   ListTile(
@@ -302,5 +349,7 @@ class _SettingsState extends State<Settings> {
           ),
         ),
     );
+
+
   }
 }

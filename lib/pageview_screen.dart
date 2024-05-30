@@ -52,26 +52,34 @@
             ),
             const SizedBox(height: 40),
             if (currentPageIndex != 3)
-              // Show indicator only if not on SignIn page
+
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
               //   children: [
-              //
-              //     // DotsIndicator(
-              //     //   dotsCount: 3,
-              //     //   position: _currentPage.toDouble().toInt(),
-              //     //   decorator: DotsDecorator(
-              //     //     color: Colors.grey, // Inactive color
-              //     //     activeColor: Colors.redAccent, // Active color
-              //     //     size: Size(11, 11), // Adjust the size of the dots here
-              //     //     activeSize: Size(20, 20), // Adjust the size of the active dot
-              //     //   ),
-              //     // ),
               //     InkWell(
-              //         onTap:(){
+              //       onTap: () {
               //
-              //         } ,
-              //         child: Image.asset("images/Arrowleft.png")),
+              //    if(currentPageIndex == 2)
+              //           {
+              //             print(currentPageIndex);
+              //             _pageController.animateToPage(
+              //               1,
+              //               duration: const Duration(milliseconds: 300),
+              //               curve: Curves.ease,
+              //             );
+              //           }
+              //         else if(currentPageIndex == 1)
+              //         {
+              //           print(currentPageIndex);
+              //           _pageController.animateToPage(
+              //             0,
+              //             duration: const Duration(milliseconds: 300),
+              //             curve: Curves.ease,
+              //           );
+              //         }
+              //       },
+              //       child: Image.asset("images/Arrowleft.png"),
+              //     ),
               //     SmoothPageIndicator(
               //       controller: _pageController,
               //       count: 3,
@@ -87,40 +95,58 @@
               //       },
               //     ),
               //     InkWell(
-              //         onTap:(){
-              //
-              //         } ,
-              //         child: Image.asset("images/Arrowright.png")),
-              //
+              //       onTap: () {
+              //         if (currentPageIndex == 1) {
+              //           _pageController.animateToPage(
+              //             2,
+              //             duration: const Duration(milliseconds: 300),
+              //             curve: Curves.ease,
+              //           );
+              //         }
+              //         else if(currentPageIndex == 0){
+              //           _pageController.animateToPage(
+              //             1,
+              //             duration: const Duration(milliseconds: 300),
+              //             curve: Curves.ease,
+              //           );
+              //         }
+              //         else if(currentPageIndex == 2){
+              //           // _pageController.animateToPage(
+              //           //   1,
+              //           //   duration: const Duration(milliseconds: 300),
+              //           //   curve: Curves.ease,
+              //           // );
+              //           Navigator.pushReplacement(
+              //               context,
+              //               MaterialPageRoute(builder: (context) => SignIn(),));
+              //         }
+              //       },
+              //       child: Image.asset("images/Arrowright.png"),
+              //     ),
               //   ],
               // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-
-                 if(currentPageIndex == 2)
-                        {
-                          print(currentPageIndex);
+                  if (currentPageIndex != 0) // Condition to show left arrow on pages other than page 1
+                    InkWell(
+                      onTap: () {
+                        if (currentPageIndex == 2) {
                           _pageController.animateToPage(
                             1,
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.ease,
                           );
+                        } else if (currentPageIndex == 1) {
+                          _pageController.animateToPage(
+                            0,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
                         }
-                      else if(currentPageIndex == 1)
-                      {
-                        print(currentPageIndex);
-                        _pageController.animateToPage(
-                          0,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease,
-                        );
-                      }
-                    },
-                    child: Image.asset("images/Arrowleft.png"),
-                  ),
+                      },
+                      child: Image.asset("images/Arrowleft.png"),
+                    ),
                   SmoothPageIndicator(
                     controller: _pageController,
                     count: 3,
@@ -135,37 +161,74 @@
                       );
                     },
                   ),
-                  InkWell(
-                    onTap: () {
-                      if (currentPageIndex == 1) {
-                        _pageController.animateToPage(
-                          2,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease,
-                        );
-                      }
-                      else if(currentPageIndex == 0){
-                        _pageController.animateToPage(
-                          1,
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.ease,
-                        );
-                      }
-                      else if(currentPageIndex == 2){
-                        // _pageController.animateToPage(
-                        //   1,
-                        //   duration: const Duration(milliseconds: 300),
-                        //   curve: Curves.ease,
-                        // );
+                  if (currentPageIndex != 2) // Condition to show right arrow on pages other than page 3
+                    InkWell(
+                      onTap: () {
+                        if (currentPageIndex == 1) {
+                          _pageController.animateToPage(
+                            2,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        } else if (currentPageIndex == 0) {
+                          _pageController.animateToPage(
+                            1,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        }
+                      },
+                      child: Image.asset("images/Arrowright.png"),
+                    ),
+                  // if (currentPageIndex == 2) // Condition to show right arrow on pages other than page 3
+                  //   InkWell(
+                  //     onTap: () {
+                  //       if (currentPageIndex == 1) {
+                  //         _pageController.animateToPage(
+                  //          1,
+                  //           duration: const Duration(milliseconds: 300),
+                  //           curve: Curves.ease,
+                  //         );
+                  //       } else if (currentPageIndex == 0) {
+                  //         _pageController.animateToPage(
+                  //           3,
+                  //           duration: const Duration(milliseconds: 300),
+                  //           curve: Curves.ease,
+                  //         );
+                  //       }
+                  //     },
+                  //     child: Image.asset("images/Arrowright.png"),
+                  //   ),
+                  if (currentPageIndex == 2) // Condition to show right arrow on pages other than page 3
+                    InkWell(
+                      onTap: () {
+                        // if (currentPageIndex == 1) {
+                        //   _pageController.animateToPage(
+                        //     1,
+                        //     duration: const Duration(milliseconds: 300),
+                        //     curve: Curves.ease,
+                        //   );
+                        // } else if (currentPageIndex == 0) {
+                        //   _pageController.animateToPage(
+                        //     3,
+                        //     duration: const Duration(milliseconds: 300),
+                        //     curve: Curves.ease,
+                        //   );
+                        // }
                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => SignIn(),));
-                      }
-                    },
-                    child: Image.asset("images/Arrowright.png"),
-                  ),
+                                          context,
+                                           MaterialPageRoute(builder: (context) => SignIn(),));
+                      },
+                      child: Image.asset("images/Arrowright.png"),
+                    ),
+
                 ],
               ),
+
+
+
+
+
 
 
             const SizedBox(height: 20),
@@ -195,7 +258,7 @@
               child: Text(
                 "Let's Get Started !",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 23.5,
                   fontWeight: FontWeight.bold,
                   foreground: Paint()
                     ..shader = LinearGradient(
@@ -221,6 +284,7 @@
       return Scaffold(
         body: Column(
           children: [
+
             Padding(
               padding: const EdgeInsets.all(1),
               child: Image.asset('images/Hiremi_Icon.png'),
@@ -229,7 +293,7 @@
             const Text(
               "Discover Exclusive",
               style: TextStyle(
-                fontSize: 30,
+                fontSize:23.5,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -239,12 +303,13 @@
               child: Text(
                 "Job Opportunities!",
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 23.5,
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
                 ),
               ),
             ),
+
           ],
         ),
       );
@@ -265,15 +330,18 @@
               padding: const EdgeInsets.all(1),
               child: Image.asset('images/Hiremi_Icon.png'),
             ),
-            SizedBox(
-              height: screenHeight*0.47,
-              width: screenWidth*0.99,
-              child: Image.asset('images/thirdCongratulation.png'),
+            Padding(
+              padding: const EdgeInsets.only(left: 21.0),
+              child: SizedBox(
+                height: screenHeight*0.43,
+                width: screenWidth*0.9,
+                child: Image.asset('images/thirdCongratulation.png'),
+              ),
             ),
             const Text(
               "Get Personalized",
               style: TextStyle(
-                fontSize: 27.5,
+                fontSize: 23.5,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -281,7 +349,7 @@
             Text(
               "Career Guidance!",
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 23.5,
                 fontWeight: FontWeight.bold,
                 color: Colors.red,
               ),

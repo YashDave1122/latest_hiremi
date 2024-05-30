@@ -79,7 +79,12 @@ class _RegisterState extends State<Register> {
   //   }
   // }
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+  }
   List listItem=[
     "Male","Female","Other"
   ];
@@ -279,58 +284,7 @@ class _RegisterState extends State<Register> {
                 if (emailController.text == serverUsername) {
                   // Username and password match, navigate to the home page
                 print("Email Already exist");
-                // showDialog(context: context, builder: (BuildContext context){
-                //
-                // return AlertDialog(
-                //     backgroundColor: Colors.white,
-                //     surfaceTintColor: Colors.transparent,
-                //     actions: [
-                //       Column(
-                //         children: [
-                //
-                //           SizedBox(height: 30,),
-                //           Center(
-                //             child: Text(
-                //               "Email Already exist",
-                //               textAlign: TextAlign.center,
-                //               style: TextStyle(
-                //                 fontFamily: "FontMain",
-                //                 fontSize: 18,
-                //                 color: Color(0xFFBD232B),
-                //               ),
-                //             ),
-                //           ),
-                //           SizedBox(height: 35,),
-                //           ElevatedButton(
-                //             onPressed: () {
-                //               // Pop the current route (the AlertDialog)
-                //               Navigator.of(context).pop();
-                //
-                //               // Navigate to the HomePage
-                //
-                //             },
-                //             style: ElevatedButton.styleFrom(
-                //               backgroundColor: const Color(0xFFF13640),
-                //               minimumSize: Size(250, 50),
-                //               shape: RoundedRectangleBorder(
-                //                 borderRadius: BorderRadius.circular(30),
-                //               ),
-                //             ),
-                //             child: const Text(
-                //               "OK",
-                //               style: TextStyle(
-                //                 color: Colors.white,
-                //                 fontWeight: FontWeight.w700,
-                //                 fontSize: 20,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   );
-                //
-                // });
+
 
                 showDialog(
                   context: context,
@@ -446,7 +400,7 @@ class _RegisterState extends State<Register> {
   Future<void> saveFullNameToSharedPreferences(String FullName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('FullName', FullName);
-   // print(FullName);
+   print(FullName);
   }
   Gender _gender=Gender.Male;
   final UserService _userService = UserService();
@@ -505,6 +459,967 @@ class _RegisterState extends State<Register> {
         passingYearController.text = selectedYear.toString();
       }
     }
+    // return Scaffold(
+    //   body: SingleChildScrollView(
+    //
+    //     child: Form(
+    //       key: _formKey,
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.start,
+    //         children: [
+    //           SizedBox(height: 30,),
+    //           Row(
+    //             children: [
+    //
+    //               InkWell(
+    //                   onTap: (){
+    //                     Navigator.push(context,MaterialPageRoute(builder: (context)
+    //                     {
+    //                       return SignIn();
+    //                     }
+    //                     ),);
+    //                   },
+    //                   child: Image.asset('images/Back_Button.png')),
+    //             ],
+    //           ),
+    //           SizedBox(height: 10,),
+    //           Container(
+    //             child: Row(
+    //               children: [
+    //
+    //                 SizedBox(width: 10,),
+    //                CustomTextWidget(text: "Register",
+    //                color:  Color(0xFFBD232B),
+    //                fontSize: 30,
+    //                ),
+    //
+    //               ],
+    //             ),
+    //           ),
+    //           Container(
+    //             child: Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 CustomTextWidget(text: "Create your new account,\nwe are glad that you joined us.",
+    //                   fontSize: screenWidth < 411 ? 11 : 13,
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //           SizedBox(height: 45,),
+    //
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Your Name",style: TextStyle(
+    //                   color:  Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 23 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //           Container(
+    //             color: Colors.white,
+    //
+    //             child:  Row(
+    //               children: [
+    //                 Flexible(
+    //                   child: Padding(
+    //                     padding: EdgeInsets.all(30.0),
+    //
+    //                     child: TextFormField(
+    //                       controller:firstnameController ,
+    //                       validator: (value) {
+    //                         if (value!.isEmpty) {
+    //                           return 'Please enter name';
+    //                         }
+    //                         return null; // Return null if the input is valid
+    //                       },
+    //                       decoration: InputDecoration(labelText: 'First Name',
+    //                           labelStyle: TextStyle( color:Color(0xFFCACACA))),
+    //                     ),
+    //                   ),
+    //
+    //
+    //                 ),
+    //
+    //                 Flexible(
+    //                   child: Padding(
+    //                     padding: EdgeInsets.all(30.0),
+    //                     child: TextFormField(
+    //                       controller:lastnameController ,
+    //                       validator: (value) {
+    //                         if (value!.isEmpty) {
+    //                           return 'Please enter name';
+    //                         }
+    //                         return null; // Return null if the input is valid
+    //                       },
+    //                       decoration: InputDecoration(labelText: 'Last Name',
+    //                       labelStyle: TextStyle( color:Color(0xFFCACACA))),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //           SizedBox(height: 30,),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Father's Name",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 23 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //           Container(
+    //             color: Colors.white,
+    //
+    //             child: Row(
+    //               children: [
+    //                 Flexible(
+    //                   child: Padding(
+    //                     padding: EdgeInsets.all(30.0),
+    //                     child: TextFormField(
+    //                       controller:fatherFirstController ,
+    //                       validator: (value) {
+    //                         if (value!.isEmpty) {
+    //                           return 'Please enter Fathers name';
+    //                         }
+    //                         return null; // Return null if the input is valid
+    //                       },
+    //                       decoration: InputDecoration(labelText: 'First Name',
+    //                       labelStyle: TextStyle( color:Color(0xFFCACACA))),
+    //                     ),
+    //                   ),
+    //                 ),
+    //
+    //                 Flexible(
+    //                   child: Padding(
+    //                     padding: EdgeInsets.all(30.0),
+    //                     child: TextFormField(
+    //                       controller: fatherLastController,
+    //                       validator: (value) {
+    //                         if (value!.isEmpty) {
+    //                           return 'Please enter name';
+    //                         }
+    //                         return null; // Return null if the input is valid
+    //                       },
+    //                       decoration: InputDecoration(labelText: 'Last Name',
+    //                       labelStyle: TextStyle( color:Color(0xFFCACACA))),
+    //                     ),
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Gender",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 23 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //
+    //           Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //             children: [
+    //               Text("Male",
+    //               style: TextStyle(
+    //                 fontWeight: FontWeight.w500,
+    //                 fontSize: screenWidth < 400 ? 13 : 16,
+    //                 fontFamily: 'Poppins.bold',
+    //                color: Color(0xFFCACACA),
+    //               ),),
+    //             Radio(
+    //
+    //                 value: Gender.Male, groupValue: _gender, onChanged: (gender){
+    //               setState(() {
+    //                 _gender = gender!;
+    //               });
+    //             }),
+    //               Text("Female",
+    //               style: TextStyle(
+    //                 fontWeight: FontWeight.w500,
+    //                 fontSize: screenWidth < 400 ? 14 : 16,
+    //                 fontFamily: 'Poppins.bold',
+    //                 color: Color(0xFFCACACA),
+    //               ),),
+    //               Radio(
+    //
+    //                   value: Gender.Female, groupValue: _gender, onChanged: (gender){
+    //                 setState(() {
+    //                   _gender = gender!;
+    //                 });
+    //               }),
+    //
+    //             ],
+    //           ),
+    //
+    //
+    //          SizedBox(height: 25,),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Enter your Email",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 24 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //           Container(
+    //             color: Colors.white,
+    //
+    //             child:  Row(
+    //               children: [
+    //                 Flexible(
+    //                   child: Padding(
+    //                     padding: EdgeInsets.all(20.0),
+    //                     child: TextFormField(
+    //                       controller:emailController ,
+    //                       onChanged: (value) {
+    //                         setState(() {
+    //                           if (value.contains(' ')) {
+    //                             errorTextVal = "Don't use blank spaces";
+    //                           } else if (!value.contains('@gmail.com')) {
+    //                             errorTextVal = "use @gmail.com in the email";
+    //                           } else {
+    //                             errorTextVal = '';
+    //                           }
+    //                         });
+    //                       },
+    //                       validator: (value) {
+    //                         if (value!.isEmpty) {
+    //                           return 'Please enter an email';
+    //                         }
+    //                         // Define a regular expression for email validation.
+    //                         final emailRegex =
+    //                         RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    //                         if (!emailRegex.hasMatch(value)) {
+    //                           return 'Please enter a valid email';
+    //                         }
+    //                         return null;
+    //                       },
+    //                       textInputAction: TextInputAction.done,
+    //                       decoration: InputDecoration(
+    //                         errorText: errorTextVal.isEmpty ? null : errorTextVal,
+    //                         enabledBorder: const UnderlineInputBorder(
+    //                           borderSide: BorderSide(
+    //                             color: Color(0xFFCACACA),
+    //                           ),
+    //                         ),
+    //                         focusedBorder: const UnderlineInputBorder(
+    //                           borderSide: BorderSide(
+    //                             color: Color(0xFFCACACA),
+    //                           ),
+    //                         ),
+    //                         hintText: 'email@gmail.com',
+    //                         hintStyle: const TextStyle(
+    //                           color:Color(0xFF9B9B9B),
+    //                           fontSize: 14.5,
+    //                           fontWeight: FontWeight.w500,
+    //                         ),
+    //                       ),
+    //                     ),
+    //                   ),
+    //                 ),
+    //
+    //
+    //
+    //               ],
+    //             ),
+    //           ),
+    //           SizedBox(height: 25,),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Date of Birth",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 24 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //          SizedBox(height: 10,),
+    //
+    //           Padding(
+    //             padding: EdgeInsets.all(20.0),
+    //             child: TextFormField(
+    //               readOnly: true,
+    //               cursorColor: Color(0xFF9B9B9B),
+    //               controller: dateOfBirthController,
+    //               focusNode: FocusNode(),
+    //               validator: (value) {
+    //                 if (value!.isEmpty) {
+    //                   return 'Please enter Date of Birth';
+    //                 }
+    //                 return null; // Return null if the input is valid
+    //               },
+    //               onTap: () {
+    //                 selectDatePicker();
+    //               },
+    //               decoration: InputDecoration(
+    //                 enabledBorder: const UnderlineInputBorder(
+    //                   borderSide: BorderSide(
+    //                     color: Color(0xFFCACACA),
+    //                   ),
+    //                 ),
+    //                 focusedBorder: const UnderlineInputBorder(
+    //                   borderSide: BorderSide(
+    //                     color: Color(0xFF9B9B9B),
+    //                   ),
+    //                 ),
+    //                 suffixIcon: IconButton(
+    //                   onPressed: () {
+    //                     selectDatePicker();
+    //                   },
+    //                   icon: const Icon(
+    //                   //  Icons.expand_more,
+    //                     Icons.arrow_drop_down,
+    //                   ),
+    //                 ),
+    //                 suffixIconColor: Color(0xFF9B9B9B),
+    //                 prefixIcon: IconButton(
+    //                   onPressed: () {
+    //                     selectDatePicker();
+    //                   },
+    //                   icon: const Icon(
+    //                     Icons.calendar_month_outlined,
+    //                   ),
+    //                 ),
+    //                 prefixIconColor: Color(0xFF9B9B9B),
+    //               ),
+    //             ),
+    //           ),
+    //
+    //           SizedBox(height: 10,),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Birth Place",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 24 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //
+    //
+    //            Padding(
+    //             padding: EdgeInsets.all(20.0),
+    //             child: TextFormField(
+    //               controller: birthStateController,
+    //               readOnly: true,
+    //               onTap: () {
+    //                 // Display a dialog with a list of states for selection
+    //                 showDialog(
+    //                   context: context,
+    //                   builder: (BuildContext context) {
+    //                     return AlertDialog(
+    //                       title: Text('Select Your Home State'),
+    //                       content: SingleChildScrollView(
+    //                         child: Column(
+    //                           children: indianStates.map((state) {
+    //                             return ListTile(
+    //                               title: Text(state),
+    //                               onTap: () {
+    //                                 setState(() {
+    //                                   birthStateController.text = state;
+    //                                 });
+    //                                 Navigator.pop(context); // Close the dialog
+    //                               },
+    //                             );
+    //                           }).toList(),
+    //                         ),
+    //                       ),
+    //                     );
+    //                   },
+    //                 );
+    //               },
+    //               decoration: InputDecoration(
+    //                 labelText: 'Select Your Home State',
+    //                 labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                 suffixIcon: Icon(Icons.arrow_drop_down),
+    //               ),
+    //               validator: (value) {
+    //                 if (value == null || value.isEmpty) {
+    //                   return 'Please select a state';
+    //                 }
+    //                 return null;
+    //               },
+    //             ),
+    //           ),
+    //           SizedBox(height: 15,),
+    //          Container(
+    //            child: Column(
+    //              children: [ Container( color: Colors.white,
+    //                child:  Row(
+    //                  children: [
+    //                    SizedBox(width: 30,),
+    //                    Text("Contact Number",style: TextStyle(
+    //                      color: Colors.black,
+    //                      fontWeight: FontWeight.w700,
+    //                      fontSize: screenWidth < 400 ? 24 : 26,
+    //                      fontFamily: 'FontMain',
+    //                    ),),
+    //                  ],),),
+    //                Row(
+    //                  children: [
+    //                    Flexible(
+    //                      child: Padding(
+    //                        padding: EdgeInsets.all(20.0),
+    //                        child: TextFormField(
+    //                          controller: phoneNumberController,
+    //                          maxLength: 10,
+    //                          onChanged: (value) {
+    //                            // Remove any non-digit characters from the input value
+    //                            phoneNumberController.text = value.replaceAll(RegExp(r'[^0-9]'), ''); // This regex will remove any non-digit characters
+    //                          },
+    //                          validator: (value) {
+    //                            // Get the trimmed value without non-digit characters
+    //                            String trimmedValue = value!.replaceAll(RegExp(r'[^0-9]'), '');
+    //
+    //                            if (trimmedValue.isEmpty) {
+    //                              return 'Please enter a phone number';
+    //                            } else if (trimmedValue.length < 10) {
+    //                              return 'Number should contain 10 digits';
+    //                            }
+    //                            return null; // Return null if the input is valid
+    //                          },
+    //                          keyboardType: TextInputType.number,
+    //                          inputFormatters: [FilteringTextInputFormatter.digitsOnly], // Restrict input to only digits
+    //                          decoration: InputDecoration(
+    //                            labelText: 'Phone Number',
+    //                            labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                          ),
+    //                        ),
+    //
+    //
+    //                      ),
+    //                    ),
+    //                  ],
+    //                ),
+    //                Row(
+    //                  children: [
+    //                    Flexible(
+    //                      child: Padding(
+    //                        padding: EdgeInsets.all(20.0),
+    //                        child: TextFormField(
+    //                          controller: whatsAppNumberController,
+    //                          maxLength: 10,
+    //                          keyboardType: TextInputType.number,
+    //                          onChanged: (value) {
+    //                            // Remove any non-digit characters from the input value
+    //                            whatsAppNumberController.text = value.replaceAll(RegExp(r'[^0-9]'), ''); // This regex will remove any non-digit characters
+    //                          },
+    //                          validator: (value) {
+    //                            // Get the trimmed value without non-digit characters
+    //                            String trimmedValue = value!.replaceAll(RegExp(r'[^0-9]'), '');
+    //
+    //                            if (trimmedValue.isEmpty) {
+    //                              return 'Please enter a WhatsApp number';
+    //                            } else if (trimmedValue.length < 10) {
+    //                              return 'Number should contain 10 digits';
+    //                            }
+    //
+    //                            return null; // Return null if the input is valid
+    //                          },
+    //                          decoration: InputDecoration(
+    //                            labelText: 'WhatsApp Number',
+    //                            labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                          ),
+    //                        ),
+    //
+    //                      ),
+    //                    ),
+    //                  ],
+    //                ),],
+    //            ),
+    //          ),
+    //          SizedBox(height: 15,),
+    //          Container( color: Colors.white,
+    //            child:  Row(
+    //              children: [
+    //                SizedBox(width: 20,),
+    //                Text("College",style: TextStyle(
+    //                  color: Colors.black,
+    //                  fontWeight: FontWeight.w700,
+    //                  fontSize: screenWidth < 400 ? 23.5 : 26,
+    //                  fontFamily: 'FontMain',
+    //                ),),
+    //              ],),),
+    //
+    //           Row(
+    //             children: [
+    //               Flexible(
+    //
+    //                 child: Padding(
+    //                   padding: EdgeInsets.all(20.0),
+    //                   child: TextFormField(
+    //                     controller: collageStateController,
+    //                     readOnly: true,
+    //                     onTap: () {
+    //                       showDialog(
+    //                         context: context,
+    //                         builder: (BuildContext context) {
+    //                           return AlertDialog(
+    //                             title: Text('Select Your College State'),
+    //                             content: SingleChildScrollView(
+    //                               child: Column(
+    //                                 children: indianStates.map((state) {
+    //                                   return ListTile(
+    //                                     title: Text(state),
+    //                                     onTap: () {
+    //                                       setState(() {
+    //                                         collageStateController.text = state;
+    //                                       });
+    //                                       Navigator.pop(context); // Close the dialog
+    //                                     },
+    //                                   );
+    //                                 }).toList(),
+    //                               ),
+    //                             ),
+    //                           );
+    //                         },
+    //                       );
+    //                     },
+    //                     decoration: InputDecoration(
+    //                       labelText: 'Select Your College State',
+    //                       labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                       suffixIcon: Icon(Icons.arrow_drop_down),
+    //                     ),
+    //                     validator: (value) {
+    //                       if (value == null || value.isEmpty) {
+    //                         return 'Please select a state';
+    //                       }
+    //                       return null;
+    //                     },
+    //                   ),
+    //                 ),
+    //
+    //
+    //
+    //               ),
+    //             ],
+    //           ),
+    //           Row(
+    //             children: [
+    //               Flexible(
+    //                 child: Padding(
+    //                   padding: EdgeInsets.all(20.0),
+    //                   child: TextFormField(
+    //                     controller: collageNameController,
+    //                     validator: (value) {
+    //                       if (value!.isEmpty) {
+    //                         return 'Please enter CollageName';
+    //                       }
+    //                       return null; // Return null if the input is valid
+    //                     },
+    //                     decoration: InputDecoration(labelText: 'College Name',
+    //                         labelStyle: TextStyle( color:Color(0xFFCACACA)
+    //
+    //                         ),
+    //
+    //                     ),
+    //
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //           Row(
+    //             children: [
+    //               Flexible(
+    //                 child: Padding(
+    //                   padding: EdgeInsets.all(20.0),
+    //                   child: TextFormField(
+    //                     controller: branchNameController,
+    //                     readOnly: true,
+    //                     onTap: () {
+    //                       // Display a dialog with a list of states for selection
+    //                       showDialog(
+    //                         context: context,
+    //                         builder: (BuildContext context) {
+    //                           return AlertDialog(
+    //                             title: Text('Select Your Branch'),
+    //                             content: SingleChildScrollView(
+    //                               child: Column(
+    //                                 children: Branch.map((Branch) {
+    //                                   return ListTile(
+    //                                     title: Text(Branch),
+    //                                     onTap: () {
+    //                                       setState(() {
+    //                                         branchNameController.text = Branch;
+    //                                       });
+    //                                       Navigator.pop(context); // Close the dialog
+    //                                     },
+    //                                   );
+    //                                 }).toList(),
+    //                               ),
+    //                             ),
+    //                           );
+    //                         },
+    //                       );
+    //                     },
+    //                     decoration: InputDecoration(
+    //                       labelText: 'Select Your Branch',
+    //                       labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                       suffixIcon: Icon(Icons.arrow_drop_down),
+    //                     ),
+    //                     validator: (value) {
+    //                       if (value == null || value.isEmpty) {
+    //                         return 'Please select a state';
+    //                       }
+    //                       return null;
+    //                     },
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //           Row(
+    //             children: [
+    //               Flexible(
+    //                 child: Padding(
+    //                   padding: EdgeInsets.all(20.0),
+    //                   child: TextFormField(
+    //                     controller: DegreeNameController,
+    //                     readOnly: true,
+    //                     onTap: () {
+    //                       // Display a dialog with a list of states for selection
+    //                       showDialog(
+    //                         context: context,
+    //                         builder: (BuildContext context) {
+    //                           return AlertDialog(
+    //                             title: Text('Degree Name'),
+    //                             content: SingleChildScrollView(
+    //                               child: Column(
+    //                                 children: Degree.map((Degree) {
+    //                                   return ListTile(
+    //                                     title: Text(Degree),
+    //                                     onTap: () {
+    //                                       setState(() {
+    //                                         DegreeNameController.text = Degree;
+    //                                       });
+    //                                       Navigator.pop(context); // Close the dialog
+    //                                     },
+    //                                   );
+    //                                 }).toList(),
+    //                               ),
+    //                             ),
+    //                           );
+    //                         },
+    //                       );
+    //                     },
+    //                     decoration: InputDecoration(
+    //                       labelText: 'Degree Name',
+    //                       labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //                       suffixIcon: Icon(Icons.arrow_drop_down),
+    //                     ),
+    //                     validator: (value) {
+    //                       if (value == null || value.isEmpty) {
+    //                         return 'Please select a Degree Name';
+    //                       }
+    //                       return null;
+    //                     },
+    //                   ),
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
+    //           Row(
+    //             children: [
+    //               Flexible(
+    //                 // child: Padding(
+    //                 //   padding: EdgeInsets.all(20.0),
+    //                 //   child: TextFormField(
+    //                 //     controller:passingYearController,
+    //                 //     validator: (value) {
+    //                 //       if (value!.isEmpty) {
+    //                 //         return 'Please enter Passing year';
+    //                 //       }
+    //                 //       return null; // Return null if the input is valid
+    //                 //     },
+    //                 //     keyboardType: TextInputType.number,
+    //                 //     decoration: InputDecoration(labelText: 'Passing Year',
+    //                 //         labelStyle: TextStyle( color:Color(0xFFCACACA))),
+    //                 //   ),
+    //                 // ),
+    //
+    //           child: Padding(
+    //            padding: EdgeInsets.all(20.0),
+    //           child: TextFormField(
+    //         controller: passingYearController,
+    //         readOnly: true,
+    //         onTap: () => _selectYear(context),
+    //         validator: (value) {
+    //           if (value!.isEmpty) {
+    //             return 'Please select a year';
+    //           }
+    //           return null;
+    //         },
+    //         keyboardType: TextInputType.number,
+    //         decoration: InputDecoration(
+    //           labelText: 'Year',
+    //           labelStyle: TextStyle(color: Color(0xFFCACACA)),
+    //           suffixIcon: Icon(Icons.arrow_drop_down),
+    //         ),
+    //       ),
+    //     )
+    //               ),
+    //             ],
+    //           ),
+    //           SizedBox(height: 15,),
+    //           Container(
+    //
+    //             color: Colors.white,
+    //             child:  Row(
+    //               children: [
+    //                 SizedBox(width: 30,),
+    //                 Text("Create Your Password",style: TextStyle(
+    //                   color: Colors.black,
+    //                   fontWeight: FontWeight.w700,
+    //                   fontSize: screenWidth < 400 ? 23.5 : 26,
+    //                   fontFamily: 'FontMain',
+    //                 ),),
+    //               ],),
+    //           ),
+    //           SizedBox(height: 15,),
+    //
+    //           Padding(
+    //             padding: const EdgeInsets.only(left: 37, right: 58),
+    //
+    //             child:TextFormField(
+    //               controller: passwordController,
+    //               obscureText: !isPasswordVisible,
+    //             validator: (value) {
+    //                  if (value!.isEmpty) {
+    //                         return 'Please enter password';
+    //                     }
+    //                      return null; // Return null if the input is valid
+    //                    },
+    //               decoration: InputDecoration(
+    //                 enabledBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(color: Color(0xFFCACACA)),
+    //                 ),
+    //                 focusedBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(color: Color(0xFFCACACA)),
+    //                 ),
+    //                 prefixIcon: Padding(
+    //                   padding: EdgeInsets.only(right: 20),
+    //                   child: Icon(
+    //                     Icons.lock,
+    //                     color: Color(0xFF9B9B9B),
+    //                     size: 22,
+    //                   ),
+    //                 ),
+    //                 suffixIcon: IconButton(
+    //                   onPressed: () {
+    //                     setState(() {
+    //                       isPasswordVisible = !isPasswordVisible;
+    //                     });
+    //                   },
+    //                   icon: Icon(
+    //                     isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+    //                     color: Color(0xFF9B9B9B),
+    //                   ),
+    //                 ),
+    //                 hintText: 'Password',
+    //                 hintStyle: TextStyle(
+    //                   color: Color(0xFF9B9B9B),
+    //                   fontSize: screenWidth < 400 ? 13 : 15,
+    //                   fontWeight: FontWeight.w500,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //          const SizedBox(height: 30),
+    //           Padding(
+    //             padding: const EdgeInsets.only(left: 37, right: 58),
+    //             child:TextFormField(
+    //               controller: conformPasswordController,
+    //               obscureText: !isConfirmPasswordVisible,
+    //               validator: (value) {
+    //                 if (value!.isEmpty) {
+    //                   return 'Please enter Conform password';
+    //                 }
+    //                 return null; // Return null if the input is valid
+    //               },
+    //               decoration: InputDecoration(
+    //                 enabledBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(color: Color(0xFFCACACA)),
+    //                 ),
+    //                 focusedBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(color: Color(0xFFCACACA)),
+    //                 ),
+    //                 prefixIcon: Padding(
+    //                   padding: EdgeInsets.only(right: 20),
+    //                   child: Icon(
+    //                     Icons.lock,
+    //                     color: Color(0xFF9B9B9B),
+    //                     size: 22,
+    //                   ),
+    //                 ),
+    //                 suffixIcon: IconButton(
+    //                   onPressed: () {
+    //                     setState(() {
+    //                       isConfirmPasswordVisible = !isConfirmPasswordVisible;
+    //                     });
+    //                   },
+    //                   icon: Icon(
+    //                     isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+    //                     color: Color(0xFF9B9B9B),
+    //                   ),
+    //                 ),
+    //                 hintText: 'Confirm Password',
+    //                 hintStyle: TextStyle(
+    //                   color: Color(0xFF9B9B9B),
+    //                   fontSize: 15,
+    //                   fontWeight: FontWeight.w500,
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //           SizedBox(height: 35,),
+    //           ElevatedButton(onPressed: ()    {
+    //
+    //           //validateEmail(emailController.text);
+    //             if (_formKey.currentState?.validate() == true) {
+    //
+    //              print("All feilds are filled");
+    //                if(passwordController.text != conformPasswordController.text){
+    //
+    //                  showDialog(
+    //                    context: context,
+    //                    builder: (BuildContext context) {
+    //                      return Stack(
+    //                        children: [
+    //                          // Blurred background
+    //                          BackdropFilter(
+    //                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+    //                            child: Container(
+    //                              color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+    //                              width: MediaQuery.of(context).size.width,
+    //                              height: MediaQuery.of(context).size.height,
+    //                            ),
+    //                          ),
+    //                          // AlertDialog on top of the blurred background
+    //                          AlertDialog(
+    //                            backgroundColor: Colors.white,
+    //                            surfaceTintColor: Colors.transparent,// Set the background color to transparent
+    //                            content: Column(
+    //                              mainAxisSize: MainAxisSize.min,
+    //                              children: [
+    //                                SizedBox(height: 30),
+    //                                Center(
+    //                                  child: Text(
+    //                                    "Password Mismatch",
+    //                                    textAlign: TextAlign.center,
+    //                                    style: TextStyle(
+    //                                      fontFamily: "FontMain",
+    //                                      fontSize: 18,
+    //                                      color: Color(0xFFBD232B),
+    //                                    ),
+    //                                  ),
+    //                                ),
+    //                                SizedBox(height: 35),
+    //                                ElevatedButton(
+    //                                  onPressed: () {
+    //                                    // Pop the current route (the AlertDialog)
+    //                                    Navigator.of(context).pop();
+    //
+    //                                    // Add any additional logic here
+    //
+    //                                  },
+    //                                  style: ElevatedButton.styleFrom(
+    //                                    backgroundColor: const Color(0xFFF13640),
+    //                                    minimumSize: Size(250, 50),
+    //                                    shape: RoundedRectangleBorder(
+    //                                      borderRadius: BorderRadius.circular(30),
+    //                                    ),
+    //                                  ),
+    //                                  child: const Text(
+    //                                    "OK",
+    //                                    style: TextStyle(
+    //                                      color: Colors.white,
+    //                                      fontWeight: FontWeight.w700,
+    //                                      fontSize: 20,
+    //                                    ),
+    //                                  ),
+    //                                ),
+    //                              ],
+    //                            ),
+    //                          ),
+    //                        ],
+    //                      );
+    //                    },
+    //                  );
+    //               }
+    //
+    //              else{
+    //                checkEmailExistence();
+    //              }
+    //
+    //             }
+    //
+    //             else {
+    //               // Form is not valid, show error message
+    //               ScaffoldMessenger.of(context).showSnackBar(
+    //                 SnackBar(
+    //                   content: Text('Please fix the errors in the form.'),
+    //                 ),
+    //               );
+    //             }
+    //
+    //
+    //            //submitVerification();
+    //           },style: ElevatedButton.styleFrom(
+    //                 backgroundColor:const Color(0xFFF13640),
+    //                 shape:RoundedRectangleBorder(
+    //                   borderRadius:BorderRadius.circular(20)
+    //                 ),
+    //           ), child: Text("Submit",style: TextStyle(
+    //             color:Colors.white,
+    //             fontWeight:FontWeight.w700,
+    //              fontSize:25,
+    //           ),)),
+    //           SizedBox(height: 35,),
+    //
+    //
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
     return Scaffold(
       body: SingleChildScrollView(
 
@@ -516,7 +1431,7 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 30,),
               Row(
                 children: [
-          
+
                   InkWell(
                       onTap: (){
                         Navigator.push(context,MaterialPageRoute(builder: (context)
@@ -532,13 +1447,13 @@ class _RegisterState extends State<Register> {
               Container(
                 child: Row(
                   children: [
-          
+
                     SizedBox(width: 10,),
-                   CustomTextWidget(text: "Register",
-                   color:  Color(0xFFBD232B),
-                   fontSize: 30,
-                   ),
-          
+                    CustomTextWidget(text: "Register",
+                      color:  Color(0xFFBD232B),
+                      fontSize: 30,
+                    ),
+
                   ],
                 ),
               ),
@@ -553,9 +1468,9 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               SizedBox(height: 45,),
-          
+
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -570,7 +1485,7 @@ class _RegisterState extends State<Register> {
               ),
               Container(
                 color: Colors.white,
-          
+
                 child:  Row(
                   children: [
                     Flexible(
@@ -589,10 +1504,10 @@ class _RegisterState extends State<Register> {
                               labelStyle: TextStyle( color:Color(0xFFCACACA))),
                         ),
                       ),
-          
-          
+
+
                     ),
-          
+
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.all(30.0),
@@ -605,7 +1520,7 @@ class _RegisterState extends State<Register> {
                             return null; // Return null if the input is valid
                           },
                           decoration: InputDecoration(labelText: 'Last Name',
-                          labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                              labelStyle: TextStyle( color:Color(0xFFCACACA))),
                         ),
                       ),
                     ),
@@ -614,7 +1529,7 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 30,),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -629,7 +1544,7 @@ class _RegisterState extends State<Register> {
               ),
               Container(
                 color: Colors.white,
-          
+
                 child: Row(
                   children: [
                     Flexible(
@@ -644,11 +1559,11 @@ class _RegisterState extends State<Register> {
                             return null; // Return null if the input is valid
                           },
                           decoration: InputDecoration(labelText: 'First Name',
-                          labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                              labelStyle: TextStyle( color:Color(0xFFCACACA))),
                         ),
                       ),
                     ),
-          
+
                     Flexible(
                       child: Padding(
                         padding: EdgeInsets.all(30.0),
@@ -661,7 +1576,7 @@ class _RegisterState extends State<Register> {
                             return null; // Return null if the input is valid
                           },
                           decoration: InputDecoration(labelText: 'Last Name',
-                          labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                              labelStyle: TextStyle( color:Color(0xFFCACACA))),
                         ),
                       ),
                     ),
@@ -669,7 +1584,7 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -682,46 +1597,68 @@ class _RegisterState extends State<Register> {
                     ),),
                   ],),
               ),
-          
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Male",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: screenWidth < 400 ? 13 : 16,
-                    fontFamily: 'Poppins.bold',
-                   color: Color(0xFFCACACA),
-                  ),),
-                Radio(
-          
-                    value: Gender.Male, groupValue: _gender, onChanged: (gender){
-                  setState(() {
-                    _gender = gender!;
-                  });
-                }),
-                  Text("Female",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: screenWidth < 400 ? 14 : 16,
-                    fontFamily: 'Poppins.bold',
-                    color: Color(0xFFCACACA),
-                  ),),
-                  Radio(
-          
-                      value: Gender.Female, groupValue: _gender, onChanged: (gender){
-                    setState(() {
-                      _gender = gender!;
-                    });
-                  }),
-          
+                 Row(
+                   children: [
+                     Radio(
+
+                         value: Gender.Male, groupValue: _gender, onChanged: (gender){
+                       setState(() {
+                         _gender = gender!;
+                       });
+                     }),
+                     Text("Male",
+                       style: TextStyle(
+                         fontWeight: FontWeight.w500,
+                         fontSize: screenWidth < 400 ? 18 : 16,
+                         fontFamily: 'Poppins.bold',
+                         color: Color(0xFFCACACA),
+                       ),),
+                   ],
+                 ),
+                  // Radio(
+                  //
+                  //     value: Gender.Male, groupValue: _gender, onChanged: (gender){
+                  //   setState(() {
+                  //     _gender = gender!;
+                  //   });
+                  // }),
+                Row(
+                  children: [
+                    Radio(
+
+                        value: Gender.Female, groupValue: _gender, onChanged: (gender){
+                      setState(() {
+                        _gender = gender!;
+                      });
+                    }),
+                    Text("Female",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: screenWidth < 400 ? 18 : 16,
+                        fontFamily: 'Poppins.bold',
+                        color: Color(0xFFCACACA),
+                      ),),
+                  ],
+                )
+                  //Radio(
+                  //
+                  //     value: Gender.Female, groupValue: _gender, onChanged: (gender){
+                  //   setState(() {
+                  //     _gender = gender!;
+                  //   });
+                  // }),
+
                 ],
               ),
-          
-          
-             SizedBox(height: 25,),
+
+
+              SizedBox(height: 25,),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -736,7 +1673,7 @@ class _RegisterState extends State<Register> {
               ),
               Container(
                 color: Colors.white,
-          
+
                 child:  Row(
                   children: [
                     Flexible(
@@ -791,14 +1728,14 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
 
-          
-          
+
+
                   ],
                 ),
               ),
               SizedBox(height: 25,),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -811,7 +1748,7 @@ class _RegisterState extends State<Register> {
                     ),),
                   ],),
               ),
-             SizedBox(height: 10,),
+              SizedBox(height: 10,),
 
               Padding(
                 padding: EdgeInsets.all(20.0),
@@ -845,7 +1782,7 @@ class _RegisterState extends State<Register> {
                         selectDatePicker();
                       },
                       icon: const Icon(
-                      //  Icons.expand_more,
+                        //  Icons.expand_more,
                         Icons.arrow_drop_down,
                       ),
                     ),
@@ -865,7 +1802,7 @@ class _RegisterState extends State<Register> {
 
               SizedBox(height: 10,),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -880,7 +1817,7 @@ class _RegisterState extends State<Register> {
               ),
 
 
-               Padding(
+              Padding(
                 padding: EdgeInsets.all(20.0),
                 child: TextFormField(
                   controller: birthStateController,
@@ -925,87 +1862,87 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               SizedBox(height: 15,),
-             Container(
-               child: Column(
-                 children: [ Container( color: Colors.white,
-                   child:  Row(
-                     children: [
-                       SizedBox(width: 30,),
-                       Text("Contact Number",style: TextStyle(
-                         color: Colors.black,
-                         fontWeight: FontWeight.w700,
-                         fontSize: screenWidth < 400 ? 24 : 26,
-                         fontFamily: 'FontMain',
-                       ),),
-                     ],),),
-                   Row(
-                     children: [
-                       Flexible(
-                         child: Padding(
-                           padding: EdgeInsets.all(20.0),
-                           child: TextFormField(
-                             controller:phoneNumberController ,
-                             maxLength: 10,
-                             validator: (value) {
-                               if (value!.isEmpty) {
-                                 return 'Please enter phone number';
-                               }
-                               else if(value.length<10)
-                                 {
-                                   return 'Number should contain 10 digit';
-                                 }
-                               return null; // Return null if the input is valid
-                             },
-                               keyboardType: TextInputType.number,
-                             decoration: InputDecoration(labelText: 'Phone Number',
-                                 labelStyle: TextStyle( color:Color(0xFFCACACA))),
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),
-                   Row(
-                     children: [
-                       Flexible(
-                         child: Padding(
-                           padding: EdgeInsets.all(20.0),
-                           child: TextFormField(
-                             controller: whatsAppNumberController,
-                             maxLength: 10,
-                             keyboardType: TextInputType.number,
-                             validator: (value) {
-                               if (value!.isEmpty) {
-                                 return 'Please enter Whatsapp number';
-                               }
-                               else if(value.length<10)
-                               {
-                                 return 'Number should contain 10 digit';
-                               }
+              Container(
+                child: Column(
+                  children: [ Container( color: Colors.white,
+                    child:  Row(
+                      children: [
+                        SizedBox(width: 30,),
+                        Text("Contact Number",style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: screenWidth < 400 ? 24 : 26,
+                          fontFamily: 'FontMain',
+                        ),),
+                      ],),),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: TextFormField(
+                              controller:phoneNumberController ,
+                              maxLength: 10,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter phone number';
+                                }
+                                else if(value.length<10)
+                                {
+                                  return 'Number should contain 10 digit';
+                                }
+                                return null; // Return null if the input is valid
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(labelText: 'Phone Number',
+                                  labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: TextFormField(
+                              controller: whatsAppNumberController,
+                              maxLength: 10,
+                              keyboardType: TextInputType.number,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Please enter Whatsapp number';
+                                }
+                                else if(value.length<10)
+                                {
+                                  return 'Number should contain 10 digit';
+                                }
 
-                               return null; // Return null if the input is valid
-                             },
-                             decoration: InputDecoration(labelText: 'Whatsapp Number',
-                                 labelStyle: TextStyle( color:Color(0xFFCACACA))),
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),],
-               ),
-             ),
-             SizedBox(height: 15,),
-             Container( color: Colors.white,
-               child:  Row(
-                 children: [
-                   SizedBox(width: 20,),
-                   Text("College",style: TextStyle(
-                     color: Colors.black,
-                     fontWeight: FontWeight.w700,
-                     fontSize: screenWidth < 400 ? 23.5 : 26,
-                     fontFamily: 'FontMain',
-                   ),),
-                 ],),),
-          
+                                return null; // Return null if the input is valid
+                              },
+                              decoration: InputDecoration(labelText: 'Whatsapp Number',
+                                  labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),],
+                ),
+              ),
+              SizedBox(height: 15,),
+              Container( color: Colors.white,
+                child:  Row(
+                  children: [
+                    SizedBox(width: 20,),
+                    Text("College",style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: screenWidth < 400 ? 23.5 : 26,
+                      fontFamily: 'FontMain',
+                    ),),
+                  ],),),
+
               Row(
                 children: [
                   Flexible(
@@ -1073,9 +2010,9 @@ class _RegisterState extends State<Register> {
                           return null; // Return null if the input is valid
                         },
                         decoration: InputDecoration(labelText: 'College Name',
-                            labelStyle: TextStyle( color:Color(0xFFCACACA)
+                          labelStyle: TextStyle( color:Color(0xFFCACACA)
 
-                            ),
+                          ),
 
                         ),
 
@@ -1203,32 +2140,32 @@ class _RegisterState extends State<Register> {
                     //   ),
                     // ),
 
-              child: Padding(
-              padding: EdgeInsets.all(20.0),
-          child: TextFormField(
-            controller: passingYearController,
-            readOnly: true,
-            onTap: () => _selectYear(context),
-            validator: (value) {
-              if (value!.isEmpty) {
-                return 'Please select a year';
-              }
-              return null;
-            },
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: 'Year',
-              labelStyle: TextStyle(color: Color(0xFFCACACA)),
-              suffixIcon: Icon(Icons.arrow_drop_down),
-            ),
-          ),
-        )
+                      child: Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: TextFormField(
+                          controller: passingYearController,
+                          readOnly: true,
+                          onTap: () => _selectYear(context),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please select a year';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            labelText: 'Year',
+                            labelStyle: TextStyle(color: Color(0xFFCACACA)),
+                            suffixIcon: Icon(Icons.arrow_drop_down),
+                          ),
+                        ),
+                      )
                   ),
                 ],
               ),
               SizedBox(height: 15,),
               Container(
-          
+
                 color: Colors.white,
                 child:  Row(
                   children: [
@@ -1242,19 +2179,19 @@ class _RegisterState extends State<Register> {
                   ],),
               ),
               SizedBox(height: 15,),
-          
+
               Padding(
-                padding: const EdgeInsets.only(left: 37, right: 58),
+                padding: const EdgeInsets.only(left: 66, right: 58),
 
                 child:TextFormField(
                   controller: passwordController,
                   obscureText: !isPasswordVisible,
-                validator: (value) {
-                     if (value!.isEmpty) {
-                            return 'Please enter password';
-                        }
-                         return null; // Return null if the input is valid
-                       },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter password';
+                    }
+                    return null; // Return null if the input is valid
+                  },
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xFFCACACA)),
@@ -1290,9 +2227,9 @@ class _RegisterState extends State<Register> {
                   ),
                 ),
               ),
-             const SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
-                padding: const EdgeInsets.only(left: 37, right: 58),
+                padding: const EdgeInsets.only(left: 66, right: 58),
                 child:TextFormField(
                   controller: conformPasswordController,
                   obscureText: !isConfirmPasswordVisible,
@@ -1340,82 +2277,83 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 35,),
               ElevatedButton(onPressed: ()    {
 
-              //validateEmail(emailController.text);
+                //validateEmail(emailController.text);
                 if (_formKey.currentState?.validate() == true) {
 
-                 print("All feilds are filled");
-                   if(passwordController.text != conformPasswordController.text){
+                  print("All feilds are filled");
 
-                     showDialog(
-                       context: context,
-                       builder: (BuildContext context) {
-                         return Stack(
-                           children: [
-                             // Blurred background
-                             BackdropFilter(
-                               filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                               child: Container(
-                                 color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
-                                 width: MediaQuery.of(context).size.width,
-                                 height: MediaQuery.of(context).size.height,
-                               ),
-                             ),
-                             // AlertDialog on top of the blurred background
-                             AlertDialog(
-                               backgroundColor: Colors.white,
-                               surfaceTintColor: Colors.transparent,// Set the background color to transparent
-                               content: Column(
-                                 mainAxisSize: MainAxisSize.min,
-                                 children: [
-                                   SizedBox(height: 30),
-                                   Center(
-                                     child: Text(
-                                       "Password Mismatch",
-                                       textAlign: TextAlign.center,
-                                       style: TextStyle(
-                                         fontFamily: "FontMain",
-                                         fontSize: 18,
-                                         color: Color(0xFFBD232B),
-                                       ),
-                                     ),
-                                   ),
-                                   SizedBox(height: 35),
-                                   ElevatedButton(
-                                     onPressed: () {
-                                       // Pop the current route (the AlertDialog)
-                                       Navigator.of(context).pop();
+                  if(passwordController.text != conformPasswordController.text){
 
-                                       // Add any additional logic here
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Stack(
+                          children: [
+                            // Blurred background
+                            BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                              child: Container(
+                                color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                              ),
+                            ),
+                            // AlertDialog on top of the blurred background
+                            AlertDialog(
+                              backgroundColor: Colors.white,
+                              surfaceTintColor: Colors.transparent,// Set the background color to transparent
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(height: 30),
+                                  Center(
+                                    child: Text(
+                                      "Password Mismatch",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: "FontMain",
+                                        fontSize: 18,
+                                        color: Color(0xFFBD232B),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 35),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Pop the current route (the AlertDialog)
+                                      Navigator.of(context).pop();
 
-                                     },
-                                     style: ElevatedButton.styleFrom(
-                                       backgroundColor: const Color(0xFFF13640),
-                                       minimumSize: Size(250, 50),
-                                       shape: RoundedRectangleBorder(
-                                         borderRadius: BorderRadius.circular(30),
-                                       ),
-                                     ),
-                                     child: const Text(
-                                       "OK",
-                                       style: TextStyle(
-                                         color: Colors.white,
-                                         fontWeight: FontWeight.w700,
-                                         fontSize: 20,
-                                       ),
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                             ),
-                           ],
-                         );
-                       },
-                     );
+                                      // Add any additional logic here
+
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFFF13640),
+                                      minimumSize: Size(250, 50),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      "OK",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
 
-                 else{
-                   checkEmailExistence();
-                 }
+                  else{
+                    checkEmailExistence();
+                  }
 
                 }
 
@@ -1429,20 +2367,20 @@ class _RegisterState extends State<Register> {
                 }
 
 
-               //submitVerification();
+                //submitVerification();
               },style: ElevatedButton.styleFrom(
-                    backgroundColor:const Color(0xFFF13640),
-                    shape:RoundedRectangleBorder(
-                      borderRadius:BorderRadius.circular(20)
-                    ),
+                backgroundColor:const Color(0xFFF13640),
+                shape:RoundedRectangleBorder(
+                    borderRadius:BorderRadius.circular(20)
+                ),
               ), child: Text("Submit",style: TextStyle(
                 color:Colors.white,
                 fontWeight:FontWeight.w700,
-                 fontSize:25,
+                fontSize:25,
               ),)),
               SizedBox(height: 35,),
-          
-          
+
+
             ],
           ),
         ),

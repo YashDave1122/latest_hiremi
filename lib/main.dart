@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:hiremi/CongratulationScreen.dart';
 import 'package:hiremi/CorporateTraining.dart';
 import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:hiremi/PaymentSuccesful.dart';
 import 'package:hiremi/chatGptrz2.dart';
+import 'package:hiremi/dependenct_injection.dart';
+import 'package:hiremi/fupazhan.dart';
 import 'package:hiremi/pageview_screen.dart';
 import 'package:hiremi/seceondCongratulationScreen.dart';
 import 'package:hiremi/firstCongratulationScreen.dart';
@@ -24,6 +27,7 @@ import 'RZ.dart';
 void main() {
 
   runApp(const MyApp());
+  DependencyInjection.init();
 }
 
 
@@ -47,7 +51,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _checkForUpdate();
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -69,7 +73,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor:Colors.white),
         useMaterial3: true,
       ),
-      home: HomePage(sourceScreen: '', uid: '', username: '', verificationId: '',),
+      home: CongratulationScreen(),
       // routes: {
       //   '/signin': (context) => SignIn(),
       // },

@@ -97,7 +97,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     child: const Text(
-                      "OK",
+                      "LogIn",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
@@ -373,6 +373,7 @@ class _SignInState extends State<SignIn> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('username', username);
   }
+
   Future<void> savePasswordToSharedPreferences(String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('password', password);
