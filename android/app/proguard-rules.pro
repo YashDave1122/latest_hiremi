@@ -1,0 +1,12 @@
+-keep class com.paytm.routersdk.RouterService
+-keep class com.paytm.routersdk.RouterOrder
+-keep class com.paytm.routersdk.RouterTransactionCallback
+-keep class com.paytm.routersdk.RouterTransactionManager
+-keep class com.paytm.routersdk.model.** { *; }
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.**  { *; }
+-keep class io.flutter.util.**  { *; }
+-keep class io.flutter.view.**  { *; }
+-keep class io.flutter.**  { *; }
+-keep class io.flutter.plugins.**  { *; }
+-dontwarn io.flutter.embedding.**

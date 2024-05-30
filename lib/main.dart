@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:hiremi/CongratulationScreen.dart';
 import 'package:hiremi/CorporateTraining.dart';
 import 'package:flutter_app_update/flutter_app_update.dart';
+import 'package:hiremi/PaymenrCompletionScreen.dart';
 import 'package:hiremi/PaymentSuccesful.dart';
 import 'package:hiremi/chatGptrz2.dart';
 import 'package:hiremi/dependenct_injection.dart';
 import 'package:hiremi/fupazhan.dart';
 import 'package:hiremi/pageview_screen.dart';
+import 'package:hiremi/paytmpayment.dart';
 import 'package:hiremi/seceondCongratulationScreen.dart';
 import 'package:hiremi/firstCongratulationScreen.dart';
 import 'package:in_app_update/in_app_update.dart';
@@ -73,7 +75,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor:Colors.white),
         useMaterial3: true,
       ),
-      home: CongratulationScreen(),
+      home:CongratulationScreen(),
       // routes: {
       //   '/signin': (context) => SignIn(),
       // },

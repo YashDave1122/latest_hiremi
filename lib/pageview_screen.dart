@@ -240,7 +240,7 @@
   
   class Page1 extends StatelessWidget {
     const Page1({Key? key}) : super(key: key);
-  
+
     @override
     Widget build(BuildContext context) {
       double screenWidth=MediaQuery.of(context).size.width;
@@ -253,26 +253,68 @@
               child: Image.asset('images/Hiremi_Icon.png'),
             ),
             Image.asset('images/FirstCongratulationScreen.png'),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Text(
-                "Let's Get Started !",
-                style: TextStyle(
-                  fontSize: 23.5,
-                  fontWeight: FontWeight.bold,
-                  foreground: Paint()
-                    ..shader = LinearGradient(
-                      colors: [Colors.red.shade900, Colors.red.shade500],
-                    ).createShader(const Rect.fromLTWH(0, 0, 200, 70)),
-                ),
+            // Text(
+            //   "Let's Get Started !",
+            //   style: TextStyle(
+            //     fontSize: 30.5,
+            //     fontWeight: FontWeight.bold,
+            //     // foreground: Paint()
+            //     //   ..shader = LinearGradient(
+            //     //     colors: [Colors.red.shade900, Colors.red.shade500],
+            //     //   ).createShader(const Rect.fromLTWH(0, 0, 200, 70)),
+            //     color: [Colors.red.shade900, Colors.red.shade500],
+            //   ),
+            // ),
+            Text(
+              "Let's Get Started!",
+              style: TextStyle(
+                fontSize: 23.5,
+                fontWeight: FontWeight.bold,
+                foreground: Paint()
+                  ..shader = LinearGradient(
+                    colors: [Colors.red.shade900, Colors.red.shade500],
+                  ).createShader(const Rect.fromLTWH(0, 0, 200, 70)),
               ),
             ),
-  
+
           ],
         ),
       );
     }
   }
+  // class Page1 extends StatelessWidget {
+  //   const Page1({Key? key}) : super(key: key);
+  //
+  //   @override
+  //   Widget build(BuildContext context) {
+  //     double screenWidth = MediaQuery.of(context).size.width;
+  //     double screenHeight = MediaQuery.of(context).size.height;
+  //     return Scaffold(
+  //       body: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         crossAxisAlignment: CrossAxisAlignment.center,
+  //         children: [
+  //           Padding(
+  //             padding: const EdgeInsets.all(1.0),
+  //             child: Image.asset('images/Hiremi_Icon.png'),
+  //           ),
+  //           Image.asset('images/FirstCongratulationScreen.png'),
+  //           Text(
+  //             "Let's Get Started!",
+  //             style: TextStyle(
+  //               fontSize: 23.5,
+  //               fontWeight: FontWeight.bold,
+  //               foreground: Paint()
+  //                 ..shader = LinearGradient(
+  //                   colors: [Colors.red.shade900, Colors.red.shade500],
+  //                 ).createShader(const Rect.fromLTWH(0, 0, 200, 70)),
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
   
   class Page2 extends StatelessWidget {
     const Page2({Key? key}) : super(key: key);
@@ -285,10 +327,7 @@
         body: Column(
           children: [
 
-            Padding(
-              padding: const EdgeInsets.all(1),
-              child: Image.asset('images/Hiremi_Icon.png'),
-            ),
+            Image.asset('images/Hiremi_Icon.png'),
             Image.asset('images/seceondCongratulations.png'),
             const Text(
               "Discover Exclusive",
@@ -298,15 +337,12 @@
                 color: Colors.black,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(2.0),
-              child: Text(
-                "Job Opportunities!",
-                style: TextStyle(
-                  fontSize: 23.5,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.red,
-                ),
+            Text(
+              "Job Opportunities!",
+              style: TextStyle(
+                fontSize: 23.5,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
               ),
             ),
 
@@ -326,15 +362,12 @@
       return Scaffold(
         body: Column(
           children: [
+            Image.asset('images/Hiremi_Icon.png'),
             Padding(
-              padding: const EdgeInsets.all(1),
-              child: Image.asset('images/Hiremi_Icon.png'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 21.0),
+              padding: const EdgeInsets.only(left: 51.0),
               child: SizedBox(
                 height: screenHeight*0.43,
-                width: screenWidth*0.9,
+                width: screenWidth*0.8,
                 child: Image.asset('images/thirdCongratulation.png'),
               ),
             ),

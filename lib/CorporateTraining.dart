@@ -22,7 +22,7 @@ class _CorporateTrainingState extends State<CorporateTraining> {
     AlreadyApplied();
     _loadUserEmail();
     fetchDiscount();
-    print("ghfidahvchfcduhfsuch ");
+
   }
   String loginEmail="";
   int Uid = 0;
@@ -45,9 +45,12 @@ class _CorporateTrainingState extends State<CorporateTraining> {
     }
   }
   Future<void> fetchDiscount() async {
-    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/discount/'));
+    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/corporatediscount/'));
+    print("FetchDiscount");
 
     if (response.statusCode == 200) {
+      print("${response.statusCode}");
+      print("idjh");
       // Parse the response JSON
       final List<dynamic> data = jsonDecode(response.body);
 
@@ -57,6 +60,8 @@ class _CorporateTrainingState extends State<CorporateTraining> {
         final int originalPrice = discountData['original_price'];
 
         // Calculate discounted price
+        print(discount);
+        print(originalPrice);
         final double discountPrice = originalPrice - (originalPrice * discount / 100);
 
         setState(() {
@@ -68,6 +73,10 @@ class _CorporateTrainingState extends State<CorporateTraining> {
 
       }
 
+    }
+    else{
+      print("${response.statusCode}");
+      print("In else section");
     }
   }
   Future<void> applyNow() async {

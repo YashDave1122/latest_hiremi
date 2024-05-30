@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('csrfToken', csrfToken);
   }
- // TextEditingController passingYearController = TextEditingController();
+  // TextEditingController passingYearController = TextEditingController();
   DateTime? selectedDate;
 
   // Future<void> _selectDate(BuildContext context) async {
@@ -79,7 +79,7 @@ class _RegisterState extends State<Register> {
   //   }
   // }
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -202,31 +202,31 @@ class _RegisterState extends State<Register> {
 
 
   Future<void> submitVerification() async{
-   //saveFullNameToSharedPreferences(firstnameController.text.toString()+lastnameController.text.toString());
+    //saveFullNameToSharedPreferences(firstnameController.text.toString()+lastnameController.text.toString());
 
     final url =Uri.parse('${ApiUrls.baseurl}api/registers/');
     try {
       final response = await http.post(
         url,
 
-          body: {
-         //  'uid': Uuid().v4().substring(0, 8),
+        body: {
+          //  'uid': Uuid().v4().substring(0, 8),
           'full_name':firstnameController.text+' '+lastnameController.text,
           'father_name': lastnameController.text+' '+fatherLastController.text,
-            'gender': _gender.toString().split('.').last,
-            // "gender": genderSelector.toString(),
-      "email": emailController.text,
-            'date_of_birth': dateOfBirthController.text,
+          'gender': _gender.toString().split('.').last,
+          // "gender": genderSelector.toString(),
+          "email": emailController.text,
+          'date_of_birth': dateOfBirthController.text,
           'phone_number':phoneNumberController.text,
           'whatsapp_number':whatsAppNumberController.text,
           'college_state': collageStateController.text,
-           'college_name':collageNameController.text,
+          'college_name':collageNameController.text,
           'branch_name':branchNameController.text,
-            "degree_name":DegreeNameController.text,
+          "degree_name":DegreeNameController.text,
           'passing_year':passingYearController.text,
           'password':passwordController.text,
-            'address': '$countryPicker-$statePicker-$cityPicker',
-          },
+          'home_state': birthStateController.text,
+        },
       );
       if (response.statusCode == 201) {
         Navigator.push(context,MaterialPageRoute(builder: (context)
@@ -271,7 +271,7 @@ class _RegisterState extends State<Register> {
             // Check if the data is a Map
             if (data is Map<String, dynamic>) {
               // Print the entire data for inspection
-             // print('Entire data: $data');
+              // print('Entire data: $data');
 
 
               // Check for specific keys in the data
@@ -283,88 +283,88 @@ class _RegisterState extends State<Register> {
                 // Check if the entered username and password match the server data
                 if (emailController.text == serverUsername) {
                   // Username and password match, navigate to the home page
-                print("Email Already exist");
+                  print("Email Already exist");
 
 
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Stack(
-                      children: [
-                        // Blurred background
-                        BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: Container(
-                            color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Stack(
+                        children: [
+                          // Blurred background
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                            ),
                           ),
-                        ),
-                        // AlertDialog on top of the blurred background
-                        AlertDialog(
-                          backgroundColor: Colors.white,
-                          surfaceTintColor: Colors.transparent,// Set the background color to transparent
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(height: 30),
-                              Center(
-                                child: Text(
-                                  "Email Already Exist",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: "FontMain",
-                                    fontSize: 18,
-                                    color: Color(0xFFBD232B),
+                          // AlertDialog on top of the blurred background
+                          AlertDialog(
+                            backgroundColor: Colors.white,
+                            surfaceTintColor: Colors.transparent,// Set the background color to transparent
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(height: 30),
+                                Center(
+                                  child: Text(
+                                    "Email Already Exist",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "FontMain",
+                                      fontSize: 18,
+                                      color: Color(0xFFBD232B),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 35),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // Pop the current route (the AlertDialog)
-                                  Navigator.of(context).pop();
+                                SizedBox(height: 35),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // Pop the current route (the AlertDialog)
+                                    Navigator.of(context).pop();
 
-                                  // Add any additional logic here
+                                    // Add any additional logic here
 
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFF13640),
-                                  minimumSize: Size(250, 50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30),
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFFF13640),
+                                    minimumSize: Size(250, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    "OK",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
-                                child: const Text(
-                                  "OK",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                        ],
+                      );
+                    },
+                  );
 
-                // Break out of the loop if a match is found (assuming you only want the first match)
-
+                  // Break out of the loop if a match is found (assuming you only want the first match)
 
 
 
-                break;
+
+                  break;
                 }
                 else {
                   // Username and password do not match, handle accordingly (show error message, etc.)
                   submitVerification();
-                print('New Email ID');
-                print("Hello");
-             // break;
+                  print('New Email ID');
+                  print("Hello");
+                  // break;
 
                 }
               } else {
@@ -400,7 +400,7 @@ class _RegisterState extends State<Register> {
   Future<void> saveFullNameToSharedPreferences(String FullName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('FullName', FullName);
-   print(FullName);
+    print(FullName);
   }
   Gender _gender=Gender.Male;
   final UserService _userService = UserService();
@@ -1454,9 +1454,11 @@ class _RegisterState extends State<Register> {
                       fontSize: 30,
                     ),
 
+
                   ],
                 ),
               ),
+              SizedBox(height: 10,),
               Container(
                 child: Row(
                   children: [
@@ -1601,24 +1603,24 @@ class _RegisterState extends State<Register> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                 Row(
-                   children: [
-                     Radio(
+                  Row(
+                    children: [
+                      Radio(
 
-                         value: Gender.Male, groupValue: _gender, onChanged: (gender){
-                       setState(() {
-                         _gender = gender!;
-                       });
-                     }),
-                     Text("Male",
-                       style: TextStyle(
-                         fontWeight: FontWeight.w500,
-                         fontSize: screenWidth < 400 ? 18 : 16,
-                         fontFamily: 'Poppins.bold',
-                         color: Color(0xFFCACACA),
-                       ),),
-                   ],
-                 ),
+                          value: Gender.Male, groupValue: _gender, onChanged: (gender){
+                        setState(() {
+                          _gender = gender!;
+                        });
+                      }),
+                      Text("Male",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: screenWidth < 400 ? 18 : 16,
+                          fontFamily: 'Poppins.bold',
+                          color: Color(0xFFCACACA),
+                        ),),
+                    ],
+                  ),
                   // Radio(
                   //
                   //     value: Gender.Male, groupValue: _gender, onChanged: (gender){
@@ -1626,24 +1628,24 @@ class _RegisterState extends State<Register> {
                   //     _gender = gender!;
                   //   });
                   // }),
-                Row(
-                  children: [
-                    Radio(
+                  Row(
+                    children: [
+                      Radio(
 
-                        value: Gender.Female, groupValue: _gender, onChanged: (gender){
-                      setState(() {
-                        _gender = gender!;
-                      });
-                    }),
-                    Text("Female",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: screenWidth < 400 ? 18 : 16,
-                        fontFamily: 'Poppins.bold',
-                        color: Color(0xFFCACACA),
-                      ),),
-                  ],
-                )
+                          value: Gender.Female, groupValue: _gender, onChanged: (gender){
+                        setState(() {
+                          _gender = gender!;
+                        });
+                      }),
+                      Text("Female",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: screenWidth < 400 ? 18 : 16,
+                          fontFamily: 'Poppins.bold',
+                          color: Color(0xFFCACACA),
+                        ),),
+                    ],
+                  )
                   //Radio(
                   //
                   //     value: Gender.Female, groupValue: _gender, onChanged: (gender){
@@ -1875,32 +1877,89 @@ class _RegisterState extends State<Register> {
                           fontFamily: 'FontMain',
                         ),),
                       ],),),
+                    // Row(
+                    //   children: [
+                    //     Flexible(
+                    //       child: Padding(
+                    //         padding: EdgeInsets.all(20.0),
+                    //         child: TextFormField(
+                    //           controller:phoneNumberController ,
+                    //           maxLength: 10,
+                    //           validator: (value) {
+                    //             if (value!.isEmpty) {
+                    //               return 'Please enter phone number';
+                    //             }
+                    //             else if(value.length<10)
+                    //             {
+                    //               return 'Number should contain 10 digit';
+                    //             }
+                    //             return null; // Return null if the input is valid
+                    //           },
+                    //           keyboardType: TextInputType.number,
+                    //           decoration: InputDecoration(labelText: 'Phone Number',
+                    //               labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         Flexible(
                           child: Padding(
                             padding: EdgeInsets.all(20.0),
                             child: TextFormField(
-                              controller:phoneNumberController ,
+                              controller: phoneNumberController,
                               maxLength: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return 'Please enter phone number';
-                                }
-                                else if(value.length<10)
-                                {
-                                  return 'Number should contain 10 digit';
+                                } else if (value.length < 10) {
+                                  return 'Number should contain 10 digits';
                                 }
                                 return null; // Return null if the input is valid
                               },
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(labelText: 'Phone Number',
-                                  labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              decoration: InputDecoration(
+                                labelText: 'Phone Number',
+                                labelStyle: TextStyle(color: Color(0xFFCACACA)),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
+
+                    // Row(
+                    //   children: [
+                    //     Flexible(
+                    //       child: Padding(
+                    //         padding: EdgeInsets.all(20.0),
+                    //         child: TextFormField(
+                    //           controller: whatsAppNumberController,
+                    //           maxLength: 10,
+                    //           keyboardType: TextInputType.number,
+                    //           validator: (value) {
+                    //             if (value!.isEmpty) {
+                    //               return 'Please enter Whatsapp number';
+                    //             }
+                    //             else if(value.length<10)
+                    //             {
+                    //               return 'Number should contain 10 digit';
+                    //             }
+                    //
+                    //             return null; // Return null if the input is valid
+                    //           },
+                    //           decoration: InputDecoration(labelText: 'Whatsapp Number',
+                    //               labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       children: [
                         Flexible(
@@ -1910,24 +1969,29 @@ class _RegisterState extends State<Register> {
                               controller: whatsAppNumberController,
                               maxLength: 10,
                               keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter Whatsapp number';
+                                  return 'Please enter WhatsApp number';
+                                } else if (value.length < 10) {
+                                  return 'Number should contain 10 digits';
                                 }
-                                else if(value.length<10)
-                                {
-                                  return 'Number should contain 10 digit';
-                                }
-
                                 return null; // Return null if the input is valid
                               },
-                              decoration: InputDecoration(labelText: 'Whatsapp Number',
-                                  labelStyle: TextStyle( color:Color(0xFFCACACA))),
+                              decoration: InputDecoration(
+                                labelText: 'WhatsApp Number',
+                                labelStyle: TextStyle(color: Color(0xFFCACACA)),
+                              ),
                             ),
                           ),
                         ),
                       ],
-                    ),],
+                    )
+
+
+                  ],
                 ),
               ),
               SizedBox(height: 15,),

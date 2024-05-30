@@ -12,6 +12,7 @@ import 'package:hiremi/api_services/base_services.dart';
 import 'package:hiremi/api_services/user_services.dart';
 import 'package:hiremi/chatGptrz.dart';
 import 'package:hiremi/chatGptrz2.dart';
+import 'package:hiremi/paytmpayment.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -229,7 +230,7 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                         SizedBox(height: 30),
                         Center(
                           child: Text(
-                            "After verification, you can applyfor job and internship opportunities! ",
+                            "After verification, you can apply for job and internship opportunities! ",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: 'FontMain',
@@ -245,20 +246,10 @@ class _UserVerificationScreenState extends State<UserVerificationScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaymentScreen(paymentAmount:discountedPrice.toInt() ),
+                                builder: (context) => MyPaytmPayment(sourceScreen:'ForVerification',paymentAmount:discountedPrice.toInt() ),
                               ),
                             );
-                          }
-
-                             // paymentScreen._startPayment
-                            // Navigate to payment screen with the discounted price
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => PaymentScreen(paymentAmount: 1),
-                            //   ),
-                            // );
-                          ,
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFF13640),
                             minimumSize: Size(250, 50),

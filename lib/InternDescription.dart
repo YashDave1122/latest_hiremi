@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hiremi/HomePage.dart';
 import 'package:hiremi/internship.dart';
 import 'package:hiremi/utils/api.dart';
 import 'package:hiremi/utils/my_colors.dart';
+import 'package:hiremi/widgets/bottomnav.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:ui';
@@ -175,8 +177,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                 actions: [
                   Column(
                     children: [
-                      SizedBox(height: 30,),
-                      Center(
+                      const SizedBox(height: 30,),
+                      const Center(
                         child: Text(
                           "Enter Internship Code ",
                           style: TextStyle(
@@ -186,12 +188,12 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
                       TextField(
                         controller: jobCodeController,
-                        decoration: InputDecoration(labelText: 'Internship Code'),
+                        decoration: const InputDecoration(labelText: 'Internship Code'),
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
 
                       ElevatedButton(
                         onPressed: () async {
@@ -208,12 +210,12 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF13640),
-                          minimumSize: Size(250, 50),
+                          minimumSize: const Size(250, 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: Text('Submit', style: TextStyle(color: Colors.white)),
+                        child: const Text('Submit', style: TextStyle(color: Colors.white)),
                       ),
                     ],
                   )
@@ -230,7 +232,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(const Duration(seconds: 3), () {
           Navigator.of(context).pop(true); // Close the dialog after 3 seconds
         });
         return Stack(
@@ -262,35 +264,35 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                         child: RichText(
                           textAlign: TextAlign.center,
                           text: TextSpan(
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: "FontMain",
                               fontSize: 15,
                               color: Colors.black, // Default color for other text
                             ),
                             children: [
-                              TextSpan(
+                              const TextSpan(
                                 text: "You have applied for ",
                               ),
 
                               TextSpan(
                                 text: "$JProfile",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold, // Make JobProfile text bold
                                   color: Color(0xFFBD232B), // Desired color for JobProfile text
                                 ),
                               ),
-                              TextSpan(
+                              const TextSpan(
                                 text: " position. We will update you after the interview.",
                               ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ],
-                content: Text(
+                content: const Text(
 
                   "Thank you for applying to hiremi", // Your leading text
                   textAlign: TextAlign.center,
@@ -348,7 +350,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                   return AlertDialog(
                     backgroundColor: Colors.white,
                     surfaceTintColor: Colors.transparent,
-                    title: Text(
+                    title: const Text(
                       'Terms And Condition',
                       textAlign: TextAlign.center,
                     ),
@@ -370,7 +372,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                           //     ),
                           //   ),
                           // ),
-                          Text(
+                          const Text(
                             "1.All the selected students will get mobile application link, where they have to pay a security deposit of Rs. 3000 which is refundable only at the time of joining the organization (after completion of training)",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -380,8 +382,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 20,),
-                          Text(
+                          const SizedBox(height: 20,),
+                          const Text(
                             "2.After doing registration then their Employee id will get active and their entire joining process will get started In case any student has done registration then they don't want to join the organization so in such a situation amount is not refundable.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -391,8 +393,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                               color: Colors.black,
                             ),
                           ),
-                          SizedBox(height: 20,),
-                          Text(
+                          const SizedBox(height: 20,),
+                          const Text(
                             "3.The offer letter will be released only after registration.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -403,8 +405,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                               ,
                             ),
                           ),
-                          SizedBox(height: 20,),
-                          Text(
+                          const SizedBox(height: 20,),
+                          const Text(
                             "4.Security Deposit: As a part of the joining process, all selected students are required to pay a refundable security deposit of Rs. 3000."
                             ,
                             textAlign: TextAlign.center,
@@ -427,10 +429,9 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                                   }
                                       : null,
                                   style: ElevatedButton.styleFrom(
-                                    primary:
-                                    agreedToTerms ? Color(0xFFF13640) : null,
+                                    backgroundColor: agreedToTerms ? const Color(0xFFF13640) : null,
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Apply',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(color: Colors.white),
@@ -443,7 +444,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('Cancel'),
+                                  child: const Text('Cancel'),
                                 ),
                               ),
                             ],
@@ -459,7 +460,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                                 },
                               ),
                               const SizedBox(width: 8),
-                              Text('Agree with terms and conditions'),
+                              const Text('Agree with terms and conditions'),
                             ],
                           ),
                         ],
@@ -490,21 +491,21 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
           content: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Center(
                   child: Text(
                     "$error",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: "FontMain",
                       fontSize: 18,
                       color: Color(0xFFBD232B),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 35,
                 ),
                 ElevatedButton(
@@ -514,7 +515,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFF13640),
-                    minimumSize: Size(250, 50),
+                    minimumSize: const Size(250, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -548,15 +549,15 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
           actions: [
             Column(
               children: [
-                SizedBox(height: 30,),
-                Center(child: Text("Job Code is not valid",
+                const SizedBox(height: 30,),
+                const Center(child: Text("Job Code is not valid",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "FontMain",
                     fontSize: 18,
                     color: Color(0xFFBD232B),
                   ),)),
-                SizedBox(height: 35,),
+                const SizedBox(height: 35,),
                 // ElevatedButton(onPressed: (){
                 //
                 // }, child: Text("click here"))
@@ -566,7 +567,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF13640),
-                      minimumSize: Size(250, 50),
+                      minimumSize: const Size(250, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
 
@@ -627,7 +628,8 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const HomePage(sourceScreen: "Screen11", uid: "", username: "", verificationId: ""),
+              builder: (context) => const Bottom()
+            //HomePage(sourceScreen: "Screen11", uid: "", username: "", verificationId: ""),
           ),
         );
 
@@ -757,7 +759,7 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
 
             children: [
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               InkWell(
                 onTap: (){
                   // Navigator.pushReplacement(
@@ -777,193 +779,227 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 170.0),
-                child: Text(
-                  widget.InternshipProfile,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w700,
+                padding: const EdgeInsets.only(left: 30),
+                child: Container(
+                  width: double.infinity,
+                  child: FittedBox(
+                    alignment: Alignment.centerLeft,
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      widget.InternshipProfile,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          fontFamily: "FontMain"
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25,top: 15),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: MyColor.grey7474,
+                      size: 17,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Location:   ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: MyColor.grey7474,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.InternshipLocation,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25,top: 15),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.money,
+                      color: MyColor.grey7474,
+                      size: 17,
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Stipend :   ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: MyColor.grey7474,
+                              ),
+                            ),
+                            TextSpan(
+                              text: widget.InternshipCtc,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                fontFamily: 'Poppins',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 190.0),
-                child: TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.location_on,
-                    color: MyColor.grey7474,
-                    size: 17,
-                  ),
-                  label: Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Location:   ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            color: MyColor.grey7474,
-                          ),
-                        ),
-                        TextSpan(
-                          text: widget.InternshipLocation,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 210.0),
-                child: TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.money,
-                    color: MyColor.grey7474,
-                    size: 17,
-                  ),
-                  label: Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Stipend :   ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            color: MyColor.grey7474,
-                          ),
-                        ),
-                        TextSpan(
-                          text: widget.InternshipCtc,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
 
               Container(
                 width: double.infinity, // Use double.infinity to stretch the Divider
-                child: Divider(),
+                child: const Divider(),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(right: 145.0),
-                child: Text(
-                  'About the Internship',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'About the Internship',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                        fontFamily: "FontMain"
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Padding(
-                padding: const EdgeInsets.only(right: 40.0),
-                child: Text(
-                  widget.InternshipDescreption,
-
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: MyColor.black,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.InternshipDescreption,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: MyColor.black,
+                    ),
                   ),
                 ),
               ),
+
               Column(
 
                 children: [
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   Padding(
-                    padding:  EdgeInsets.only(right: 170.0),
-                    child:  Text(
-                      'Skill(s) required:',
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Skill(s) required:',
 
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 23,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 23,
+                            fontFamily: "FontMain"
+                        ),
                       ),
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  for (int i = 0; i < skills.length; i += 2)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 180.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int j = i; j < i + 2 && j < skills.length; j++)
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              margin: const EdgeInsets.all(5), // Adjust the margin for gap between skills
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Center(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft, // Align the Wrap to the left
+                          child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: skills.map((skill) {
+                              return Container(
+                                padding: const EdgeInsets.all(8),
+                                margin: const EdgeInsets.all(5), // Adjust the margin for gap between skills
+                                decoration: BoxDecoration(
+                                  color: Colors.grey, // Adjust color to match the image
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                                 child: Text(
-                                  skills[j].trim(), // Trim to remove leading/trailing spaces
+                                  skill.trim(), // Trim to remove leading/trailing spaces
                                   style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  SizedBox(height: 25,),
-
-
-
-                    Padding(
-                      padding: const EdgeInsets.only(right: 160.0),
-                      child: const Text(
-                      'Who can Apply',
-
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22,
-                          fontFamily: 'FontMain'
-                      ),
-                                        ),
-                    ),
-                  SizedBox(height: 20,),
-                  Text(
-                    widget.termsAndConditions,
-
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: MyColor.black,
-
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
 
-                  SizedBox(height: 22),
+                  const SizedBox(height: 25,),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Who can Apply',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            fontFamily: 'FontMain'
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.termsAndConditions,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: MyColor.black,
+                        ),
+                      ),
+                    ),
+                  ),
 
+                  const SizedBox(height: 22),
                   ElevatedButton(
                     onPressed: () async {
                       await getFresherJobProfile();
@@ -977,19 +1013,18 @@ class _InternshipDescriptionState extends State<InternshipDescription> {
                         _applyForJob();
                       }
                     },
-                    child: Text(
-                      "Applly",
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFBD232B),
+                      minimumSize: const Size(200, 50),
+                    ),
+                    child: const Text(
+                      "Apply",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFBD232B),
-                      minimumSize: Size(200, 50),
-                    ),
-                  ),
-                  SizedBox(height: 42),
+                  ), const SizedBox(height: 30),
 
 
                 ],

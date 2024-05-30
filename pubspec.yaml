@@ -12,7 +12,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Android, build-name is used as versionName while build-number used as versionCode.
 # Read more about Android versioning at https://developer.android.com/studio/publish/versioning
 # In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
+# Read more about   iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
@@ -61,6 +61,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   connectivity_plus: ^6.0.3
   get: ^4.6.6
+  paytm_allinonesdk: ^1.2.5
+  paytm_routersdk: ^1.0.2
 
 
 dev_dependencies:
@@ -87,67 +89,67 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - images/Hiremi_Icon.png
-     - images/ForgetUrPass.png
-     - images/Back_Button.png
-     - images/ThreeLine.png
-     - images/TheFace.png
-     - images/Intern.png
-     - images/FresJob.png
-     - images/Ex.png
-     - images/Mentor.png
-     - images/IntTXT.png
-     - images/TheGirl.png
-     - images/Saly-1 (1).png
-     - images/Saly-1 (2).png
-     - images/female.png
-     - images/verified (2) 1.png
-     - images/verified.png
-     - images/tick.png
-     - images/Rectangle.png
-     - images/certificate.png
-     - images/Ellipse.png
-     - images/partnerpana.png
-     - images/Cpana.png
-     - images/Helping.png
-     - images/Confidence.png
-     - images/JobSeeker.png
-     - images/Medical.png
-     - images/Profe.png
-     - images/Rocket.png
-     - images/Line.png
-     - images/Meeting.png
-     - images/Line2.png
-     - images/Flag.png
-     - images/pana.png
-     - images/Internship2.png
-     - images/Fresherjob2.png
-     - images/Experience.png
-     - images/Mentorship2.png
-     - images/CorperateTraining2.png
-     - images/CT.png
-     - images/WhiteRectangle.png
-     - images/trainingphoto.png
-     - images/trainingnnn.png
-     - images/CorTra2.png
-     - images/hourglass.png
-     - images/BlackCt.png
-     - images/Experienced2.png
-     - images/Black.png
-     - images/payment.png
-     - images/FirstCongratulationScreen.png
-     - images/seceondCongratulations.png
-     - images/Arrowright.png
-     - images/Arrowleft.png
-     - images/thirdCongratulation.png
-     - images/paymentscreen.png
-     - images/whitetick.png
-     - images/greentick.png
-     - images/HomePage01.png
-     - images/HomePage2.png
-     - images/whatsapp.png
-     - images/lockex.png
-     - images/lockcou.png
+    - images/Hiremi_Icon.png
+    - images/ForgetUrPass.png
+    - images/Back_Button.png
+    - images/ThreeLine.png
+    - images/TheFace.png
+    - images/Intern.png
+    - images/FresJob.png
+    - images/Ex.png
+    - images/Mentor.png
+    - images/IntTXT.png
+    - images/TheGirl.png
+    - images/Saly-1 (1).png
+    - images/Saly-1 (2).png
+    - images/female.png
+    - images/verified (2) 1.png
+    - images/verified.png
+    - images/tick.png
+    - images/Rectangle.png
+    - images/certificate.png
+    - images/Ellipse.png
+    - images/partnerpana.png
+    - images/Cpana.png
+    - images/Helping.png
+    - images/Confidence.png
+    - images/JobSeeker.png
+    - images/Medical.png
+    - images/Profe.png
+    - images/Rocket.png
+    - images/Line.png
+    - images/Meeting.png
+    - images/Line2.png
+    - images/Flag.png
+    - images/pana.png
+    - images/Internship2.png
+    - images/Fresherjob2.png
+    - images/Experience.png
+    - images/Mentorship2.png
+    - images/CorperateTraining2.png
+    - images/CT.png
+    - images/WhiteRectangle.png
+    - images/trainingphoto.png
+    - images/trainingnnn.png
+    - images/CorTra2.png
+    - images/hourglass.png
+    - images/BlackCt.png
+    - images/Experienced2.png
+    - images/Black.png
+    - images/payment.png
+    - images/FirstCongratulationScreen.png
+    - images/seceondCongratulations.png
+    - images/Arrowright.png
+    - images/Arrowleft.png
+    - images/thirdCongratulation.png
+    - images/paymentscreen.png
+    - images/whitetick.png
+    - images/greentick.png
+    - images/HomePage01.png
+    - images/HomePage2.png
+    - images/whatsapp.png
+    - images/lockex.png
+    - images/lockcou.png
 
 
   #   - images/a_dot_ham.jpeg
@@ -164,9 +166,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: FontMain
-       fonts:
-         - asset: assets/fonts/Poppins-Bold.ttf
+    - family: FontMain
+      fonts:
+        - asset: assets/fonts/Poppins-Bold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

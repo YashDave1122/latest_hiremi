@@ -9,6 +9,7 @@ import 'package:hiremi/CorporateTraining.dart';
 import 'package:hiremi/FresherJob.dart';
 import 'package:hiremi/FresherJob.dart';
 import 'package:hiremi/FreshersJob2.dart';
+import 'package:hiremi/paytmpayment.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hiremi/Mentorship.dart';
 import 'package:hiremi/Payment.dart';
@@ -57,6 +58,9 @@ import 'chatGptrz2.dart';
     bool enableGestureDetector = true;
     String discountPrice="";
     String DiscountedPrice="";
+    String DiscountedPriceforMentorship="";
+
+    String DiscountedPriceforCorporateTraining="";
     late DateTime currentTime;
     late String  _date;
     late String  _time;
@@ -140,7 +144,7 @@ import 'chatGptrz2.dart';
     }
 
     Future<void> initialize() async {
-      await fetchDiscount();
+
       await VerificationID();
       await _loadUserFullName();
       await  _CheckStatusInMEntorship();
@@ -170,7 +174,7 @@ import 'chatGptrz2.dart';
          // retrieveSubmitStatus2();
         }
         else if (widget.sourceScreen == 'Screen2') {
-         // retrieveSubmitStatus2();
+       //   retrieveSubmitStatus2();
         } else if (widget.sourceScreen == 'Screen3') {
            _loadUserJobProfile();
 
@@ -185,7 +189,7 @@ import 'chatGptrz2.dart';
         }
         else if(widget.sourceScreen=="Screen6")
           {
-      _showTimeFinishDialog();
+      //_showTimeFinishDialog();
             print("${widget.sourceScreen}");
             print("${widget.sourceScreen}"); print("${widget.sourceScreen}");
           }
@@ -288,7 +292,7 @@ import 'chatGptrz2.dart';
         });
 
         // Replace the API URL with your actual API endpoint
-        final apiUrl = '${ApiUrls.baseurl}/Internship-applications/';
+        final apiUrl = '${ApiUrls.baseurl}/api/internship-applications/';
 
         try {
           final response = await http.get(Uri.parse(apiUrl));
@@ -349,7 +353,7 @@ import 'chatGptrz2.dart';
         });
 
         // Replace the API URL with your actual API endpoint
-        final apiUrl = '${ApiUrls.baseurl}/job-applications/';
+        final apiUrl = '${ApiUrls.baseurl}/api/job-applications/';
 
         try {
           final response = await http.get(Uri.parse(apiUrl));
@@ -406,7 +410,7 @@ import 'chatGptrz2.dart';
         });
 
         // Replace the API URL with your actual API endpoint
-        final apiUrl = '${ApiUrls.baseurl}/job-applications/';
+        final apiUrl = '${ApiUrls.baseurl}/api/job-applications/';
 
         try {
           final response = await http.get(Uri.parse(apiUrl));
@@ -465,7 +469,7 @@ import 'chatGptrz2.dart';
       // ... (your dialog code)
 
       String errormessage = "Your Application is rejected $JobProfile ";
-      showCustomDialog(errormessage);
+      //showCustomDialog(errormessage);
       await _GetUidfromVerifyDetails();
     }
 
@@ -560,23 +564,24 @@ import 'chatGptrz2.dart';
     }
 
     Future<void> _EnrollDialogforRegistration() async {
+      await fetchDiscount();
       DateTime currentTime = DateTime.now();
       Duration timeDifference = futureTime.difference(currentTime);
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
-        bool result = await _showTimeFinishDialog();
-            // sourceScreen: 'Screen1',
-        if (result) {
-            // User pressed 'OK', take necessary actions
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => RazorPayPage(),
-          //   ),
-          // );
-          print(result);
-        }
+        // bool result = await _showTimeFinishDialog();
+        //     // sourceScreen: 'Screen1',
+        // if (result) {
+        //     // User pressed 'OK', take necessary actions
+        //   // Navigator.push(
+        //   //   context,
+        //   //   MaterialPageRoute(
+        //   //     builder: (context) => RazorPayPage(),
+        //   //   ),
+        //   // );
+        //   print(result);
+        // }
         return; // Return early to avoid showing the main dialog
       }
 
@@ -663,8 +668,9 @@ import 'chatGptrz2.dart';
                           onPressed: () {
                             Navigator.push(
                               context,
+                              //    await fetchDiscount();
                               MaterialPageRoute(
-                                builder: (context) => PaymentScreen(sourceScreen:'_EnrollDialogforRegistration',paymentAmount: 1,),
+                                builder: (context) => MyPaytmPayment(sourceScreen:'_EnrollDialogforRegistration',paymentAmount: 1),
                               ),
                             );
                           },
@@ -698,8 +704,8 @@ import 'chatGptrz2.dart';
 
     }
     Future<void> _EnrollDialogForMentorship() async {
-      fetchDiscount();
-      print("discountPrice is $DiscountedPrice");
+      fetchDiscountforMentorship();
+      print("discountPrice is $DiscountedPriceforMentorship");
       print("_EnrollDialogForMentorshippppppppppppppppppppp");
       DateTime currentTime = DateTime.now();
       Duration timeDifference = futureTimeforMentorship.difference(currentTime);
@@ -707,12 +713,12 @@ import 'chatGptrz2.dart';
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
         print("In if statement");
-        bool result = await _showTimeFinishDialog();
-        // sourceScreen: 'Screen1',
-        if (result) {
-          print("Result issssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
-
-        }
+        // bool result = await _showTimeFinishDialog();
+        // // sourceScreen: 'Screen1',
+        // if (result) {
+        //   print("Result issssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
+        //
+        // }
         return; // Return early to avoid showing the main dialog
       }
       else {
@@ -780,15 +786,23 @@ import 'chatGptrz2.dart';
                                 fontFamily: 'FontMain'
                             ),
                           ),
+                          Text(
+                            "Our team will connect with you shortly to provide further details and guidance.",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'FontMain'
+                            ),
+                          ),
+
                           SizedBox(height: 35,),
                           ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PaymentScreen(
+                                  builder: (context) => MyPaytmPayment(
                                     sourceScreen: '_EnrollDialogForMentorship',
-                                    paymentAmount:   DiscountedPrice.contains('.') ? double.parse(DiscountedPrice).round() : int.parse(DiscountedPrice),),
+                                    paymentAmount:   DiscountedPriceforMentorship.contains('.') ? double.parse(DiscountedPriceforMentorship).round() : int.parse(DiscountedPriceforMentorship),),
                                 ),
                               );
                             },
@@ -993,6 +1007,7 @@ import 'chatGptrz2.dart';
       );
     }
     Future<void> _EnrollDialogForCorporatetrainingRejection() async {
+
       return showDialog<void>(
         context: context,
         barrierDismissible: false,
@@ -1059,27 +1074,27 @@ import 'chatGptrz2.dart';
       );
     }
     Future<void> _EnrollDialogForcorporatetraining() async {
-      fetchDiscount();
-      print("discountPrice is $DiscountedPrice");
+      fetchDiscountforCorporatetraining();();
+      print("discountPrice is $DiscountedPriceforCorporateTraining");
       print("_EnrollDialogForcorporatetraining");
       DateTime currentTime = DateTime.now();
-      Duration timeDifference = futureTime.difference(currentTime);
+      Duration timeDifference = futureTimeforCorporatetraining.difference(currentTime);
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
-        bool result = await _showTimeFinishDialog();
-        // sourceScreen: 'Screen1',
-        if (result) {
-          print("Result dfvdffdvsissssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
-
-          //User pressed 'OK', take necessary actions
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => RazorPayPage(sourceScreen: '_EnrollDialogForMentorship'),
-          //   ),
-          // );
-        }
+        // bool result = await _showTimeFinishDialog();
+        // // sourceScreen: 'Screen1',
+        // if (result) {
+        //   print("Result dfvdffdvsissssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss $result");
+        //
+        //   //User pressed 'OK', take necessary actions
+        //   // Navigator.push(
+        //   //   context,
+        //   //   MaterialPageRoute(
+        //   //     builder: (context) => RazorPayPage(sourceScreen: '_EnrollDialogForMentorship'),
+        //   //   ),
+        //   // );
+        // }
         return; // Return early to avoid showing the main dialog
       }
       return showDialog<void>(
@@ -1140,7 +1155,7 @@ import 'chatGptrz2.dart';
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PaymentScreen(sourceScreen: '_EnrollDialogForCorporateTraining',paymentAmount:  DiscountedPrice.contains('.') ? double.parse(DiscountedPrice).round() : int.parse(DiscountedPrice),),
+                                builder: (context) => MyPaytmPayment(sourceScreen: '_EnrollDialogForCorporateTraining',paymentAmount:  DiscountedPriceforCorporateTraining.contains('.') ? double.parse(DiscountedPriceforCorporateTraining).round() : int.parse(DiscountedPriceforCorporateTraining),),
                               ),
                             );
                           },
@@ -1180,17 +1195,17 @@ import 'chatGptrz2.dart';
 
       // Check if time left is less than or equal to zero
       if (timeDifference.inSeconds <= 0) {
-        bool result = await _showTimeFinishDialog();
-        // sourceScreen: 'Screen1',
-        if (result) {
-          // User pressed 'OK', take necessary actions
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => RazorPayPage(sourceScreen: '_EnrollDialogForMentorship'),
-          //   ),
-          // );
-        }
+        // bool result = await _showTimeFinishDialog();
+        // // sourceScreen: 'Screen1',
+        // if (result) {
+        //   // User pressed 'OK', take necessary actions
+        //   // Navigator.push(
+        //   //   context,
+        //   //   MaterialPageRoute(
+        //   //     builder: (context) => RazorPayPage(sourceScreen: '_EnrollDialogForMentorship'),
+        //   //   ),
+        //   // );
+        // }
         return; // Return early to avoid showing the main dialog
       }
       return showDialog<void>(
@@ -1247,12 +1262,12 @@ import 'chatGptrz2.dart';
                         SizedBox(height: 35,),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentScreen(sourceScreen: '_EnrollDialogForMentorship',paymentAmount: 1,),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => PaymentScreen(sourceScreen: '_EnrollDialogForMentorship',paymentAmount: 1,),
+                            //   ),
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFF13640),
@@ -1283,119 +1298,7 @@ import 'chatGptrz2.dart';
 
 
     }
-    // Future<void> _CheckStatusInMEntorship()async{
-    //   print("ppppppsamnkn ndn");
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? savedUsername = prefs.getString('username');
-    //
-    //   if (savedUsername != null && savedUsername.isNotEmpty) {
-    //     setState(() {
-    //       loginEmail = savedUsername;
-    //     });
-    //
-    //     // Replace the API URL with your actual API endpoint
-    //     final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
-    //
-    //     try {
-    //       final response = await http.get(Uri.parse(apiUrl));
-    //
-    //       if (response.statusCode == 200) {
-    //         final data = json.decode(response.body);
-    //
-    //         if (data is List && data.isNotEmpty) {
-    //           for (final user in data) {
-    //
-    //             final email = user['email'];
-    //             final candidateStatus = user['candidate_status'];
-    //             final timeEndString = user['time_end'];
-    //             final PaymentStatus=user['payment_status'];
-    //
-    //             if (email == loginEmail) {
-    //               setState(() {
-    //
-    //                 CandidateStatus = candidateStatus;
-    //                 futureTimeforMentorship = DateTime.parse(timeEndString);
-    //                 print("dsdcswdcxdc $futureTimeforMentorship");
-    //               });
-    //               if(PaymentStatus=='Enrolled')
-    //               {
-    //                 print("Hello payment status is $PaymentStatus");
-    //                 break;
-    //               }
-    //               else if (CandidateStatus == "Select") {
-    //                 print("Select me hai");
-    //                 print('End time isssssssssssssss $futureTimeforMentorship');
-    //                 print("Yashhhhhhhhhhh");
-    //                 await _EnrollDialogForMentorship();
-    //
-    //                 if (data is List && data.isNotEmpty) {
-    //                   for (final user in data) {
-    //                     final id=user['id'];
-    //                     final email = user['email'];
-    //
-    //                     final candidateStatus = user['candidate_status'];
-    //                     final timeEndString = user['time_end'];
-    //
-    //                     if (email == loginEmail) {
-    //                       setState(() {
-    //                         IDforRegistartion=id ?? '';
-    //                         CandidateStatus = candidateStatus ?? ''; // Use an empty string if candidateStatus is null
-    //                         futureTimeforMentorship = timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
-    //                       });
-    //
-    //
-    //                       if (CandidateStatus == "Select") {
-    //                         print('End time is  mentorship$futureTimeforMentorship');
-    //                         await _EnrollDialogForMentorship();
-    //                         print("Yash");
-    //                       }
-    //                       else if(CandidateStatus == "Reject")
-    //                       {
-    //                         await _EnrollDialogForMentorshipRejection();
-    //                       }
-    //
-    //                       break; // Exit the loop once a match is found
-    //                     }
-    //                   }
-    //
-    //                   if (FullName.isEmpty) {
-    //                     print('Full Name not found for Email: $loginEmail');
-    //                   }
-    //                 }
-    //
-    //
-    //                 else {
-    //                   print('Email not found on the server.');
-    //                 }
-    //
-    //               }
-    //
-    //               else if(CandidateStatus == "Reject")
-    //               {
-    //                 print("Reject me hai");
-    //                 await _EnrollDialogForMentorshipRejection();
-    //               }
-    //
-    //
-    //
-    //               print("Gender is $Gender");
-    //
-    //               print("Your ID is $verify");
-    //
-    //               break; // Exit the loop once a match is found
-    //             }
-    //           }
-    //
-    //
-    //         } else {
-    //           print('Email not found on the server.');
-    //         }
-    //       }
-    //     } catch (e) {
-    //       print('Error in Mentorship: $e');
-    //     }
-    //   }
-    // }
+
     Future<void> _updateCandidateStatusforMentorship(String email, String newStatus ,String IDformentorship) async {
       final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
 
@@ -1441,74 +1344,7 @@ import 'chatGptrz2.dart';
         print('Error updating candidate status: $e');
       }
     }
-    // Future<void> _CheckStatusInMEntorship() async {
-    //   print("ppppppsamnkn ndn");
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? savedUsername = prefs.getString('username');
-    //
-    //   if (savedUsername != null && savedUsername.isNotEmpty) {
-    //     setState(() {
-    //       loginEmail = savedUsername;
-    //     });
-    //
-    //     final apiUrl = '${ApiUrls.baseurl}/api/mentorship/';
-    //
-    //     try {
-    //       final response = await http.get(Uri.parse(apiUrl));
-    //
-    //       if (response.statusCode == 200) {
-    //         final data = json.decode(response.body);
-    //
-    //         if (data is List && data.isNotEmpty) {
-    //           for (final user in data) {
-    //             final email = user['email'];
-    //             final candidateStatus = user['candidate_status'];
-    //             final timeEndString = user['time_end'];
-    //             final PaymentStatus = user['payment_status'];
-    //             final uid=user['uid'];
-    //             final id=user['id'];
-    //
-    //             if (email == loginEmail) {
-    //               setState(() {
-    //                 UIDforMentorship=uid;
-    //                 CandidateStatus = candidateStatus ?? '';
-    //                 IDformentorship = id;
-    //                 futureTimeforMentorship = timeEndString != null ? DateTime.parse(timeEndString) : DateTime.now();
-    //               });
-    //
-    //               if (PaymentStatus == 'Enrolled') {
-    //                 _showDialogMentorship();
-    //                 print("Hello payment status is $PaymentStatus");
-    //                 break;
-    //               } else if (CandidateStatus == "Select") {
-    //                 print("Select me hai");
-    //                 print('End time isssssssssssssss $futureTimeforMentorship');
-    //                 print("Yashhhhhhhhhhh");
-    //                 await _EnrollDialogForMentorship();
-    //                 // Additional logic here
-    //               } else if (CandidateStatus == "Reject") {
-    //                 print("Reject me hai");
-    //                 await _updateCandidateStatus(loginEmail,'Rejectt',IDformentorship);
-    //                 await _EnrollDialogForMentorshipRejection();
-    //
-    //               }
-    //
-    //
-    //
-    //               print("Gender is $Gender");
-    //               print("Your ID is $verify");
-    //               break;
-    //             }
-    //           }
-    //         } else {
-    //           print('Email not found on the server.');
-    //         }
-    //       }
-    //     } catch (e) {
-    //       print('Error in Mentorshippppp: $e');
-    //     }
-    //   }
-    // }
+
     Future<void> _CheckStatusInMEntorship() async {
       print("ppppppsamnkn ndn");
 
@@ -1547,7 +1383,7 @@ import 'chatGptrz2.dart';
                   });
 
                   if (PaymentStatus == 'Enrolled') {
-                    _showDialogMentorship();
+                    //_showDialogMentorship();
                     print("Hello payment status is $PaymentStatus");
                     break;
                   } else if (CandidateStatus == "Select") {
@@ -1662,7 +1498,8 @@ import 'chatGptrz2.dart';
                   });
                   if(PaymentStatus=='Enrolled')
                   {
-                   _showDialogBox();
+                  // _showDialogBox();
+                   print("UID is $UIDforCorporateTraining");
                     print("Hello payment status is $PaymentStatus");
 
                     break;
@@ -2167,6 +2004,54 @@ import 'chatGptrz2.dart';
 
       }
     }
+    Future<void> fetchDiscountforMentorship() async {
+      final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/mentorshipdiscount/'));
+
+      if (response.statusCode == 200) {
+        // Parse the response JSON
+        final List<dynamic> data = jsonDecode(response.body);
+
+        if (data.isNotEmpty) {
+          final Map<String, dynamic> discountData = data.last; // Access the last element in the list
+          final int discount = discountData['discount'];
+          final int originalPrice = discountData['original_price'];
+
+          // Calculate discounted price
+          final double discountPrice = originalPrice - (originalPrice * discount / 100);
+
+          setState(() {
+            DiscountedPriceforMentorship = discountPrice.toString(); // Convert ID to String
+          });
+
+
+        }
+
+      }
+    }
+    Future<void> fetchDiscountforCorporatetraining() async {
+      final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/corporatediscount/'));
+
+      if (response.statusCode == 200) {
+        // Parse the response JSON
+        final List<dynamic> data = jsonDecode(response.body);
+
+        if (data.isNotEmpty) {
+          final Map<String, dynamic> discountData = data.last; // Access the last element in the list
+          final int discount = discountData['discount'];
+          final int originalPrice = discountData['original_price'];
+
+          // Calculate discounted price
+          final double discountPrice = originalPrice - (originalPrice * discount / 100);
+
+          setState(() {
+            DiscountedPriceforCorporateTraining = discountPrice.toString(); // Convert ID to String
+          });
+
+
+        }
+
+      }
+    }
 
     Future<void>  _showDialog() async {
       fetchDiscount();
@@ -2339,7 +2224,7 @@ import 'chatGptrz2.dart';
       else{
          if(verify) {
 
-         await  ID_is_Verify();
+       //  await  ID_is_Verify();
          }
            else
              {
@@ -2354,7 +2239,7 @@ import 'chatGptrz2.dart';
    Future<void> _showDialogBox()async{
      showDialog<void>(
        context: context,
-       barrierDismissible: false, // Set this to false to prevent closing on outside tap
+       barrierDismissible: true, // Set this to false to prevent closing on outside tap
        builder: (BuildContext context) {
          return Stack(
            children: [
@@ -2373,7 +2258,7 @@ import 'chatGptrz2.dart';
                  // Handle back button press here
                  // Returning true allows the dialog to be popped
                  // Returning false prevents the dialog from being popped
-                 return false;
+                 return true;
                },
                child: AlertDialog(
                  backgroundColor: Colors.white,
@@ -2789,7 +2674,7 @@ import 'chatGptrz2.dart';
                         SizedBox(height: 30),
                         Center(
                           child: Text(
-                            "Your application is under review ",
+                            "Your application is currently being reviewed",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: "FontMain",
@@ -2799,6 +2684,7 @@ import 'chatGptrz2.dart';
                           ),
 
                         ),
+                        SizedBox(height: 15),
                         Center(
                           child: Text(
                             "Our team will contact you\nshortly",
@@ -2846,7 +2732,7 @@ import 'chatGptrz2.dart';
                         // ),
                         GestureDetector(
                           onTap: () {
-                            launch('https://api.whatsapp.com/send?phone=+918815165433');
+                            launch('https://api.whatsapp.com/send?phone=+919302707264;');
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -3534,6 +3420,15 @@ import 'chatGptrz2.dart';
                 //               Colors.red; // Change the color for the tapped icon
                 //         }
                 //       });
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 //     },
                 //   ),
                 // ),

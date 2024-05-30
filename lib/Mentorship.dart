@@ -43,7 +43,7 @@ class _MentorshipState extends State<Mentorship> {
     }
   }
   Future<void> fetchDiscount() async {
-    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/discount/'));
+    final response = await http.get(Uri.parse('http://13.127.81.177:8000/api/mentorshipdiscount/'));
 
     if (response.statusCode == 200) {
       // Parse the response JSON
@@ -618,14 +618,39 @@ class _MentorshipState extends State<Mentorship> {
                                          fontSize: screenWidth < 411   ? 19 : 22,
                                        ),),
                                    ),
+                                   // Padding(
+                                   //   padding: const EdgeInsets.only(top: 24.0),
+                                   //   child: Text("Rs $DiscountedPrice/Rs $OriginalPrice",
+                                   //     textAlign: TextAlign.center,
+                                   //     style: TextStyle(
+                                   //       fontFamily: 'FontMain',
+                                   //       fontSize: screenWidth < 411 ? 19 : 22,
+                                   //     ),),
+                                   // ),
                                    Padding(
                                      padding: const EdgeInsets.only(top: 24.0),
-                                     child: Text("Rs $DiscountedPrice/Rs $OriginalPrice",
+                                     child: RichText(
                                        textAlign: TextAlign.center,
-                                       style: TextStyle(
-                                         fontFamily: 'FontMain',
-                                         fontSize: screenWidth < 411 ? 19 : 22,
-                                       ),),
+                                       text: TextSpan(
+                                         style: TextStyle(
+                                           fontFamily: 'FontMain',
+                                           fontSize: screenWidth < 411 ? 19 : 22,
+                                           color: Colors.black, // You can change the color if needed
+                                         ),
+                                         children: [
+                                           TextSpan(
+                                             text: "Rs $DiscountedPrice",
+                                           ),
+                                           TextSpan(
+                                             text: "/$OriginalPrice", // This will remain unstruck
+                                             style: TextStyle(
+                                               decoration: TextDecoration.lineThrough,
+                                               // To remove the decoration from this part
+                                             ),
+                                           ),
+                                         ],
+                                       ),
+                                     ),
                                    ),
                                    SizedBox(height: screenHeight*0.02,),
                                    Padding(
@@ -688,220 +713,166 @@ class _MentorshipState extends State<Mentorship> {
                        ],
                      ),
                    ),
-                   SizedBox(height: screenHeight*0.071,),
-                   Text("Why Choose Hiremi Mentorship?",
-                     textAlign: TextAlign.center,
-                     style: TextStyle(
-                       fontFamily: 'FontMain',
-                       fontSize:  screenWidth < 411 ? 16.65 : 20,
-                     ),),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                     SizedBox(width: screenWidth*0.033,),
-                     Image.asset('images/partnerpana.png'),
-                     //SizedBox(width: screenWidth*0.011,),
-                     Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Text("1.Personalised Guidance :",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: 'FontMain',
-                             color: Colors.redAccent,
-                             fontSize:  screenWidth < 411  ? 9.2 : 13.5,
-
-                           ),),
-                         SizedBox(height: screenHeight*0.023,),
-                         Text("Navigate your\ncareer with\npersonalized mentorship\ntailored to your\n goals and aspirations.",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: "FontMain",
-                             fontSize: screenWidth < 411  ? 9.5 : 12,
-                           ),),],
-                     )
-                   ],),
-                   SizedBox(height: screenHeight*0.041,),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                     SizedBox(width: screenWidth*0.018,),
-                     Column(
-                       children: [
-                         Text("2.Industry Insights :",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: 'FontMain',
-                             color: Colors.redAccent,
-                             fontSize: screenWidth < 411 ? 10 : 13.5,
-                           ),),
-                         SizedBox(height: screenHeight*0.023,),
-                         Text("Gain valuable insights\ninto your chosen\nfield from experienced\nprofessionals.",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: "FontMain",
-                             fontSize: screenWidth < 411 ? 9.4 : 12,
-                           ),),],
-                     ),
-                     Image.asset('images/Cpana.png'),
-                   ],),
-                   SizedBox(height: screenHeight*0.035,),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                     SizedBox(width: screenWidth*0.033,),
-                     Image.asset('images/Helping.png'),
-                     SizedBox(width: screenWidth*0.024,),
-                     Column(
-                       children: [
-                         Text("3.Skill Development :",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: 'FontMain',
-                             color: Colors.redAccent,
-                             fontSize:screenWidth < 411  ? 9.35 : 13.5,
-                           ),),
-                         SizedBox(height: 20,),
-                         Text("Elevate your skill\nset with curated\nprograms designed\nto enhanceyour capabilities\nand make you\njob-ready."
-                           ,
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: "FontMain",
-                             fontSize:screenWidth < 411  ? 9 : 11,
-                           ),),],
-                     )
-                   ],),
-                   SizedBox(height: screenHeight*0.041,),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                     SizedBox(width: screenWidth*0.048,),
-                     Column(
-                       children: [
-                         Text("4.Network Opportunities:",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: 'FontMain',
-                             color: Colors.redAccent,
-                             fontSize: screenWidth < 411 ? 9.5 : 13,
-                           ),),
-                         SizedBox(height: screenHeight*0.023,),
-                         Text("Expand your professional\nnetwork with connections\nthat can influence\nyour career\ntrajectory.",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: "FontMain",
-                             fontSize: screenWidth < 411  ? 8.2 : 12,
-                           ),),],
-                     ),
-                     Image.asset('images/pana.png'),
-                   ],),
-                   SizedBox(height: screenHeight*0.041,),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                     SizedBox(width: screenWidth*0.09,),
-                     Image.asset('images/Confidence.png'),
-                     SizedBox(width: screenHeight*0.011,),
-                     Column(
-
-                       children: [
-                         Text("5.Confidence building:",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: 'FontMain',
-                             color: Colors.redAccent,
-                             fontSize: screenWidth < 411 ? 9.3 : 13,
-                           ),),
-                         SizedBox(height: screenHeight*0.023,),
-                         Text("Develop confidence in\nyour abilities with\nongoing support and\nconstructive feedback.",
-                           textAlign: TextAlign.center,
-                           style: TextStyle(
-                             fontFamily: "FontMain",
-                             fontSize: screenWidth < 411 ? 9.3 : 12,
-                           ),),],
-                     )
-                   ],),
-                   SizedBox(height: screenHeight*0.0415,),
-                   Padding(
-                     padding: const EdgeInsets.only(right: 48.0),
-                     child: Text("Who does it help?",
-                       textAlign: TextAlign.center,
-                       style: TextStyle(
-                         fontFamily: 'FontMain',
-                         fontSize:screenWidth < 411 ? 24: 28,
-                       ),),
-                   ),
-                   SizedBox(height: screenHeight*0.0415,),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Image.asset("images/JobSeeker.png"),
-                      SizedBox(width: screenWidth*0.060,),
-                       Column(
-                         children: [
-                           Padding(
-                             padding: const EdgeInsets.only(right: 180.0),
-                             child: Text("Job Seekers:",style: TextStyle(
-                               color: Colors.redAccent,
-                               fontFamily: 'FontMain',
-                               fontSize: screenWidth < 411 ? 9: 12,
-                             ),),
-                           ),
-                           Text("Individuals looking to enter\nthe jobmarket benefit from\nmentorship by gaining a\ncompetitive edge and understanding\nindustry expectations.",
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411 ? 9: 12,
-                             ),)
-                         ],
-                       ),
-                     ],
-                   ),
-                   SizedBox(height: screenHeight*0.0415,),
+                   // SizedBox(height: screenHeight*0.071,),
+                   // Text("Why Choose Hiremi Mentorship?",
+                   //   textAlign: TextAlign.center,
+                   //   style: TextStyle(
+                   //     fontFamily: 'FontMain',
+                   //     fontSize:  screenWidth < 411 ? 16.65 : 20,
+                   //   ),),
                    // Row(
                    //   mainAxisAlignment: MainAxisAlignment.center,
                    //   children: [
-                   //     Image.asset("images/Medical.png"),
-                   //     SizedBox(width: screenWidth*0.018,),
-                   //     Column(
-                   //       children: [
-                   //         Padding(
-                   //           padding: const EdgeInsets.only(right: 170.0),
-                   //           child: Text("College Students:",
-                   //             textAlign: TextAlign.center,
-                   //             style: TextStyle(
-                   //               color: Colors.redAccent,
-                   //               fontFamily: 'FontMain',
-                   //               fontSize: screenWidth < 411 ? 9: 12,
-                   //             ),),
-                   //         ),
-                   //         Text("Mentorship aids students in navigating\ntheir academic journey, making\ninformed careerchoices, and\npreparing for the professional\nworld.",
-                   //           textAlign: TextAlign.center,
-                   //           style: TextStyle(
-                   //             fontFamily: "FontMain",
-                   //             fontSize: screenWidth < 411 ? 9: 11,
-                   //           ),)
-                   //       ],
-                   //     ),
-                   //   ],
+                   //   SizedBox(width: screenWidth*0.033,),
+                   //   Image.asset('images/partnerpana.png'),
+                   //   //SizedBox(width: screenWidth*0.011,),
+                   //   Column(
+                   //     mainAxisAlignment: MainAxisAlignment.center,
+                   //     children: [
+                   //       Text("1.Personalised Guidance :",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: 'FontMain',
+                   //           color: Colors.redAccent,
+                   //           fontSize:  screenWidth < 411  ? 9.2 : 13.5,
+                   //
+                   //         ),),
+                   //       SizedBox(height: screenHeight*0.023,),
+                   //       Text("Navigate your\ncareer with\npersonalized mentorship\ntailored to your\n goals and aspirations.",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: "FontMain",
+                   //           fontSize: screenWidth < 411  ? 9.5 : 12,
+                   //         ),),],
+                   //   )
+                   // ],),
+                   // SizedBox(height: screenHeight*0.041,),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //   SizedBox(width: screenWidth*0.018,),
+                   //   Column(
+                   //     children: [
+                   //       Text("2.Industry Insights :",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: 'FontMain',
+                   //           color: Colors.redAccent,
+                   //           fontSize: screenWidth < 411 ? 10 : 13.5,
+                   //         ),),
+                   //       SizedBox(height: screenHeight*0.023,),
+                   //       Text("Gain valuable insights\ninto your chosen\nfield from experienced\nprofessionals.",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: "FontMain",
+                   //           fontSize: screenWidth < 411 ? 9.4 : 12,
+                   //         ),),],
+                   //   ),
+                   //   Image.asset('images/Cpana.png'),
+                   // ],),
+                   // SizedBox(height: screenHeight*0.035,),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //   SizedBox(width: screenWidth*0.033,),
+                   //   Image.asset('images/Helping.png'),
+                   //   SizedBox(width: screenWidth*0.024,),
+                   //   Column(
+                   //     children: [
+                   //       Text("3.Skill Development :",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: 'FontMain',
+                   //           color: Colors.redAccent,
+                   //           fontSize:screenWidth < 411  ? 9.35 : 13.5,
+                   //         ),),
+                   //       SizedBox(height: 20,),
+                   //       Text("Elevate your skill\nset with curated\nprograms designed\nto enhanceyour capabilities\nand make you\njob-ready."
+                   //         ,
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: "FontMain",
+                   //           fontSize:screenWidth < 411  ? 9 : 11,
+                   //         ),),],
+                   //   )
+                   // ],),
+                   // SizedBox(height: screenHeight*0.041,),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //   SizedBox(width: screenWidth*0.048,),
+                   //   Column(
+                   //     children: [
+                   //       Text("4.Network Opportunities:",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: 'FontMain',
+                   //           color: Colors.redAccent,
+                   //           fontSize: screenWidth < 411 ? 9.5 : 13,
+                   //         ),),
+                   //       SizedBox(height: screenHeight*0.023,),
+                   //       Text("Expand your professional\nnetwork with connections\nthat can influence\nyour career\ntrajectory.",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: "FontMain",
+                   //           fontSize: screenWidth < 411  ? 8.2 : 12,
+                   //         ),),],
+                   //   ),
+                   //   Image.asset('images/pana.png'),
+                   // ],),
+                   // SizedBox(height: screenHeight*0.041,),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //   SizedBox(width: screenWidth*0.09,),
+                   //   Image.asset('images/Confidence.png'),
+                   //   SizedBox(width: screenHeight*0.011,),
+                   //   Column(
+                   //
+                   //     children: [
+                   //       Text("5.Confidence building:",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: 'FontMain',
+                   //           color: Colors.redAccent,
+                   //           fontSize: screenWidth < 411 ? 9.3 : 13,
+                   //         ),),
+                   //       SizedBox(height: screenHeight*0.023,),
+                   //       Text("Develop confidence in\nyour abilities with\nongoing support and\nconstructive feedback.",
+                   //         textAlign: TextAlign.center,
+                   //         style: TextStyle(
+                   //           fontFamily: "FontMain",
+                   //           fontSize: screenWidth < 411 ? 9.3 : 12,
+                   //         ),),],
+                   //   )
+                   // ],),
+                   // SizedBox(height: screenHeight*0.0415,),
+                   // Padding(
+                   //   padding: const EdgeInsets.only(right: 48.0),
+                   //   child: Text("Who does it help?",
+                   //     textAlign: TextAlign.center,
+                   //     style: TextStyle(
+                   //       fontFamily: 'FontMain',
+                   //       fontSize:screenWidth < 411 ? 24: 28,
+                   //     ),),
                    // ),
-                   SizedBox(height: screenHeight*0.03,),
+                   // SizedBox(height: screenHeight*0.0415,),
                    // Row(
                    //   mainAxisAlignment: MainAxisAlignment.center,
                    //   children: [
-                   //     Image.asset("images/Profe.png"),
-                   //     SizedBox(width: screenWidth*0.0608,),
+                   //     Image.asset("images/JobSeeker.png"),
+                   //    SizedBox(width: screenWidth*0.060,),
                    //     Column(
                    //       children: [
                    //         Padding(
-                   //           padding: const EdgeInsets.only(right: 170.0),
-                   //           child: Text("Professionals:",style: TextStyle(
+                   //           padding: const EdgeInsets.only(right: 180.0),
+                   //           child: Text("Job Seekers:",style: TextStyle(
                    //             color: Colors.redAccent,
                    //             fontFamily: 'FontMain',
-                   //             fontSize: screenWidth < 411  ? 9: 13,
+                   //             fontSize: screenWidth < 411 ? 9: 12,
                    //           ),),
                    //         ),
-                   //         Text("Even experienced professionals\nbenefit by receiving guidance on\ncareer advancement, leadership skills,\nand staying relevant in a rapidly\nchanging work environment.",
+                   //         Text("Individuals looking to enter\nthe jobmarket benefit from\nmentorship by gaining a\ncompetitive edge and understanding\nindustry expectations.",
                    //           textAlign: TextAlign.center,
                    //           style: TextStyle(
                    //             fontFamily: "FontMain",
@@ -911,21 +882,482 @@ class _MentorshipState extends State<Mentorship> {
                    //     ),
                    //   ],
                    // ),
-
-                   Text("How to Apply for Mentorship?",
+                   // SizedBox(height: screenHeight*0.0415,),
+                   //
+                   // SizedBox(height: screenHeight*0.03,),
+                   //
+                   //
+                   // Text("How to Apply for Mentorship?",
+                   //   textAlign: TextAlign.center,
+                   //   style: TextStyle(
+                   //     fontFamily: 'FontMain',
+                   //     fontSize: screenWidth < 411 ? 19: 23,
+                   //   ),),
+                   // SizedBox(height: screenHeight*0.041,),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //     Column(
+                   //       children: [
+                   //         Image.asset("images/Rocket.png"),
+                   //
+                   //       ],
+                   //     ),
+                   //     // SizedBox(width: screenWidth*0.060,),
+                   //     // Column(
+                   //     //   children: [
+                   //     //     Padding(
+                   //     //       padding: const EdgeInsets.only(right: 170.0),
+                   //     //       child: Text("Step 1:",style: TextStyle(
+                   //     //         color: Colors.redAccent,
+                   //     //         fontFamily: 'FontMain',
+                   //     //         fontSize: screenWidth < 411  ? 11: 14,
+                   //     //       ),),
+                   //     //     ),
+                   //     //     Text(" Tap on Apply\nLaunch the Hiremi app\nand head to the\nMentorship section.\nLook for the'Apply Now' option\nand tap on it to begin\nyour application process.",
+                   //     //       textAlign: TextAlign.center,
+                   //     //       style: TextStyle(
+                   //     //         fontFamily: "FontMain",
+                   //     //         fontSize: screenWidth < 411 ? 9: 11,
+                   //     //       ),)
+                   //     //   ],
+                   //     // ),
+                   //     Column(
+                   //       children: [
+                   //         // Heading before Step 1
+                   //
+                   //
+                   //         // Step 1
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 170.0),
+                   //           child: Text(
+                   //             "Step 1:",
+                   //             style: TextStyle(
+                   //               color: Colors.redAccent,
+                   //               fontFamily: 'FontMain',
+                   //               fontSize: screenWidth < 411 ? 11 : 14,
+                   //             ),
+                   //           ),
+                   //         ),
+                   //
+                   //         // Description Text
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 170.0),
+                   //           child: Text(
+                   //             "Tap to Apply", // Your bold heading text
+                   //             style: TextStyle(
+                   //               fontFamily: 'FontMain',
+                   //               fontSize: screenWidth < 411 ? 11 : 13,
+                   //               fontWeight: FontWeight.bold, // Set the font weight to bold
+                   //             ),
+                   //           ),
+                   //         ),
+                   //         Text(
+                   //           "1.Launch the Hiremi appand\nhead to the Mentorship section.",
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411 ? 9 : 11,
+                   //           ),
+                   //         ),
+                   //         SizedBox(height: 5,),
+                   //         Text(
+                   //           "2.Look for the apply now option \n and tap on it to begin your\n application process",
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411 ? 9 : 11,
+                   //           ),
+                   //         ),
+                   //       ],
+                   //     ),
+                   //
+                   //   ],
+                   // ),
+                   // Padding(
+                   //   padding: const EdgeInsets.only(right: 80.0),
+                   //   child: Image.asset("images/Line.png"),
+                   // ),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //     SizedBox(width: screenWidth*0.024,),
+                   //     Column(
+                   //       children: [
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 170.0),
+                   //           child: Text("Step 2:",style: TextStyle(
+                   //             color: Colors.redAccent,
+                   //             fontFamily: 'FontMain',
+                   //             fontSize: screenWidth < 411 ? 9.5: 13,
+                   //           ),),
+                   //         ),
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 120.0),
+                   //           child: Text(
+                   //             "Q&A Session:", // Your bold heading text
+                   //             style: TextStyle(
+                   //               fontFamily: 'FontMain',
+                   //               fontSize: screenWidth < 411 ? 11 : 13,
+                   //               fontWeight: FontWeight.bold, // Set the font weight to bold
+                   //             ),
+                   //           ),
+                   //         ),
+                   //         Text(
+                   //           "1.Once your session is\nscheduled,you will receive a\n notification",
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411 ? 9 : 11,
+                   //           ),
+                   //         ),
+                   //         SizedBox(height: 5,),
+                   //         Text(
+                   //           "2.During the session ,you'll\nhave to opportunity to\ndiscuss your queires and\ncareer aspiration with our\nexperienced mentors",
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411 ? 9 : 11,
+                   //           ),
+                   //         ),
+                   //       ],
+                   //     ),
+                   //     SizedBox(width: screenWidth*0.036,),
+                   //     Column(
+                   //       children: [
+                   //         Image.asset("images/Meeting.png"),
+                   //
+                   //       ],
+                   //     ),
+                   //   ],
+                   // ),
+                   // Padding(
+                   //   padding: const EdgeInsets.only(right: 20.0),
+                   //   child: Image.asset("images/Line2.png"),
+                   // ),
+                   // Row(
+                   //   mainAxisAlignment: MainAxisAlignment.center,
+                   //   children: [
+                   //     Column(
+                   //       children: [
+                   //         Image.asset("images/Flag.png"),
+                   //
+                   //       ],
+                   //     ),
+                   //     SizedBox(width: screenWidth*0.060,),
+                   //     Column(
+                   //       children: [
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 170.0),
+                   //           child: Text("Step 3:",style: TextStyle(
+                   //             color: Colors.redAccent,
+                   //             fontFamily: 'FontMain',
+                   //             fontSize: screenWidth < 411  ? 7.5: 11.4,
+                   //           ),),
+                   //         ),
+                   //         Padding(
+                   //           padding: const EdgeInsets.only(right: 70.0),
+                   //           child: Text(
+                   //             "Enroll in the program:", // Your bold heading text
+                   //             style: TextStyle(
+                   //               fontFamily: 'FontMain',
+                   //               fontSize: screenWidth < 411 ? 11 : 13,
+                   //               fontWeight: FontWeight.bold, // Set the font weight to bold
+                   //             ),
+                   //           ),
+                   //         ),
+                   //         Text("1.After selection, gain exclusive\naccess to enroll in our mentorship\nprogram via the app by\ncompleting payment process.",
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411  ? 9.4: 11,
+                   //           ),),
+                   //         SizedBox(height: 5,),
+                   //         Text("2.Get ready for a transformative\nexperience in skill development,\nreal-time project exposure, and\ncareer growth.",
+                   //
+                   //           textAlign: TextAlign.center,
+                   //           style: TextStyle(
+                   //             fontFamily: "FontMain",
+                   //             fontSize: screenWidth < 411  ? 9.4: 11,
+                   //           ),)
+                   //       ],
+                   //     ),
+                   //   ],
+                   // ),
+                   //SizedBox(height: screenHeight*0.100,)
+                   Text(
+                     "Why Choose Hiremi Mentorship?",
                      textAlign: TextAlign.center,
                      style: TextStyle(
                        fontFamily: 'FontMain',
-                       fontSize: screenWidth < 411 ? 19: 23,
-                     ),),
-                   SizedBox(height: screenHeight*0.041,),
+                       fontSize: screenWidth < 411 ? 16.65 : 20,
+                     ),
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       SizedBox(
+                         width: screenWidth * 0.033,
+                       ),
+                       Image.asset('images/partnerpana.png'),
+                       //SizedBox(width: screenWidth*0.011,),
+                       Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Text(
+                             "1.Personalised Guidance :",
+                             textAlign: TextAlign.center,
+                             style: TextStyle(
+                               fontFamily: 'FontMain',
+                               color: Colors.redAccent,
+                               fontSize: screenWidth < 411 ? 10 : 12,
+                             ),
+                           ),
+                           SizedBox(
+                             height: screenHeight * 0.010,
+                           ),
+                           Text(
+                             "Navigate your career with\npersonalized mentorship\ntailored to your goals \nand aspirations.",
+                             textAlign: TextAlign.justify,
+                             style: TextStyle(
+                               fontFamily: "FontMain",
+                               fontSize: screenWidth < 411 ? 10 : 12,
+                             ),
+                           ),
+                         ],
+                       )
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.041,
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       //SizedBox(width: screenWidth*0.018,),
+                       Column(
+                         children: [
+                           Padding(
+                             padding: const EdgeInsets.only(right: 15),
+                             child: Text(
+                               "2.Industry Insights :",
+                               style: TextStyle(
+                                 fontFamily: 'FontMain',
+                                 color: Colors.redAccent,
+                                 fontSize: screenWidth < 411 ? 10 : 12,
+                               ),
+                             ),
+                           ),
+                           SizedBox(
+                             height: screenHeight * 0.010,
+                           ),
+                           Text(
+                             "Gain valuable insights\ninto your chosen\nfield from experienced\nprofessionals.",
+                             textAlign: TextAlign.justify,
+                             style: TextStyle(
+                               fontFamily: "FontMain",
+                               fontSize: screenWidth < 411 ? 10 : 12,
+                             ),
+                           ),
+                         ],
+                       ),
+                       SizedBox(
+                         width: screenWidth * 0.1,
+                       ),
+                       Image.asset('images/Cpana.png'),
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.035,
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       SizedBox(
+                         width: screenWidth * 0.033,
+                       ),
+                       Image.asset('images/Helping.png'),
+                       SizedBox(
+                         width: screenWidth * 0.024,
+                       ),
+                       Column(
+                         children: [
+                           Padding(
+                             padding: const EdgeInsets.only(right: 40),
+                             child: Text(
+                               "3.Skill Development :",
+                               style: TextStyle(
+                                 fontFamily: 'FontMain',
+                                 color: Colors.redAccent,
+                                 fontSize: screenWidth < 411 ? 10 : 12,
+                               ),
+                             ),
+                           ),
+                           SizedBox(
+                             height: screenHeight * 0.01,
+                           ),
+                           Text(
+                             "Elevate your skill set with\ncurated programs designed\nto enhanceyour capabilities\nand make you job-ready.",
+                             textAlign: TextAlign.justify,
+                             style: TextStyle(
+                               fontFamily: "FontMain",
+                               fontSize: screenWidth < 411 ? 10 : 12,
+                             ),
+                           ),
+                         ],
+                       )
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.041,
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Column(
+                         children: [
+                           Padding(
+                             padding: const EdgeInsets.only(right: 15),
+                             child: Text(
+                               "4.Network Opportunities:",
+                               style: TextStyle(
+                                 fontFamily: 'FontMain',
+                                 color: Colors.redAccent,
+                                 fontSize: screenWidth < 411 ? 10 : 13,
+                               ),
+                             ),
+                           ),
+                           SizedBox(
+                             height: screenHeight * 0.010,
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(right: 13),
+                             child: Text(
+                               "Expand your professional\nnetwork with connections\nthat can influence your\n career trajectory.",
+                               textAlign: TextAlign.justify,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 10 : 12,
+                               ),
+                             ),
+                           ),
+                         ],
+                       ),
+                       Image.asset('images/pana.png'),
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.041,
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Image.asset('images/Confidence.png'),
+                       SizedBox(
+                         width: screenHeight * 0.011,
+                       ),
+                       Column(
+                         children: [
+                           Text(
+                             "5.Confidence building:",
+                             textAlign: TextAlign.center,
+                             style: TextStyle(
+                               fontFamily: 'FontMain',
+                               color: Colors.redAccent,
+                               fontSize: screenWidth < 411 ? 9.3 : 13,
+                             ),
+                           ),
+                           SizedBox(
+                             height: screenHeight * 0.010,
+                           ),
+                           Text(
+                             "Develop confidence in\nyour abilities with\nongoing support and\nconstructive feedback.",
+                             textAlign: TextAlign.justify,
+                             style: TextStyle(
+                               fontFamily: "FontMain",
+                               fontSize: screenWidth < 411 ? 9.3 : 12,
+                             ),
+                           ),
+                         ],
+                       )
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.0415,
+                   ),
+                   Padding(
+                     padding: const EdgeInsets.only(right: 100.0),
+                     child: Text(
+                       "Who does it help?",
+                       textAlign: TextAlign.center,
+                       style: TextStyle(
+                         fontFamily: 'FontMain',
+                         fontSize: screenWidth < 411 ? 24 : 24,
+                       ),
+                     ),
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.0415,
+                   ),
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                     children: [
+                       Image.asset("images/JobSeeker.png"),
+                       // SizedBox(
+                       //   width: screenWidth * 0.0,
+                       // ),
+                       Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(
+                             "Job Seekers:",
+                             style: TextStyle(
+                               color: Colors.redAccent,
+                               fontFamily: 'FontMain',
+                               fontSize: screenWidth < 411 ? 9 : 12,
+                             ),
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(top: 10),
+                             child: Text(
+                               "Individuals looking to enter the job market \nbenefit from mentorship by gaining a\ncompetitive edge and understanding \nindustry expectations.",
+                               textAlign: TextAlign.justify,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 10,
+                               ),
+                             ),
+                           )
+                         ],
+                       ),
+                     ],
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.0415,
+                   ),
+
+                   SizedBox(
+                     height: screenHeight * 0.03,
+                   ),
+
+
+                   Text(
+                     "How to Apply for Mentorship?",
+                     textAlign: TextAlign.center,
+                     style: TextStyle(
+                       fontFamily: 'FontMain',
+                       fontSize: screenWidth < 411 ? 19 : 23,
+                     ),
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.041,
+                   ),
                    Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
                        Column(
                          children: [
                            Image.asset("images/Rocket.png"),
-
                          ],
                        ),
                        // SizedBox(width: screenWidth*0.060,),
@@ -949,54 +1381,50 @@ class _MentorshipState extends State<Mentorship> {
                        // ),
                        Column(
                          children: [
-                           // Heading before Step 1
-
-
-                           // Step 1
                            Padding(
                              padding: const EdgeInsets.only(right: 170.0),
                              child: Text(
                                "Step 1:",
                                style: TextStyle(
-                                 color: Colors.redAccent,
-                                 fontFamily: 'FontMain',
-                                 fontSize: screenWidth < 411 ? 11 : 14,
-                               ),
+                                   color: Colors.redAccent,
+                                   fontFamily: "FontMain",
+                                   fontSize: screenWidth < 411 ? 11 : 11),
                              ),
                            ),
-
-                           // Description Text
-                           Padding(
-                             padding: const EdgeInsets.only(right: 170.0),
+                           const Padding(
+                             padding: EdgeInsets.only(right: 135),
                              child: Text(
-                               "Tap to Apply", // Your bold heading text
+                               "Tap to apply",
                                style: TextStyle(
-                                 fontFamily: 'FontMain',
-                                 fontSize: screenWidth < 411 ? 11 : 13,
-                                 fontWeight: FontWeight.bold, // Set the font weight to bold
+                                   color: Colors.black,
+                                   fontFamily: "FontMain",
+                                   fontSize: 11),
+                             ),
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(top: 5),
+                             child: Text(
+                               "1.Launch the Hiremi appand\nhead to the Mentorship section.",
+                               textAlign: TextAlign.justify,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 9,
                                ),
                              ),
                            ),
-                           Text(
-                             "1.Launch the Hiremi appand\nhead to the Mentorship section.",
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411 ? 9 : 11,
-                             ),
+                           const SizedBox(
+                             height: 3.5,
                            ),
-                           SizedBox(height: 5,),
                            Text(
-                             "2.Look for the apply now option \n and tap on it to begin your\n application process",
-                             textAlign: TextAlign.center,
+                             "2.Look for the apply now option \n and tap on it to begin your\n application process.",
+                             textAlign: TextAlign.justify,
                              style: TextStyle(
                                fontFamily: "FontMain",
-                               fontSize: screenWidth < 411 ? 9 : 11,
+                               fontSize: screenWidth < 411 ? 9 : 9,
                              ),
                            ),
                          ],
                        ),
-
                      ],
                    ),
                    Padding(
@@ -1006,52 +1434,64 @@ class _MentorshipState extends State<Mentorship> {
                    Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                       SizedBox(width: screenWidth*0.024,),
+                       SizedBox(
+                         width: screenWidth * 0.024,
+                       ),
                        Column(
                          children: [
                            Padding(
-                             padding: const EdgeInsets.only(right: 170.0),
-                             child: Text("Step 2:",style: TextStyle(
-                               color: Colors.redAccent,
-                               fontFamily: 'FontMain',
-                               fontSize: screenWidth < 411 ? 9.5: 13,
-                             ),),
+                             padding: const EdgeInsets.only(right: 140),
+                             child: Text(
+                               "Step 2:",
+                               style: TextStyle(
+                                   color: Colors.redAccent,
+                                   fontFamily: "FontMain",
+                                   fontSize: screenWidth < 411 ? 11 : 11),
+                             ),
+                           ),
+                           const Padding(
+                             padding: EdgeInsets.only(right: 104),
+                             child: Text(
+                               "Q&A Session:",
+                               style: TextStyle(
+                                   color: Colors.black,
+                                   fontFamily: "FontMain",
+                                   fontSize: 11),
+                             ),
                            ),
                            Padding(
-                             padding: const EdgeInsets.only(right: 120.0),
+                             padding: const EdgeInsets.only(top: 5,right: 10),
                              child: Text(
-                               "Q&A Session:", // Your bold heading text
+                               "1.Once your session is\nscheduled,you will receive a\n notification.",
+                               textAlign: TextAlign.justify,
                                style: TextStyle(
-                                 fontFamily: 'FontMain',
-                                 fontSize: screenWidth < 411 ? 11 : 13,
-                                 fontWeight: FontWeight.bold, // Set the font weight to bold
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 9,
                                ),
                              ),
                            ),
-                           Text(
-                             "1.Once your session is\nscheduled,you will receive a\n notification",
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411 ? 9 : 11,
-                             ),
+                           const SizedBox(
+                             height: 3.5,
                            ),
-                           SizedBox(height: 5,),
-                           Text(
-                             "2.During the session ,you'll\nhave to opportunity to\ndiscuss your queires and\ncareer aspiration with our\nexperienced mentors",
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411 ? 9 : 11,
+                           Padding(
+                             padding: const EdgeInsets.only(right: 18),
+                             child: Text(
+                               "2.During the session ,you'll\nhave to opportunity to\ndiscuss your queires and\ncareer aspiration with our\nexperienced mentors.",
+                               textAlign: TextAlign.justify,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 9,
+                               ),
                              ),
                            ),
                          ],
                        ),
-                       SizedBox(width: screenWidth*0.036,),
+                       SizedBox(
+                         width: screenWidth * 0.036,
+                       ),
                        Column(
                          children: [
                            Image.asset("images/Meeting.png"),
-
                          ],
                        ),
                      ],
@@ -1066,50 +1506,66 @@ class _MentorshipState extends State<Mentorship> {
                        Column(
                          children: [
                            Image.asset("images/Flag.png"),
-
                          ],
                        ),
-                       SizedBox(width: screenWidth*0.060,),
+                       SizedBox(
+                         width: screenWidth * 0.060,
+                       ),
                        Column(
                          children: [
                            Padding(
-                             padding: const EdgeInsets.only(right: 170.0),
-                             child: Text("Step 3:",style: TextStyle(
-                               color: Colors.redAccent,
-                               fontFamily: 'FontMain',
-                               fontSize: screenWidth < 411  ? 7.5: 11.4,
-                             ),),
+                             padding: const EdgeInsets.only(right: 149),
+                             child: Text(
+                               "Step 3:",
+                               style: TextStyle(
+                                   color: Colors.redAccent,
+                                   fontFamily: "FontMain",
+                                   fontSize: screenWidth < 411 ? 11 : 11),
+                             ),
+                           ),
+                           const Padding(
+                             padding: EdgeInsets.only(right: 60),
+                             child: Text(
+                               "Enroll in the program:",
+                               style: TextStyle(
+                                   color: Colors.black,
+                                   fontFamily: "FontMain",
+                                   fontSize: 11),
+                             ),
                            ),
                            Padding(
-                             padding: const EdgeInsets.only(right: 70.0),
+                             padding: const EdgeInsets.only(right: 5,top: 5),
                              child: Text(
-                               "Enroll in the program:", // Your bold heading text
+                               "1.After selection, gain exclusive\naccess to enroll in our mentor-\nship program via the app by\ncompleting payment process.",
+                               textAlign: TextAlign.justify,
                                style: TextStyle(
-                                 fontFamily: 'FontMain',
-                                 fontSize: screenWidth < 411 ? 11 : 13,
-                                 fontWeight: FontWeight.bold, // Set the font weight to bold
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 9,
                                ),
                              ),
                            ),
-                           Text("1.After selection, gain exclusive\naccess to enroll in our mentorship\nprogram via the app by\ncompleting payment process.",
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411  ? 9.4: 11,
-                             ),),
-                           SizedBox(height: 5,),
-                           Text("2.Get ready for a transformative\nexperience in skill development,\nreal-time project exposure, and\ncareer growth.",
-
-                             textAlign: TextAlign.center,
-                             style: TextStyle(
-                               fontFamily: "FontMain",
-                               fontSize: screenWidth < 411  ? 9.4: 11,
-                             ),)
+                           const SizedBox(
+                             height: 3.5,
+                           ),
+                           Padding(
+                             padding: const EdgeInsets.only(),
+                             child: Text(
+                               "2.Get ready for a transformative\nexperience in skill development,\nreal-time project exposure, and\ncareer growth.",
+                               textAlign: TextAlign.justify,
+                               style: TextStyle(
+                                 fontFamily: "FontMain",
+                                 fontSize: screenWidth < 411 ? 9 : 9,
+                               ),
+                             ),
+                           ),
                          ],
                        ),
                      ],
                    ),
-                   SizedBox(height: screenHeight*0.100,)
+                   SizedBox(
+                     height: screenHeight * 0.100,
+                   )
+
 
                  ],
                ),

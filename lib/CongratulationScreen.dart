@@ -141,10 +141,10 @@ class CongratulationScreenState extends State<CongratulationScreen> {
            if (CandidateStatus == "Select  ") {
               // Navigate to PaymentGateway
               print('Going to PaymentGateway');
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => PaymentGateway()),
-              );
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => PaymentGateway()),
+              // );
             }
            else if(CandidateStatus == "Reject")
              {

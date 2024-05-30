@@ -8,20 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Razorpay Payment',
-      // home: PaymentScreen(),
-    );
-  }
-}
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Razorpay Payment',
+//       // home: PaymentScreen(),
+//     );
+//   }
+// }
+//
+import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
   final String? sourceScreen;
